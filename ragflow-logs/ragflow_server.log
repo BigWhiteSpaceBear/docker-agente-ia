@@ -241,3 +241,192 @@ LiteLLM completion() model= llama3.1; provider = ollama_chat
 2026-01-14 08:05:35,179 ERROR    18 The requested URL / was not found
 2026-01-14 08:05:59,763 ERROR    18 The requested URL / was not found
 2026-01-14 08:06:11,644 ERROR    18 The requested URL / was not found
+2026-01-14 08:16:23,666 ERROR    18 The requested URL / was not found
+2026-01-14 08:16:50,251 ERROR    18 The requested URL / was not found
+2026-01-14 08:17:36,605 ERROR    18 The requested URL / was not found
+2026-01-14 08:17:55,022 ERROR    18 The requested URL / was not found
+2026-01-14 08:17:58,973 ERROR    18 The requested URL / was not found
+2026-01-14 08:18:53,086 ERROR    18 update_progress exception
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 1116, in get_connection
+    if connection.can_read() and connection.client_cache is None:
+       ^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 524, in can_read
+    return self._parser.can_read(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/_parsers/base.py", line 128, in can_read
+    return self._buffer and self._buffer.can_read(timeout)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/_parsers/socket.py", line 95, in can_read
+    return bool(self.unread_bytes()) or self._read_from_socket(
+                                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/_parsers/socket.py", line 68, in _read_from_socket
+    raise ConnectionError(SERVER_CLOSED_CONNECTION_ERROR)
+valkey.exceptions.ConnectionError: Connection closed by server.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 302, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/retry.py", line 62, in call_with_retry
+    return do()
+           ^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 303, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 728, in _connect
+    raise err
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 716, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/ragflow/api/ragflow_server.py", line 55, in update_progress
+    if redis_lock.acquire():
+       ^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/rag/utils/redis_conn.py", line 494, in acquire
+    REDIS_CONN.delete_if_equal(self.lock_key, self.lock_value)
+  File "/ragflow/rag/utils/redis_conn.py", line 468, in delete_if_equal
+    return bool(self.lua_delete_if_equal(keys=[key], args=[expected_value], client=self.REDIS))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/commands/core.py", line 6356, in __call__
+    return client.evalsha(self.sha, len(keys), *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/commands/core.py", line 5730, in evalsha
+    return self._evalsha("EVALSHA", sha, numkeys, *keys_and_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/commands/core.py", line 5714, in _evalsha
+    return self.execute_command(command, sha, numkeys, *keys_and_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/client.py", line 564, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 1120, in get_connection
+    connection.connect()
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 308, in connect
+    raise ConnectionError(self._error_message(e))
+valkey.exceptions.ConnectionError: Error 111 connecting to redis:6379. Connection refused.
+2026-01-14 08:18:53,154 ERROR    18 update_progress exception
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 302, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/retry.py", line 62, in call_with_retry
+    return do()
+           ^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 303, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 728, in _connect
+    raise err
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 716, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/ragflow/api/ragflow_server.py", line 62, in update_progress
+    redis_lock.release()
+  File "/ragflow/rag/utils/redis_conn.py", line 505, in release
+    REDIS_CONN.delete_if_equal(self.lock_key, self.lock_value)
+  File "/ragflow/rag/utils/redis_conn.py", line 468, in delete_if_equal
+    return bool(self.lua_delete_if_equal(keys=[key], args=[expected_value], client=self.REDIS))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/commands/core.py", line 6356, in __call__
+    return client.evalsha(self.sha, len(keys), *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/commands/core.py", line 5730, in evalsha
+    return self._evalsha("EVALSHA", sha, numkeys, *keys_and_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/commands/core.py", line 5714, in _evalsha
+    return self.execute_command(command, sha, numkeys, *keys_and_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/client.py", line 564, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 1107, in get_connection
+    connection.connect()
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 308, in connect
+    raise ConnectionError(self._error_message(e))
+valkey.exceptions.ConnectionError: Error 111 connecting to redis:6379. Connection refused.
+2026-01-14 08:20:38,179 INFO     24 ragflow_server log path: /ragflow/logs/ragflow_server.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-14 08:20:38,180 INFO     24 
+        ____   ___    ______ ______ __
+       / __ \ /   |  / ____// ____// /____  _      __
+      / /_/ // /| | / / __ / /_   / // __ \| | /| / /
+     / _, _// ___ |/ /_/ // __/  / // /_/ /| |/ |/ /
+    /_/ |_|/_/  |_|\____//_/    /_/ \____/ |__/|__/
+
+    
+2026-01-14 08:20:38,181 INFO     24 RAGFlow version: v0.23.1
+2026-01-14 08:20:38,182 INFO     24 project base: /ragflow
+2026-01-14 08:20:38,183 INFO     24 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-14 08:20:38,185 WARNING  24 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-14 08:20:38,189 WARNING  24 Load term.freq FAIL!
+2026-01-14 08:20:38,195 WARNING  24 Realtime synonym is disabled, since no redis connection.
+2026-01-14 08:20:38,198 WARNING  24 Load term.freq FAIL!
+2026-01-14 08:20:38,203 WARNING  24 Realtime synonym is disabled, since no redis connection.
+2026-01-14 08:20:38,205 INFO     24 MAX_CONTENT_LENGTH: 134217728
+2026-01-14 08:20:38,205 INFO     24 MAX_FILE_COUNT_PER_USER: 0
+2026-01-14 08:20:46,285 INFO     24 Init message_id sequence done, current max id is 1.
+2026-01-14 08:20:46,287 INFO     24 No memory found, no need to init memory size.
+2026-01-14 08:20:46,288 INFO     24 init web data success:7.504313230514526
+2026-01-14 08:20:46,289 INFO     24 Recursively importing plugins from path `/ragflow/plugin/embedded_plugins`
+2026-01-14 08:20:46,291 INFO     24 Loaded llm_tools plugin BadCalculatorPlugin version 1.0.0
+2026-01-14 08:20:46,293 INFO     24 RAGFlow HTTP server start...
+2026-01-14 08:20:46,553 INFO     24 Running on http://0.0.0.0:9380 (CTRL + C to quit)
+2026-01-14 08:20:47,293 INFO     24 Starting update_progress thread (delayed)
+2026-01-14 08:20:47,295 INFO     24 update_progress lock_value: e5f12233-d28a-43cf-9c00-b65aee6e3088
+2026-01-14 08:25:45,967 INFO     15 ragflow_server log path: /ragflow/logs/ragflow_server.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-14 08:25:45,968 INFO     15 
+        ____   ___    ______ ______ __
+       / __ \ /   |  / ____// ____// /____  _      __
+      / /_/ // /| | / / __ / /_   / // __ \| | /| / /
+     / _, _// ___ |/ /_/ // __/  / // /_/ /| |/ |/ /
+    /_/ |_|/_/  |_|\____//_/    /_/ \____/ |__/|__/
+
+    
+2026-01-14 08:25:45,969 INFO     15 RAGFlow version: v0.23.1
+2026-01-14 08:25:45,970 INFO     15 project base: /ragflow
+2026-01-14 08:25:45,971 INFO     15 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-14 08:25:45,973 WARNING  15 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-14 08:25:45,978 WARNING  15 Load term.freq FAIL!
+2026-01-14 08:25:45,985 WARNING  15 Realtime synonym is disabled, since no redis connection.
+2026-01-14 08:25:45,989 WARNING  15 Load term.freq FAIL!
+2026-01-14 08:25:45,994 WARNING  15 Realtime synonym is disabled, since no redis connection.
+2026-01-14 08:25:45,996 INFO     15 MAX_CONTENT_LENGTH: 134217728
+2026-01-14 08:25:45,996 INFO     15 MAX_FILE_COUNT_PER_USER: 0
+2026-01-14 08:25:53,450 INFO     15 No need to init message_id sequence, current max id is 1.
+2026-01-14 08:25:53,454 INFO     15 No memory found, no need to init memory size.
+2026-01-14 08:25:53,455 INFO     15 init web data success:6.919506072998047
+2026-01-14 08:25:53,457 INFO     15 Recursively importing plugins from path `/ragflow/plugin/embedded_plugins`
+2026-01-14 08:25:53,459 INFO     15 Loaded llm_tools plugin BadCalculatorPlugin version 1.0.0
+2026-01-14 08:25:53,461 INFO     15 RAGFlow HTTP server start...
+2026-01-14 08:25:53,838 INFO     15 Running on http://0.0.0.0:9380 (CTRL + C to quit)
+2026-01-14 08:25:54,461 INFO     15 Starting update_progress thread (delayed)
+2026-01-14 08:25:54,462 INFO     15 update_progress lock_value: e17533c0-8ccc-4e13-8eda-ef2a96cf2bc6

@@ -109,3 +109,83 @@
  * Running on http://127.0.0.1:9381
  * Running on http://172.20.0.8:9381
 2026-01-14 06:06:51,349 INFO     28 [33mPress CTRL+C to quit[0m
+2026-01-14 08:20:11,780 INFO     28 admin_service log path: /ragflow/logs/admin_service.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-14 08:20:11,781 INFO     28 
+        ____  ___   ______________                 ___       __          _     
+       / __ \/   | / ____/ ____/ /___ _      __   /   | ____/ /___ ___  (_)___ 
+      / /_/ / /| |/ / __/ /_  / / __ \ | /| / /  / /| |/ __  / __ `__ \/ / __ \
+     / _, _/ ___ / /_/ / __/ / / /_/ / |/ |/ /  / ___ / /_/ / / / / / / / / / /
+    /_/ |_/_/  |_\____/_/   /_/\____/|__/|__/  /_/  |_\__,_/_/ /_/ /_/_/_/ /_/ 
+    
+2026-01-14 08:20:11,843 INFO     28 RAGFlow version: v0.23.1
+2026-01-14 08:20:11,844 INFO     28 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-14 08:20:11,846 WARNING  28 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-14 08:20:11,856 INFO     28 GET http://es01:9200/ [status:200 duration:0.006s]
+2026-01-14 08:20:11,860 INFO     28 HEAD http://es01:9200/ [status:200 duration:0.004s]
+2026-01-14 08:20:11,862 INFO     28 Use Elasticsearch http://es01:9200 as the doc engine.
+2026-01-14 08:20:11,862 INFO     28 Elasticsearch http://es01:9200 is healthy.
+2026-01-14 08:20:11,863 INFO     28 Use Elasticsearch http://es01:9200 as the doc engine.
+2026-01-14 08:20:11,864 INFO     28 Elasticsearch http://es01:9200 is healthy.
+2026-01-14 08:20:11,867 WARNING  28 Load term.freq FAIL!
+2026-01-14 08:20:11,876 WARNING  28 Realtime synonym is disabled, since no redis connection.
+2026-01-14 08:20:11,883 WARNING  28 Load term.freq FAIL!
+2026-01-14 08:20:11,890 WARNING  28 Realtime synonym is disabled, since no redis connection.
+2026-01-14 08:20:11,905 WARNING  28 Unknown configuration key: os
+2026-01-14 08:20:11,906 WARNING  28 Unknown configuration key: oceanbase
+2026-01-14 08:20:11,907 WARNING  28 Unknown configuration key: user_default_llm
+2026-01-14 08:20:11,908 INFO     28 RAGFlow Admin service start...
+2026-01-14 08:20:11,930 INFO     28 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:9381
+ * Running on http://172.20.0.8:9381
+2026-01-14 08:20:11,931 INFO     28 [33mPress CTRL+C to quit[0m
+2026-01-14 08:25:20,307 INFO     28 admin_service log path: /ragflow/logs/admin_service.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-14 08:25:20,308 INFO     28 
+        ____  ___   ______________                 ___       __          _     
+       / __ \/   | / ____/ ____/ /___ _      __   /   | ____/ /___ ___  (_)___ 
+      / /_/ / /| |/ / __/ /_  / / __ \ | /| / /  / /| |/ __  / __ `__ \/ / __ \
+     / _, _/ ___ / /_/ / __/ / / /_/ / |/ |/ /  / ___ / /_/ / / / / / / / / / /
+    /_/ |_/_/  |_\____/_/   /_/\____/|__/|__/  /_/  |_\__,_/_/ /_/ /_/_/_/ /_/ 
+    
+2026-01-14 08:25:20,354 INFO     28 RAGFlow version: v0.23.1
+2026-01-14 08:25:20,355 INFO     28 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-14 08:25:20,357 WARNING  28 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-14 08:25:20,368 INFO     28 GET http://es01:9200/ [status:200 duration:0.008s]
+2026-01-14 08:25:20,372 INFO     28 HEAD http://es01:9200/ [status:200 duration:0.003s]
+2026-01-14 08:25:20,373 INFO     28 Use Elasticsearch http://es01:9200 as the doc engine.
+2026-01-14 08:25:20,374 INFO     28 Elasticsearch http://es01:9200 is healthy.
+2026-01-14 08:25:20,375 INFO     28 Use Elasticsearch http://es01:9200 as the doc engine.
+2026-01-14 08:25:20,376 INFO     28 Elasticsearch http://es01:9200 is healthy.
+2026-01-14 08:25:20,379 WARNING  28 Load term.freq FAIL!
+2026-01-14 08:25:20,385 WARNING  28 Realtime synonym is disabled, since no redis connection.
+2026-01-14 08:25:20,392 WARNING  28 Load term.freq FAIL!
+2026-01-14 08:25:20,398 WARNING  28 Realtime synonym is disabled, since no redis connection.
+2026-01-14 08:25:20,414 WARNING  28 Unknown configuration key: os
+2026-01-14 08:25:20,415 WARNING  28 Unknown configuration key: oceanbase
+2026-01-14 08:25:20,415 WARNING  28 Unknown configuration key: user_default_llm
+2026-01-14 08:25:20,416 INFO     28 RAGFlow Admin service start...
+2026-01-14 08:25:20,429 INFO     28 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:9381
+ * Running on http://172.20.0.8:9381
+2026-01-14 08:25:20,430 INFO     28 [33mPress CTRL+C to quit[0m

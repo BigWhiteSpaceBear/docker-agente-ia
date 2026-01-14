@@ -1,0 +1,46 @@
+2026-01-14 08:20:33,428 INFO     31 task_executor_013c4f16b3b2_0 log path: /ragflow/logs/task_executor_013c4f16b3b2_0.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-14 08:20:33,429 INFO     31 Staggering startup by 0.17s to prevent connection storm
+2026-01-14 08:20:33,600 INFO     31 
+    ____                      __  _
+   /  _/___  ____ ____  _____/ /_(_)___  ____     ________  ______   _____  _____
+   / // __ \/ __ `/ _ \/ ___/ __/ / __ \/ __ \   / ___/ _ \/ ___/ | / / _ \/ ___/
+ _/ // / / / /_/ /  __(__  ) /_/ / /_/ / / / /  (__  )  __/ /   | |/ /  __/ /
+/___/_/ /_/\__, /\___/____/\__/_/\____/_/ /_/  /____/\___/_/    |___/\___/_/
+          /____/
+    
+2026-01-14 08:20:33,601 INFO     31 RAGFlow version: v0.23.1
+2026-01-14 08:20:33,602 INFO     31 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-14 08:20:33,605 WARNING  31 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-14 08:20:33,618 INFO     31 GET http://es01:9200/ [status:200 duration:0.009s]
+2026-01-14 08:20:33,623 INFO     31 HEAD http://es01:9200/ [status:200 duration:0.004s]
+2026-01-14 08:20:33,625 INFO     31 Use Elasticsearch http://es01:9200 as the doc engine.
+2026-01-14 08:20:33,627 INFO     31 Elasticsearch http://es01:9200 is healthy.
+2026-01-14 08:20:33,628 INFO     31 Use Elasticsearch http://es01:9200 as the doc engine.
+2026-01-14 08:20:33,629 INFO     31 Elasticsearch http://es01:9200 is healthy.
+2026-01-14 08:20:33,635 WARNING  31 Load term.freq FAIL!
+2026-01-14 08:20:33,643 WARNING  31 Realtime synonym is disabled, since no redis connection.
+2026-01-14 08:20:33,653 WARNING  31 Load term.freq FAIL!
+2026-01-14 08:20:33,662 WARNING  31 Realtime synonym is disabled, since no redis connection.
+2026-01-14 08:20:33,663 INFO     31 can't import package 'torch'
+2026-01-14 08:20:33,665 INFO     31 default embedding config: {'model': '', 'factory': '', 'api_key': 'xxx', 'base_url': 'http://tei:80'}
+2026-01-14 08:20:33,665 INFO     31 MAX_CONTENT_LENGTH: 134217728
+2026-01-14 08:20:33,666 INFO     31 MAX_FILE_COUNT_PER_USER: 0
+2026-01-14 08:20:33,672 INFO     31 task_executor_013c4f16b3b2_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_013c4f16b3b2_0", "now": "2026-01-14T08:20:33.670+08:00", "boot_at": "2026-01-14T08:20:33.425+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-14 08:21:03,514 INFO     31 task_executor_013c4f16b3b2_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_013c4f16b3b2_0", "now": "2026-01-14T08:21:03.513+08:00", "boot_at": "2026-01-14T08:20:33.425+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-14 08:21:03,515 INFO     31 task_executor_3846ac492fa5_0 expired, removed
+2026-01-14 08:21:33,349 INFO     31 task_executor_013c4f16b3b2_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_013c4f16b3b2_0", "now": "2026-01-14T08:21:33.349+08:00", "boot_at": "2026-01-14T08:20:33.425+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-14 08:22:03,191 INFO     31 task_executor_013c4f16b3b2_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_013c4f16b3b2_0", "now": "2026-01-14T08:22:03.190+08:00", "boot_at": "2026-01-14T08:20:33.425+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-14 08:22:33,027 INFO     31 task_executor_013c4f16b3b2_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_013c4f16b3b2_0", "now": "2026-01-14T08:22:33.026+08:00", "boot_at": "2026-01-14T08:20:33.425+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-14 08:23:02,858 INFO     31 task_executor_013c4f16b3b2_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_013c4f16b3b2_0", "now": "2026-01-14T08:23:02.857+08:00", "boot_at": "2026-01-14T08:20:33.425+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-14 08:23:32,734 INFO     31 task_executor_013c4f16b3b2_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_013c4f16b3b2_0", "now": "2026-01-14T08:23:32.733+08:00", "boot_at": "2026-01-14T08:20:33.425+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-14 08:24:02,577 INFO     31 task_executor_013c4f16b3b2_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_013c4f16b3b2_0", "now": "2026-01-14T08:24:02.576+08:00", "boot_at": "2026-01-14T08:20:33.425+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
