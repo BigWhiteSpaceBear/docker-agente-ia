@@ -1,0 +1,82 @@
+2026-01-13 12:27:22,868 INFO     26 data_sync_0 log path: /ragflow/logs/data_sync_0.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-13 12:27:22,869 INFO     26 
+  _____        _           _____
+ |  __ \      | |         / ____|
+ | |  | | __ _| |_ __ _  | (___  _   _ _ __   ___
+ | |  | |/ _` | __/ _` |  \___ \| | | | '_ \ / __|
+ | |__| | (_| | || (_| |  ____) | |_| | | | | (__
+ |_____/ \__,_|\__\__,_| |_____/ \__, |_| |_|\___|
+                                  __/ |
+                                 |___/
+    
+2026-01-13 12:27:22,871 INFO     26 RAGFlow version: v0.23.1
+2026-01-13 12:27:22,872 INFO     26 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-13 12:27:22,876 WARNING  26 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-13 12:27:22,889 INFO     26 GET http://es01:9200/ [status:200 duration:0.009s]
+2026-01-13 12:27:22,894 INFO     26 HEAD http://es01:9200/ [status:200 duration:0.004s]
+2026-01-13 12:27:22,896 INFO     26 Use Elasticsearch http://es01:9200 as the doc engine.
+2026-01-13 12:27:22,897 INFO     26 Elasticsearch http://es01:9200 is healthy.
+2026-01-13 12:27:22,898 INFO     26 Use Elasticsearch http://es01:9200 as the doc engine.
+2026-01-13 12:27:22,899 INFO     26 Elasticsearch http://es01:9200 is healthy.
+2026-01-13 12:27:22,906 WARNING  26 Load term.freq FAIL!
+2026-01-13 12:27:22,914 WARNING  26 Realtime synonym is disabled, since no redis connection.
+2026-01-13 12:27:23,541 WARNING  26 Load term.freq FAIL!
+2026-01-13 12:27:23,549 WARNING  26 Realtime synonym is disabled, since no redis connection.
+2026-01-13 12:27:23,557 WARNING  26 DB is not ready yet: (1146, "Table 'rag_flow.sync_logs' doesn't exist")
+2026-01-13 12:27:26,565 WARNING  26 DB is not ready yet: (1146, "Table 'rag_flow.sync_logs' doesn't exist")
+2026-01-13 12:27:29,573 WARNING  26 DB is not ready yet: (1146, "Table 'rag_flow.sync_logs' doesn't exist")
+2026-01-13 12:27:32,580 WARNING  26 DB is not ready yet: (1146, "Table 'rag_flow.sync_logs' doesn't exist")
+2026-01-13 12:27:35,587 WARNING  26 DB is not ready yet: (1146, "Table 'rag_flow.sync_logs' doesn't exist")
+2026-01-13 12:27:38,595 WARNING  26 DB is not ready yet: (1146, "Table 'rag_flow.sync_logs' doesn't exist")
+2026-01-13 12:27:41,601 WARNING  26 DB is not ready yet: (1146, "Table 'rag_flow.sync_logs' doesn't exist")
+2026-01-13 12:27:44,628 WARNING  26 DB is not ready yet: (1146, "Table 'rag_flow.sync_logs' doesn't exist")
+2026-01-13 12:27:46,547 WARNING  26 DB is not ready yet: (1146, "Table 'rag_flow.sync_logs' doesn't exist")
+2026-01-13 12:27:49,553 WARNING  26 DB is not ready yet: (1146, "Table 'rag_flow.sync_logs' doesn't exist")
+2026-01-13 12:27:52,559 WARNING  26 DB is not ready yet: (1146, "Table 'rag_flow.sync_logs' doesn't exist")
+2026-01-13 12:27:55,563 WARNING  26 DB is not ready yet: (1146, "Table 'rag_flow.sync_logs' doesn't exist")
+2026-01-13 12:27:58,567 WARNING  26 DB is not ready yet: (1146, "Table 'rag_flow.sync_logs' doesn't exist")
+2026-01-13 12:28:01,572 WARNING  26 DB is not ready yet: (1146, "Table 'rag_flow.sync_logs' doesn't exist")
+2026-01-14 06:06:46,934 INFO     24 data_sync_0 log path: /ragflow/logs/data_sync_0.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-14 06:06:46,935 INFO     24 
+  _____        _           _____
+ |  __ \      | |         / ____|
+ | |  | | __ _| |_ __ _  | (___  _   _ _ __   ___
+ | |  | |/ _` | __/ _` |  \___ \| | | | '_ \ / __|
+ | |__| | (_| | || (_| |  ____) | |_| | | | | (__
+ |_____/ \__,_|\__\__,_| |_____/ \__, |_| |_|\___|
+                                  __/ |
+                                 |___/
+    
+2026-01-14 06:06:46,936 INFO     24 RAGFlow version: v0.23.1
+2026-01-14 06:06:46,937 INFO     24 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-14 06:06:46,941 WARNING  24 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-14 06:06:46,951 INFO     24 GET http://es01:9200/ [status:200 duration:0.008s]
+2026-01-14 06:06:46,956 INFO     24 HEAD http://es01:9200/ [status:200 duration:0.003s]
+2026-01-14 06:06:46,957 INFO     24 Use Elasticsearch http://es01:9200 as the doc engine.
+2026-01-14 06:06:46,958 INFO     24 Elasticsearch http://es01:9200 is healthy.
+2026-01-14 06:06:46,959 INFO     24 Use Elasticsearch http://es01:9200 as the doc engine.
+2026-01-14 06:06:46,960 INFO     24 Elasticsearch http://es01:9200 is healthy.
+2026-01-14 06:06:46,964 WARNING  24 Load term.freq FAIL!
+2026-01-14 06:06:46,970 WARNING  24 Realtime synonym is disabled, since no redis connection.
+2026-01-14 06:06:47,506 WARNING  24 Load term.freq FAIL!
+2026-01-14 06:06:47,513 WARNING  24 Realtime synonym is disabled, since no redis connection.
