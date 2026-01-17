@@ -189,3 +189,43 @@
  * Running on http://127.0.0.1:9381
  * Running on http://172.20.0.8:9381
 2026-01-14 08:25:20,430 INFO     28 [33mPress CTRL+C to quit[0m
+2026-01-18 00:54:37,683 INFO     22 admin_service log path: /ragflow/logs/admin_service.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-18 00:54:37,684 INFO     22 
+        ____  ___   ______________                 ___       __          _     
+       / __ \/   | / ____/ ____/ /___ _      __   /   | ____/ /___ ___  (_)___ 
+      / /_/ / /| |/ / __/ /_  / / __ \ | /| / /  / /| |/ __  / __ `__ \/ / __ \
+     / _, _/ ___ / /_/ / __/ / / /_/ / |/ |/ /  / ___ / /_/ / / / / / / / / / /
+    /_/ |_/_/  |_\____/_/   /_/\____/|__/|__/  /_/  |_\__,_/_/ /_/ /_/_/_/ /_/ 
+    
+2026-01-18 00:54:37,740 INFO     22 RAGFlow version: v0.23.1
+2026-01-18 00:54:37,741 INFO     22 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-18 00:54:37,743 WARNING  22 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-18 00:54:37,752 INFO     22 GET http://es01:9200/ [status:200 duration:0.006s]
+2026-01-18 00:54:37,756 INFO     22 HEAD http://es01:9200/ [status:200 duration:0.003s]
+2026-01-18 00:54:37,757 INFO     22 Use Elasticsearch http://es01:9200 as the doc engine.
+2026-01-18 00:54:37,758 INFO     22 Elasticsearch http://es01:9200 is healthy.
+2026-01-18 00:54:37,759 INFO     22 Use Elasticsearch http://es01:9200 as the doc engine.
+2026-01-18 00:54:37,760 INFO     22 Elasticsearch http://es01:9200 is healthy.
+2026-01-18 00:54:37,764 WARNING  22 Load term.freq FAIL!
+2026-01-18 00:54:37,772 WARNING  22 Realtime synonym is disabled, since no redis connection.
+2026-01-18 00:54:37,783 WARNING  22 Load term.freq FAIL!
+2026-01-18 00:54:37,791 WARNING  22 Realtime synonym is disabled, since no redis connection.
+2026-01-18 00:54:37,808 WARNING  22 Unknown configuration key: os
+2026-01-18 00:54:37,809 WARNING  22 Unknown configuration key: oceanbase
+2026-01-18 00:54:37,810 WARNING  22 Unknown configuration key: user_default_llm
+2026-01-18 00:54:37,810 INFO     22 RAGFlow Admin service start...
+2026-01-18 00:54:37,826 INFO     22 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:9381
+ * Running on http://172.20.0.8:9381
+2026-01-18 00:54:37,827 INFO     22 [33mPress CTRL+C to quit[0m
