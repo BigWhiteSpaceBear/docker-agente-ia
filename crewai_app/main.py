@@ -1,6 +1,7 @@
 import os
 import time
 import random
+import tools.database_tools as database_tools
 import streamlit as st
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, List
@@ -559,6 +560,28 @@ class AgentOrchestrator:
         """Executa o Agente Coletor de Dados com consultas reais ao banco"""
         result = {}
         
+        
+        agent.current_task = "Validando CPF/CNPJ"
+        self.add_log(LogLevel.INFO, agent.name, "Validando CPF/CNPJ", task="validar_cpf_cnpj")
+        log_placeholder.markdown(self.get_logs_text())
+        time.sleep(0.3)
+        
+        self.add_log(LogLevel.TOOL, agent.name, "Executando tool", tool="validar_cpf_cnpj")
+        log_placeholder.markdown(self.get_logs_text())
+        time.sleep(0.3)
+        
+        # Validação básica de formato
+        cpf_cnpj_aux = str(client_data.get('cpf_cnpj', ''))
+        cpf_cnpj_valido = database_tools.validar_cpf_cnpj(cpf_cnpj_aux)
+        if cpf_cnpj_valido['valido'] == False:
+            self.add_log(LogLevel.ERROR, agent.name,cpf_cnpj_valido)
+            error_msg = f"CPF/CNPJ inválido: {client_data.get('cpf_cnpj', 'N/A')}"
+            raise ValueError(error_msg)      
+        
+        self.add_log(LogLevel.SUCCESS, agent.name, f"CPF/CNPJ válido: {cpf_cnpj_aux}")
+        log_placeholder.markdown(self.get_logs_text())
+        result['cpf_valido'] = cpf_cnpj_valido['valido']
+        
         agent.current_task = "Buscando dados do cliente"
         self.add_log(LogLevel.INFO, agent.name, "Buscando dados do cliente", task="buscar_dados_cliente")
         log_placeholder.markdown(self.get_logs_text())
@@ -596,26 +619,9 @@ class AgentOrchestrator:
         log_placeholder.markdown(self.get_logs_text())
         result['cliente'] = client_data
         
-        agent.current_task = "Validando CPF/CNPJ"
-        self.add_log(LogLevel.INFO, agent.name, "Validando CPF/CNPJ", task="validar_cpf_cnpj")
-        log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
+ 
         
-        self.add_log(LogLevel.TOOL, agent.name, "Executando tool", tool="validar_cpf_cnpj")
-        log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
         
-        # Validação básica de formato
-        cpf_cnpj_str = cpf_cnpj.replace('.', '').replace('-', '').replace('/', '')
-        if not cpf_cnpj_str.isdigit() or len(cpf_cnpj_str) not in [11, 14]:
-            error_msg = f"CPF/CNPJ inválido: {cpf_cnpj} (formato incorreto)"
-            self.add_log(LogLevel.ERROR, agent.name, error_msg)
-            log_placeholder.markdown(self.get_logs_text())
-            raise ValueError(error_msg)
-        
-        self.add_log(LogLevel.SUCCESS, agent.name, f"CPF/CNPJ válido: {cpf_cnpj}")
-        log_placeholder.markdown(self.get_logs_text())
-        result['cpf_valido'] = True
         
         agent.current_task = "Consultando histórico"
         self.add_log(LogLevel.INFO, agent.name, "Consultando histórico de crédito", task="consultar_historico_credito")
@@ -985,7 +991,7 @@ if not st.session_state.analysis_started:
     
     with col1:
         nome = st.text_input("Nome Completo", value="João Silva Santos")
-        cpf_cnpj = st.text_input("CPF/CNPJ", value="12345678900")  # Sem pontuação para validação
+        cpf_cnpj = st.text_input("CPF/CNPJ", value="16142693001")  # Sem pontuação para validação
         renda_mensal = st.number_input("Renda Mensal (R$)", min_value=0.0, value=8500.00, step=100.0)
     
     with col2:

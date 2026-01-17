@@ -346,3 +346,7 @@
 2026-01-18 03:38:48,161 WARNING  22 Realtime synonym is disabled, since no redis connection.
 2026-01-18 03:38:48,754 WARNING  22 Load term.freq FAIL!
 2026-01-18 03:38:48,761 WARNING  22 Realtime synonym is disabled, since no redis connection.
+2026-01-18 05:02:37,500 ERROR    22 DB execution failure: (1053, 'Server shutdown in progress')
+2026-01-18 05:02:37,502 WARNING  22 DB is not ready yet: (1053, 'Server shutdown in progress')
+2026-01-18 05:02:40,509 WARNING  22 Database connection issue (attempt 1/5): (2013, 'Lost connection to MySQL server during query')
+2026-01-18 05:02:40,531 ERROR    22 Failed to reconnect: (2003, "Can't connect to MySQL server on 'mysql' ([Errno 111] Connection refused)")
