@@ -468,3 +468,79 @@ valkey.exceptions.ConnectionError: Error 111 connecting to redis:6379. Connectio
 2026-01-18 00:54:58,686 INFO     16 Running on http://0.0.0.0:9380 (CTRL + C to quit)
 2026-01-18 00:54:59,424 INFO     16 Starting update_progress thread (delayed)
 2026-01-18 00:54:59,426 INFO     16 update_progress lock_value: 1b4dcd14-18ac-4d6c-898f-86ebbdedab2a
+2026-01-18 01:43:15,435 INFO     18 ragflow_server log path: /ragflow/logs/ragflow_server.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-18 01:43:15,436 INFO     18 
+        ____   ___    ______ ______ __
+       / __ \ /   |  / ____// ____// /____  _      __
+      / /_/ // /| | / / __ / /_   / // __ \| | /| / /
+     / _, _// ___ |/ /_/ // __/  / // /_/ /| |/ |/ /
+    /_/ |_|/_/  |_|\____//_/    /_/ \____/ |__/|__/
+
+    
+2026-01-18 01:43:15,437 INFO     18 RAGFlow version: v0.23.1
+2026-01-18 01:43:15,439 INFO     18 project base: /ragflow
+2026-01-18 01:43:15,441 INFO     18 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-18 01:43:15,444 WARNING  18 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-18 01:43:15,449 WARNING  18 Load term.freq FAIL!
+2026-01-18 01:43:15,457 WARNING  18 Realtime synonym is disabled, since no redis connection.
+2026-01-18 01:43:15,461 WARNING  18 Load term.freq FAIL!
+2026-01-18 01:43:15,468 WARNING  18 Realtime synonym is disabled, since no redis connection.
+2026-01-18 01:43:15,470 INFO     18 MAX_CONTENT_LENGTH: 134217728
+2026-01-18 01:43:15,471 INFO     18 MAX_FILE_COUNT_PER_USER: 0
+2026-01-18 01:43:34,983 INFO     18 Init message_id sequence done, current max id is 1.
+2026-01-18 01:43:34,985 INFO     18 No memory found, no need to init memory size.
+2026-01-18 01:43:34,986 INFO     18 init web data success:6.869725227355957
+2026-01-18 01:43:34,988 INFO     18 Recursively importing plugins from path `/ragflow/plugin/embedded_plugins`
+2026-01-18 01:43:34,990 INFO     18 Loaded llm_tools plugin BadCalculatorPlugin version 1.0.0
+2026-01-18 01:43:34,992 INFO     18 RAGFlow HTTP server start...
+2026-01-18 01:43:35,296 INFO     18 Running on http://0.0.0.0:9380 (CTRL + C to quit)
+2026-01-18 01:43:35,992 INFO     18 Starting update_progress thread (delayed)
+2026-01-18 01:43:35,993 INFO     18 update_progress lock_value: 0d466482-1f08-48ec-a163-aec2846dc1d0
+2026-01-18 01:45:08,729 INFO     17 ragflow_server log path: /ragflow/logs/ragflow_server.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-18 01:45:08,730 INFO     17 
+        ____   ___    ______ ______ __
+       / __ \ /   |  / ____// ____// /____  _      __
+      / /_/ // /| | / / __ / /_   / // __ \| | /| / /
+     / _, _// ___ |/ /_/ // __/  / // /_/ /| |/ |/ /
+    /_/ |_|/_/  |_|\____//_/    /_/ \____/ |__/|__/
+
+    
+2026-01-18 01:45:08,731 INFO     17 RAGFlow version: v0.23.1
+2026-01-18 01:45:08,731 INFO     17 project base: /ragflow
+2026-01-18 01:45:08,732 INFO     17 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-18 01:45:08,734 WARNING  17 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-18 01:45:08,738 WARNING  17 Load term.freq FAIL!
+2026-01-18 01:45:08,745 WARNING  17 Realtime synonym is disabled, since no redis connection.
+2026-01-18 01:45:08,749 WARNING  17 Load term.freq FAIL!
+2026-01-18 01:45:08,754 WARNING  17 Realtime synonym is disabled, since no redis connection.
+2026-01-18 01:45:08,756 INFO     17 MAX_CONTENT_LENGTH: 134217728
+2026-01-18 01:45:08,757 INFO     17 MAX_FILE_COUNT_PER_USER: 0
+2026-01-18 01:45:16,799 INFO     17 No need to init message_id sequence, current max id is 1.
+2026-01-18 01:45:16,804 INFO     17 No memory found, no need to init memory size.
+2026-01-18 01:45:16,806 INFO     17 init web data success:7.517308950424194
+2026-01-18 01:45:16,808 INFO     17 Recursively importing plugins from path `/ragflow/plugin/embedded_plugins`
+2026-01-18 01:45:16,811 INFO     17 Loaded llm_tools plugin BadCalculatorPlugin version 1.0.0
+2026-01-18 01:45:16,814 INFO     17 RAGFlow HTTP server start...
+2026-01-18 01:45:17,180 INFO     17 Running on http://0.0.0.0:9380 (CTRL + C to quit)
+2026-01-18 01:45:17,814 INFO     17 Starting update_progress thread (delayed)
+2026-01-18 01:45:17,815 INFO     17 update_progress lock_value: fcdaef81-3bff-44c4-8453-e2a741ba111b
