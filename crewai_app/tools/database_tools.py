@@ -80,7 +80,7 @@ def buscar_dados_cliente(cpf_cnpj: str) -> dict:
 # =============================================================================
 # TOOL 2: Validar CPF/CNPJ
 # =============================================================================
-@tool("validar_cpf_cnpj")
+# @tool("validar_cpf_cnpj")
 def validar_cpf_cnpj(cpf_cnpj: str) -> dict:
     """
     Valida o formato e dígitos verificadores de um CPF ou CNPJ.
@@ -172,6 +172,7 @@ def consultar_historico_credito(cliente_id: int) -> dict:
         Dicionário com o histórico de crédito do cliente
     """
     conn = get_db_connection()
+    print("Conexão:"+conn)
     if not conn:
         # Retorna dados simulados
         return {
@@ -190,7 +191,7 @@ def consultar_historico_credito(cliente_id: int) -> dict:
         resultado = cursor.fetchone()
         cursor.close()
         conn.close()
-        
+        print("resultado:" + resultado)
         if resultado:
             return {
                 "cliente_id": cliente_id,

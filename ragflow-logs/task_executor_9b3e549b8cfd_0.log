@@ -206,3 +206,365 @@
 2026-01-18 02:45:10,422 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:45:10.421+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
 2026-01-18 02:45:39,436 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:45:39.435+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
 2026-01-18 02:46:08,454 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:46:08.453+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:46:37,473 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:46:37.473+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:47:06,448 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:47:06.447+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:47:35,465 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:47:35.464+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:48:04,475 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:48:04.474+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:48:33,488 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:48:33.487+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:49:02,500 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:49:02.499+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:49:31,465 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:49:31.464+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:50:00,477 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:50:00.476+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:50:29,484 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:50:29.483+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:50:58,493 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:50:58.492+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:51:27,499 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:51:27.498+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:51:56,458 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:51:56.457+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:52:25,467 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:52:25.465+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:52:54,473 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:52:54.472+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:53:23,460 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:53:23.458+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:53:52,459 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:53:52.458+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:54:21,433 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:54:21.432+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:54:50,433 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:54:50.432+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:55:19,453 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:55:19.452+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:55:48,443 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:55:48.442+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:56:17,446 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:56:17.445+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:56:46,430 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:56:46.429+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:57:15,411 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:57:15.410+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:57:44,429 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:57:44.428+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:58:13,423 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:58:13.422+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:58:42,412 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:58:42.411+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:59:11,402 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:59:11.400+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 02:59:40,379 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T02:59:40.378+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:00:09,393 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:00:09.392+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:00:38,380 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:00:38.379+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:01:07,376 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:01:07.375+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:01:36,374 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:01:36.373+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:02:05,368 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:02:05.367+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:02:34,365 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:02:34.362+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:03:03,355 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:03:03.354+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:03:32,336 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:03:32.335+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:04:01,337 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:04:01.336+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:04:30,327 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:04:30.326+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:04:59,317 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:04:59.316+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:05:28,294 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:05:28.294+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:05:57,274 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:05:57.273+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:06:26,269 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:06:26.268+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:06:55,259 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:06:55.258+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:07:24,244 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:07:24.242+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:07:53,214 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:07:53.214+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:08:22,188 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:08:22.187+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:08:51,187 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:08:51.187+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:09:20,157 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:09:20.156+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:09:49,143 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:09:49.142+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:10:18,107 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:10:18.106+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:10:47,087 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:10:47.087+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:11:16,075 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:11:16.074+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:11:45,039 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:11:45.038+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:12:14,025 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:12:14.024+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:12:42,990 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:12:42.989+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:13:11,973 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:13:11.972+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:13:40,959 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:13:40.958+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:14:09,923 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:14:09.922+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:14:38,908 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:14:38.907+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:15:07,863 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:15:07.862+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:15:36,846 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:15:36.845+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:16:05,825 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:16:05.824+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:16:34,800 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:16:34.799+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:17:03,832 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:17:03.831+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:17:32,798 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:17:32.797+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:18:01,785 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:18:01.784+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:18:30,763 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:18:30.762+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:18:59,722 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:18:59.721+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:19:28,711 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:19:28.711+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:19:57,667 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:19:57.666+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:20:26,641 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:20:26.640+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:20:55,616 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:20:55.615+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:21:24,575 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:21:24.574+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:21:53,550 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:21:53.549+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:22:22,503 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:22:22.502+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:22:51,472 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:22:51.471+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:23:20,441 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:23:20.440+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:23:49,408 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:23:49.407+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:24:18,368 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:24:18.367+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:24:47,326 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:24:47.325+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:25:16,292 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:25:16.291+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:25:45,266 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:25:45.265+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:26:14,219 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:26:14.218+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:26:43,196 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:26:43.196+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:27:12,141 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:27:12.141+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:27:41,103 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:27:41.102+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:28:10,069 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:28:10.068+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:28:39,021 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:28:39.020+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:29:07,983 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:29:07.983+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:29:36,941 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:29:36.940+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:30:06,022 INFO     31 task_executor_9b3e549b8cfd_0 reported heartbeat: {"ip_address": "172.20.0.8", "pid": 31, "name": "task_executor_9b3e549b8cfd_0", "now": "2026-01-18T03:30:06.021+08:00", "boot_at": "2026-01-18T01:45:05.061+08:00", "pending": 0, "lag": 0, "done": 0, "failed": 0, "current": {}}
+2026-01-18 03:30:30,831 ERROR    31 RedisDB.queue_consumer rag_flow_svr_queue_1 got exception: Error 111 connecting to redis:6379. Connection refused.
+Traceback (most recent call last):
+  File "/ragflow/rag/svr/task_executor.py", line 176, in collect
+    redis_msg = next(UNACKED_ITERATOR)
+                ^^^^^^^^^^^^^^^^^^^^^^
+StopIteration
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 1116, in get_connection
+    if connection.can_read() and connection.client_cache is None:
+       ^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 524, in can_read
+    return self._parser.can_read(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/_parsers/base.py", line 128, in can_read
+    return self._buffer and self._buffer.can_read(timeout)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/_parsers/socket.py", line 95, in can_read
+    return bool(self.unread_bytes()) or self._read_from_socket(
+                                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/_parsers/socket.py", line 68, in _read_from_socket
+    raise ConnectionError(SERVER_CLOSED_CONNECTION_ERROR)
+valkey.exceptions.ConnectionError: Connection closed by server.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 302, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/retry.py", line 62, in call_with_retry
+    return do()
+           ^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 303, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 728, in _connect
+    raise err
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 716, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/ragflow/rag/utils/redis_conn.py", line 358, in queue_consumer
+    group_info = self.REDIS.xinfo_groups(queue_name)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/commands/core.py", line 3810, in xinfo_groups
+    return self.execute_command("XINFO GROUPS", name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/client.py", line 564, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 1120, in get_connection
+    connection.connect()
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 308, in connect
+    raise ConnectionError(self._error_message(e))
+valkey.exceptions.ConnectionError: Error 111 connecting to redis:6379. Connection refused.
+2026-01-18 03:30:30,868 ERROR    31 RedisDB.queue_consumer rag_flow_svr_queue_1 got exception: Error 111 connecting to redis:6379. Connection refused.
+Traceback (most recent call last):
+  File "/ragflow/rag/svr/task_executor.py", line 176, in collect
+    redis_msg = next(UNACKED_ITERATOR)
+                ^^^^^^^^^^^^^^^^^^^^^^
+StopIteration
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 302, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/retry.py", line 62, in call_with_retry
+    return do()
+           ^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 303, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 728, in _connect
+    raise err
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 716, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/ragflow/rag/utils/redis_conn.py", line 358, in queue_consumer
+    group_info = self.REDIS.xinfo_groups(queue_name)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/commands/core.py", line 3810, in xinfo_groups
+    return self.execute_command("XINFO GROUPS", name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/client.py", line 564, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 1107, in get_connection
+    connection.connect()
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 308, in connect
+    raise ConnectionError(self._error_message(e))
+valkey.exceptions.ConnectionError: Error 111 connecting to redis:6379. Connection refused.
+2026-01-18 03:30:30,871 ERROR    31 RedisDB.queue_consumer rag_flow_svr_queue_1 got exception: Error 111 connecting to redis:6379. Connection refused.
+Traceback (most recent call last):
+  File "/ragflow/rag/svr/task_executor.py", line 176, in collect
+    redis_msg = next(UNACKED_ITERATOR)
+                ^^^^^^^^^^^^^^^^^^^^^^
+StopIteration
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 302, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/retry.py", line 62, in call_with_retry
+    return do()
+           ^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 303, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 728, in _connect
+    raise err
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 716, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/ragflow/rag/utils/redis_conn.py", line 358, in queue_consumer
+    group_info = self.REDIS.xinfo_groups(queue_name)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/commands/core.py", line 3810, in xinfo_groups
+    return self.execute_command("XINFO GROUPS", name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/client.py", line 564, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 1107, in get_connection
+    connection.connect()
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 308, in connect
+    raise ConnectionError(self._error_message(e))
+valkey.exceptions.ConnectionError: Error 111 connecting to redis:6379. Connection refused.
+2026-01-18 03:30:30,874 ERROR    31 RedisDB.queue_consumer rag_flow_svr_queue got exception: Error 111 connecting to redis:6379. Connection refused.
+Traceback (most recent call last):
+  File "/ragflow/rag/svr/task_executor.py", line 176, in collect
+    redis_msg = next(UNACKED_ITERATOR)
+                ^^^^^^^^^^^^^^^^^^^^^^
+StopIteration
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 302, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/retry.py", line 62, in call_with_retry
+    return do()
+           ^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 303, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 728, in _connect
+    raise err
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 716, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/ragflow/rag/utils/redis_conn.py", line 358, in queue_consumer
+    group_info = self.REDIS.xinfo_groups(queue_name)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/commands/core.py", line 3810, in xinfo_groups
+    return self.execute_command("XINFO GROUPS", name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/client.py", line 564, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 1107, in get_connection
+    connection.connect()
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 308, in connect
+    raise ConnectionError(self._error_message(e))
+valkey.exceptions.ConnectionError: Error 111 connecting to redis:6379. Connection refused.
+2026-01-18 03:30:30,877 ERROR    31 RedisDB.queue_consumer rag_flow_svr_queue got exception: Error 111 connecting to redis:6379. Connection refused.
+Traceback (most recent call last):
+  File "/ragflow/rag/svr/task_executor.py", line 176, in collect
+    redis_msg = next(UNACKED_ITERATOR)
+                ^^^^^^^^^^^^^^^^^^^^^^
+StopIteration
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 302, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/retry.py", line 62, in call_with_retry
+    return do()
+           ^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 303, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 728, in _connect
+    raise err
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 716, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/ragflow/rag/utils/redis_conn.py", line 358, in queue_consumer
+    group_info = self.REDIS.xinfo_groups(queue_name)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/commands/core.py", line 3810, in xinfo_groups
+    return self.execute_command("XINFO GROUPS", name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/client.py", line 564, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 1107, in get_connection
+    connection.connect()
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 308, in connect
+    raise ConnectionError(self._error_message(e))
+valkey.exceptions.ConnectionError: Error 111 connecting to redis:6379. Connection refused.
+2026-01-18 03:30:30,881 ERROR    31 RedisDB.queue_consumer rag_flow_svr_queue got exception: Error 111 connecting to redis:6379. Connection refused.
+Traceback (most recent call last):
+  File "/ragflow/rag/svr/task_executor.py", line 176, in collect
+    redis_msg = next(UNACKED_ITERATOR)
+                ^^^^^^^^^^^^^^^^^^^^^^
+StopIteration
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 302, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/retry.py", line 62, in call_with_retry
+    return do()
+           ^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 303, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 728, in _connect
+    raise err
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 716, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/ragflow/rag/utils/redis_conn.py", line 358, in queue_consumer
+    group_info = self.REDIS.xinfo_groups(queue_name)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/commands/core.py", line 3810, in xinfo_groups
+    return self.execute_command("XINFO GROUPS", name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/client.py", line 564, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 1107, in get_connection
+    connection.connect()
+  File "/ragflow/.venv/lib/python3.12/site-packages/valkey/connection.py", line 308, in connect
+    raise ConnectionError(self._error_message(e))
+valkey.exceptions.ConnectionError: Error 111 connecting to redis:6379. Connection refused.

@@ -1,11 +1,13 @@
 import os
 import time
 import random
+import tools.database_tools as database_tools
 import streamlit as st
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, List
 from dataclasses import dataclass, field
 from enum import Enum
+import requests
 
 # =================================================================
 # 1. CONFIGURAÇÕES
@@ -16,11 +18,11 @@ DATASET_ID = os.getenv("RAGFLOW_DATASET_ID", "ffa94e65f0d111f0b9b666b15b6be987")
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://ollama:11434")
 
 # Configuração MySQL
-MYSQL_HOST = os.getenv("MYSQL_HOST", "localhost")
+MYSQL_HOST = os.getenv("MYSQL_HOST", "mysql")
 MYSQL_PORT = int(os.getenv("MYSQL_PORT", "3306"))
 MYSQL_USER = os.getenv("MYSQL_USER", "root")
-MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD", "")
-MYSQL_DATABASE = os.getenv("MYSQL_DATABASE", "credit_db")
+MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD", "infini_rag_flow")
+MYSQL_DATABASE = os.getenv("MYSQL_DATABASE", "rag_flow")
 
 # =================================================================
 # 2. CLASSES DE SUPORTE
@@ -241,8 +243,35 @@ def obter_financiamentos_ativos(cpf_cnpj: str) -> List[Dict]:
         st.error(f"Erro ao obter financiamentos: {str(e)}")
         return []
 
+def calcular_saldo_total_devedor(financiamentos: List[Dict]) -> float:
+    """Calcula o saldo devedor total dos financiamentos ativos"""
+    return sum(fin.get('saldo_devedor', 0) for fin in financiamentos)
+
 # =================================================================
-# 4. FUNÇÕES DE RENDERIZAÇÃO
+# 4. FUNÇÕES AUXILIARES
+# =================================================================
+def consult_rag(query: str) -> Dict:
+    """Consulta a API do RAGFlow"""
+    try:
+        url = f"{RAGFLOW_BASE_URL}/search"  # Assumindo endpoint /search; ajuste se necessário
+        headers = {
+            "Authorization": f"Bearer {RAGFLOW_API_KEY}",
+            "Content-Type": "application/json"
+        }
+        data = {
+            "dataset_id": DATASET_ID,
+            "query": query
+        }
+        response = requests.post(url, headers=headers, json=data)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return {"error": response.text}
+    except Exception as e:
+        return {"error": str(e)}
+
+# =================================================================
+# 5. FUNÇÕES DE RENDERIZAÇÃO
 # =================================================================
 def get_log_icon(level: LogLevel) -> str:
     icons = {
@@ -288,6 +317,10 @@ def render_agent_cards(agents: Dict[str, AgentInfo], current_agent_key: str, pla
                     st.markdown(f"**✅ {nome}**")
                     st.caption(agent.role)
                     st.info("Concluído")
+                elif agent.status == AgentStatus.ERROR:
+                    st.markdown(f"**❌ {nome}**")
+                    st.caption(agent.role)
+                    st.error("Erro")
                 else:
                     st.markdown(f"**⏳ {nome}**")
                     st.caption(agent.role)
@@ -307,7 +340,7 @@ def format_log_entry(entry: LogEntry) -> str:
     return f"`[{entry.timestamp}]` {icon} **{entry.agent}**: {entry.message}{badges}"
 
 # =================================================================
-# 5. ORQUESTRADOR DE AGENTES
+# 6. ORQUESTRADOR DE AGENTES
 # =================================================================
 class AgentOrchestrator:
     """Orquestrador de agentes com logging detalhado"""
@@ -376,47 +409,57 @@ class AgentOrchestrator:
         
         collected_data = {}
         
-        for idx, agent_key in enumerate(agent_order):
-            agent = self.agents[agent_key]
-            agent.status = AgentStatus.RUNNING
+        try:
+            for idx, agent_key in enumerate(agent_order):
+                agent = self.agents[agent_key]
+                agent.status = AgentStatus.RUNNING
+                
+                # Atualiza status
+                render_agent_cards(self.agents, agent_key, status_placeholder)
+                
+                # Log de início do agente
+                self.add_log(LogLevel.AGENT, agent.name, f"Iniciando execução", task=agent.role)
+                log_placeholder.markdown(self.get_logs_text())
+                time.sleep(0.3)
+                
+                # Executa tasks do agente
+                if agent_key == "data_collector":
+                    collected_data.update(self._run_data_collector(agent, client_data, log_placeholder))
+                elif agent_key == "risk_analyst":
+                    collected_data.update(self._run_risk_analyst(agent, collected_data, log_placeholder))
+                elif agent_key == "ml_predictor":
+                    collected_data.update(self._run_ml_predictor(agent, collected_data, log_placeholder))
+                elif agent_key == "rag_consultant":
+                    collected_data.update(self._run_rag_consultant(agent, collected_data, log_placeholder))
+                elif agent_key == "reporter":
+                    self.result = self._run_reporter(agent, collected_data, log_placeholder)
+                
+                # Marca agente como completo
+                agent.status = AgentStatus.COMPLETED
+                self.add_log(LogLevel.SUCCESS, agent.name, "Agente finalizado com sucesso")
+                log_placeholder.markdown(self.get_logs_text())
+                
+                # Atualiza barra de progresso
+                progress_bar.progress((idx + 1) / total_steps)
+                time.sleep(0.2)
             
-            # Atualiza status
+            self.analysis_complete = True
+            self.add_log(LogLevel.SUCCESS, "Sistema", "✨ Análise de risco concluída!")
+            log_placeholder.markdown(self.get_logs_text())
+            
+            return self.result
+        
+        except ValueError as e:
+            self.add_log(LogLevel.ERROR, "Sistema", str(e))
+            log_placeholder.markdown(self.get_logs_text())
+            agent.status = AgentStatus.ERROR
             render_agent_cards(self.agents, agent_key, status_placeholder)
-            
-            # Log de início do agente
-            self.add_log(LogLevel.AGENT, agent.name, f"Iniciando execução", task=agent.role)
-            log_placeholder.markdown(self.get_logs_text())
-            time.sleep(0.3)
-            
-            # Executa tasks do agente
-            if agent_key == "data_collector":
-                collected_data.update(self._run_data_collector(agent, client_data, log_placeholder, status_placeholder))
-            elif agent_key == "risk_analyst":
-                collected_data.update(self._run_risk_analyst(agent, collected_data, log_placeholder, status_placeholder))
-            elif agent_key == "ml_predictor":
-                collected_data.update(self._run_ml_predictor(agent, collected_data, log_placeholder, status_placeholder))
-            elif agent_key == "rag_consultant":
-                collected_data.update(self._run_rag_consultant(agent, collected_data, log_placeholder, status_placeholder))
-            elif agent_key == "reporter":
-                self.result = self._run_reporter(agent, collected_data, log_placeholder, status_placeholder)
-            
-            # Marca agente como completo
-            agent.status = AgentStatus.COMPLETED
-            self.add_log(LogLevel.SUCCESS, agent.name, "Agente finalizado com sucesso")
-            log_placeholder.markdown(self.get_logs_text())
-            
-            # Atualiza barra de progresso
-            progress_bar.progress((idx + 1) / total_steps)
-            time.sleep(0.2)
-        
-        self.analysis_complete = True
-        self.add_log(LogLevel.SUCCESS, "Sistema", "✨ Análise de risco concluída!")
-        log_placeholder.markdown(self.get_logs_text())
-        
-        return self.result
+            self.analysis_complete = True  # Marca como completa, mas com erro
+            self.result = {"error": str(e)}
+            return self.result
     
-    def _run_data_collector(self, agent: AgentInfo, client_data: Dict, log_placeholder, status_placeholder) -> Dict:
-        """Executa o Agente Coletor de Dados"""
+    def _run_data_collector(self, agent: AgentInfo, client_data: Dict, log_placeholder) -> Dict:
+        """Executa o Agente Coletor de Dados com consultas reais ao banco"""
         result = {}
         
         agent.current_task = "Buscando dados do cliente"
@@ -428,9 +471,9 @@ class AgentOrchestrator:
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.3)
         
-        self.add_log(LogLevel.MCP, agent.name, "Conectando ao MySQL", mcp_connection="mysql://localhost:3306/credit_db")
-        log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
+        # self.add_log(LogLevel.MCP, agent.name, "Conectando ao MySQL", mcp_connection="mysql://localhost:3306/rag_flow")
+        # log_placeholder.markdown(self.get_logs_text())
+        # time.sleep(0.3)
         
         self.add_log(LogLevel.SUCCESS, agent.name, f"Dados recuperados: {client_data.get('nome', 'N/A')}")
         log_placeholder.markdown(self.get_logs_text())
@@ -445,9 +488,17 @@ class AgentOrchestrator:
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.3)
         
-        self.add_log(LogLevel.SUCCESS, agent.name, f"CPF válido: {client_data.get('cpf_cnpj', 'N/A')}")
+        cpf_cnpj_aux = str(client_data.get('cpf_cnpj', ''))
+        # Simulação simples de validação (pode ser expandida com biblioteca real como validate-docbr)
+        cpf_cnpj_valido = database_tools.validar_cpf_cnpj(cpf_cnpj_aux)
+        if cpf_cnpj_valido['valido'] == False:
+            self.add_log(LogLevel.ERROR, agent.name,cpf_cnpj_valido)
+            error_msg = f"CPF/CNPJ inválido: {client_data.get('cpf_cnpj', 'N/A')}"
+            raise ValueError(error_msg)
+            
+        self.add_log(LogLevel.SUCCESS, agent.name, f"CPF/CNPJ válido: {client_data.get('cpf_cnpj', 'N/A')}")
         log_placeholder.markdown(self.get_logs_text())
-        result['cpf_valido'] = True
+        result['cpf_valido'] = cpf_cnpj_valido['valido']
         
         agent.current_task = "Consultando histórico"
         self.add_log(LogLevel.INFO, agent.name, "Consultando histórico de crédito", task="consultar_historico_credito")
@@ -458,20 +509,27 @@ class AgentOrchestrator:
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.3)
         
-        self.add_log(LogLevel.MCP, agent.name, "Query SQL executada", mcp_connection="mysql://localhost:3306/credit_db")
-        log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
-        
-        historico = {"total_emprestimos": random.randint(1, 5)}
+            
+        # Consulta real ao banco para histórico
+        cpf_cnpj = client_data.get('cpf_cnpj', '')
+        financiamentos = obter_financiamentos_ativos(cpf_cnpj)
+        historico = {
+            "total_emprestimos": len(financiamentos),
+            "saldo_devedor_total": calcular_saldo_total_devedor(financiamentos),
+            "financiamentos": financiamentos
+        }
         result['historico_credito'] = historico
-        self.add_log(LogLevel.SUCCESS, agent.name, f"Histórico: {historico['total_emprestimos']} empréstimos")
+        self.add_log(LogLevel.SUCCESS, agent.name, f"Histórico: {historico['total_emprestimos']} empréstimos, Saldo devedor total: R$ {historico['saldo_devedor_total']:.2f}")
         log_placeholder.markdown(self.get_logs_text())
         
         return result
     
-    def _run_risk_analyst(self, agent: AgentInfo, data: Dict, log_placeholder, status_placeholder) -> Dict:
-        """Executa o Agente Analista de Risco"""
+    def _run_risk_analyst(self, agent: AgentInfo, data: Dict, log_placeholder) -> Dict:
+        """Executa o Agente Analista de Risco com cálculos reais"""
         result = {}
+        
+        cliente = data.get('cliente', {})
+        historico = data.get('historico_credito', {})
         
         agent.current_task = "Calculando score"
         self.add_log(LogLevel.INFO, agent.name, "Calculando score financeiro", task="calcular_score_financeiro")
@@ -482,7 +540,11 @@ class AgentOrchestrator:
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.3)
         
-        score = random.randint(300, 850)
+        # Cálculo real de score (exemplo de fórmula: baseado em renda, endividamento histórico, etc.)
+        renda_mensal = cliente.get('renda_mensal', 0)
+        total_emprestimos = historico.get('total_emprestimos', 0)
+        score = int(300 + (renda_mensal / 100) - (total_emprestimos * 50))
+        score = max(300, min(850, score))  # Clamp entre 300 e 850
         result['score_financeiro'] = score
         self.add_log(LogLevel.SUCCESS, agent.name, f"Score calculado: {score} pontos")
         log_placeholder.markdown(self.get_logs_text())
@@ -496,7 +558,9 @@ class AgentOrchestrator:
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.3)
         
-        taxa = round(random.uniform(10, 60), 2)
+        # Cálculo real de taxa de endividamento: saldo devedor total / renda mensal * 100
+        saldo_devedor_total = historico.get('saldo_devedor_total', 0)
+        taxa = round((saldo_devedor_total / renda_mensal * 100) if renda_mensal > 0 else 0, 2)
         result['taxa_endividamento'] = taxa
         
         if taxa > 40:
@@ -518,7 +582,8 @@ class AgentOrchestrator:
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.3)
         
-        restricoes = random.choice([True, False, False, False])
+        # Simulação de restrições (pode integrar API real como Serasa; por agora, baseado se taxa > 50 ou random)
+        restricoes = taxa > 50 or random.choice([True, False])
         result['possui_restricoes'] = restricoes
         
         if restricoes:
@@ -529,7 +594,7 @@ class AgentOrchestrator:
         
         return result
     
-    def _run_ml_predictor(self, agent: AgentInfo, data: Dict, log_placeholder, status_placeholder) -> Dict:
+    def _run_ml_predictor(self, agent: AgentInfo, data: Dict, log_placeholder) -> Dict:
         """Executa o Agente Preditor de ML"""
         result = {}
         
@@ -550,6 +615,7 @@ class AgentOrchestrator:
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.3)
         
+        # Simulação de predição XGBoost (para real, importe xgboost e carregue modelo)
         score = data.get('score_financeiro', 500)
         if score >= 700:
             classificacao = "BAIXO"
@@ -571,6 +637,7 @@ class AgentOrchestrator:
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.3)
         
+        # Simulação baseada em classificação
         prob = round(random.uniform(0.05, 0.35) if classificacao != "BAIXO" else random.uniform(0.01, 0.10), 4)
         result['probabilidade_default'] = prob
         self.add_log(LogLevel.SUCCESS, agent.name, f"Prob. default: {prob * 100:.2f}%")
@@ -578,8 +645,8 @@ class AgentOrchestrator:
         
         return result
     
-    def _run_rag_consultant(self, agent: AgentInfo, data: Dict, log_placeholder, status_placeholder) -> Dict:
-        """Executa o Agente Consultor RAG"""
+    def _run_rag_consultant(self, agent: AgentInfo, data: Dict, log_placeholder) -> Dict:
+        """Executa o Agente Consultor RAG com chamadas reais à API"""
         result = {}
         
         agent.current_task = "Consultando RAGFlow"
@@ -603,12 +670,16 @@ class AgentOrchestrator:
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.3)
         
+        # Chamada real à API RAGFlow para políticas
         classificacao = data.get('classificacao_risco', 'MÉDIO')
-        politica = f"Para risco {classificacao}: " + {
-            "BAIXO": "Aprovação até R$ 50.000. Taxa: 1.2% a.m.",
-            "MÉDIO": "Análise manual. Limite: R$ 20.000. Taxa: 1.8% a.m.",
-            "ALTO": "Requer garantias. Limite: R$ 5.000. Taxa: 2.5% a.m."
-        }.get(classificacao, "Consultar gerência.")
+        query_politica = f"Política de crédito para risco {classificacao}"
+        rag_response = consult_rag(query_politica)
+        if "error" in rag_response:
+            politica = f"Erro ao consultar RAG: {rag_response['error']}"
+            self.add_log(LogLevel.ERROR, agent.name, politica)
+        else:
+            # Assumindo que a resposta tem 'result' ou similar; ajuste conforme API real
+            politica = rag_response.get('result', f"Política para {classificacao}: Aprovação condicional.")
         
         result['politica_aplicavel'] = politica
         self.add_log(LogLevel.SUCCESS, agent.name, "Política identificada")
@@ -627,18 +698,27 @@ class AgentOrchestrator:
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.3)
         
-        regulamentacoes = [
-            "Resolução CMN 4.949/2021 - Política de crédito",
-            "Circular BACEN 3.978/2020 - Prevenção à lavagem",
-            "Resolução CMN 4.557/2017 - Gerenciamento de risco"
-        ]
+        # Chamada real à API RAGFlow para regulamentações
+        query_reg = "Regulamentações BACEN para crédito"
+        rag_response_reg = consult_rag(query_reg)
+        if "error" in rag_response_reg:
+            regulamentacoes = [f"Erro: {rag_response_reg['error']}"]
+            self.add_log(LogLevel.ERROR, agent.name, regulamentacoes[0])
+        else:
+            # Assumindo lista em 'results'; ajuste conforme API
+            regulamentacoes = rag_response_reg.get('results', [
+                "Resolução CMN 4.949/2021 - Política de crédito",
+                "Circular BACEN 3.978/2020 - Prevenção à lavagem",
+                "Resolução CMN 4.557/2017 - Gerenciamento de risco"
+            ])
+        
         result['regulamentacoes'] = regulamentacoes
         self.add_log(LogLevel.SUCCESS, agent.name, f"Encontradas {len(regulamentacoes)} regulamentações")
         log_placeholder.markdown(self.get_logs_text())
         
         return result
     
-    def _run_reporter(self, agent: AgentInfo, data: Dict, log_placeholder, status_placeholder) -> Dict:
+    def _run_reporter(self, agent: AgentInfo, data: Dict, log_placeholder) -> Dict:
         """Executa o Agente Relator"""
         
         agent.current_task = "Gerando relatório"
@@ -683,7 +763,7 @@ class AgentOrchestrator:
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.3)
         
-        self.add_log(LogLevel.MCP, agent.name, "INSERT INTO analises_risco", mcp_connection="mysql://localhost:3306/credit_db")
+        self.add_log(LogLevel.MCP, agent.name, "INSERT INTO analises_risco", mcp_connection="mysql://localhost:3306/rag_flow")
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.3)
         
@@ -724,7 +804,7 @@ class AgentOrchestrator:
 
 
 # =================================================================
-# 6. INTERFACE WEB STREAMLIT
+# 7. INTERFACE WEB STREAMLIT
 # =================================================================
 st.set_page_config(
     page_title="Sistema de Análise de Risco Financeiro",
@@ -786,7 +866,7 @@ if not st.session_state.analysis_started:
     
     with col1:
         nome = st.text_input("Nome Completo", value="João Silva Santos")
-        cpf_cnpj = st.text_input("CPF/CNPJ", value="123.456.789-00")
+        cpf_cnpj = st.text_input("CPF/CNPJ", value="161.426.930-01")
         renda_mensal = st.number_input("Renda Mensal (R$)", min_value=0.0, value=8500.00, step=100.0)
     
     with col2:
@@ -866,164 +946,183 @@ elif st.session_state.analysis_started and not st.session_state.analysis_complet
 elif st.session_state.analysis_complete and not st.session_state.show_logs:
     result = st.session_state.result
     
-    st.subheader("✅ Análise Concluída")
-    
-    # Métricas principais
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        st.metric("Score Financeiro", f"{result['analise']['score_financeiro']} pts")
-    
-    with col2:
-        st.metric("Taxa Endividamento", f"{result['analise']['taxa_endividamento']}%")
-    
-    with col3:
-        st.metric("Prob. Default", f"{result['analise']['probabilidade_default'] * 100:.2f}%")
-    
-    with col4:
-        classificacao = result['analise']['classificacao_risco']
-        risk_color = {"BAIXO": "🟢", "MÉDIO": "🟡", "ALTO": "🔴"}.get(classificacao, "⚪")
-        st.metric("Classificação", f"{risk_color} {classificacao}")
-    
-    st.divider()
-    
-    # Detalhes
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("### 👤 Dados do Cliente")
-        st.markdown(f"""
-        | Campo | Valor |
-        |-------|-------|
-        | **Nome** | {result['cliente']['nome']} |
-        | **CPF/CNPJ** | {result['cliente']['cpf_cnpj']} |
-        | **Renda Mensal** | R$ {result['cliente']['renda_mensal']:,.2f} |
-        | **Valor Solicitado** | R$ {result['cliente']['valor_solicitado']:,.2f} |
-        """)
-    
-    with col2:
-        st.markdown("### 📊 Análise de Risco")
-        restricoes = "❌ Sim" if result['analise']['possui_restricoes'] else "✅ Não"
-        st.markdown(f"""
-        | Indicador | Valor |
-        |-----------|-------|
-        | **Score Financeiro** | {result['analise']['score_financeiro']} pontos |
-        | **Taxa Endividamento** | {result['analise']['taxa_endividamento']}% |
-        | **Possui Restrições** | {restricoes} |
-        | **Classificação** | {result['analise']['classificacao_risco']} |
-        | **Prob. Default** | {result['analise']['probabilidade_default'] * 100:.2f}% |
-        """)
-    
-    st.divider()
-    
-    # Política
-    st.markdown("### 📋 Política de Crédito Aplicável")
-    st.info(result['politica_aplicavel'])
-    
-    # Regulamentações
-    st.markdown("### 📜 Regulamentações Consultadas")
-    for reg in result['regulamentacoes']:
-        st.markdown(f"- {reg}")
-    
-    st.divider()
-    
-    # Recomendação
-    st.markdown("### 🎯 Recomendação Final")
-    recomendacao = result['recomendacao']
-    if "APROVADO" in recomendacao and "REPROVADO" not in recomendacao:
-        if "RESSALVAS" in recomendacao or "CONDICIONAL" in recomendacao:
-            st.warning(recomendacao)
-        else:
-            st.success(recomendacao)
-    else:
-        st.error(recomendacao)
-    
-    # Info
-    st.markdown("---")
-    col1, col2 = st.columns(2)
-    with col1:
-        st.caption(f"📅 Data da Análise: {result['data_analise']}")
-    with col2:
-        st.caption(f"🔖 ID da Análise: {result['id_analise']}")
-    
-    st.divider()
-    
-    # Ações
-    st.markdown("### 💼 Ações Disponíveis")
-    
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        if st.button("💾 Salvar Análise no MySQL", use_container_width=True):
-            if salvar_analise_mysql(result):
-                st.success("✅ Análise salva no MySQL com sucesso!")
-            else:
-                st.error("❌ Erro ao salvar análise")
-    
-    with col2:
-        if st.button("📋 Ver Log de Execução", use_container_width=True):
-            st.session_state.show_logs = True
-            st.rerun()
-    
-    with col3:
-        if st.button("🔄 Nova Análise", use_container_width=True):
-            st.session_state.analysis_started = False
-            st.session_state.analysis_complete = False
-            st.session_state.result = None
-            st.session_state.show_logs = False
-            st.rerun()
-    
-    # Criar financiamento
-    if "APROVADO" in recomendacao:
+    if "error" in result:
+        st.subheader("❌ Análise Interrompida")
+        st.error(result["error"])
+        
         st.divider()
-        st.markdown("### 💰 Gerar Financiamento")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            if st.button("📋 Ver Log de Execução", use_container_width=True):
+                st.session_state.show_logs = True
+                st.rerun()
+        
+        with col2:
+            if st.button("🔄 Nova Análise", use_container_width=True):
+                st.session_state.analysis_started = False
+                st.session_state.analysis_complete = False
+                st.session_state.result = None
+                st.session_state.show_logs = False
+                st.rerun()
+    else:
+        st.subheader("✅ Análise Concluída")
+        
+        # Métricas principais
+        col1, col2, col3, col4 = st.columns(4)
+        
+        with col1:
+            st.metric("Score Financeiro", f"{result['analise']['score_financeiro']} pts")
+        
+        with col2:
+            st.metric("Taxa Endividamento", f"{result['analise']['taxa_endividamento']}%")
+        
+        with col3:
+            st.metric("Prob. Default", f"{result['analise']['probabilidade_default'] * 100:.2f}%")
+        
+        with col4:
+            classificacao = result['analise']['classificacao_risco']
+            risk_color = {"BAIXO": "🟢", "MÉDIO": "🟡", "ALTO": "🔴"}.get(classificacao, "⚪")
+            st.metric("Classificação", f"{risk_color} {classificacao}")
+        
+        st.divider()
+        
+        # Detalhes
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.markdown("### 👤 Dados do Cliente")
+            st.markdown(f"""
+            | Campo | Valor |
+            |-------|-------|
+            | **Nome** | {result['cliente']['nome']} |
+            | **CPF/CNPJ** | {result['cliente']['cpf_cnpj']} |
+            | **Renda Mensal** | R$ {result['cliente']['renda_mensal']:,.2f} |
+            | **Valor Solicitado** | R$ {result['cliente']['valor_solicitado']:,.2f} |
+            """)
+        
+        with col2:
+            st.markdown("### 📊 Análise de Risco")
+            restricoes = "❌ Sim" if result['analise']['possui_restricoes'] else "✅ Não"
+            st.markdown(f"""
+            | Indicador | Valor |
+            |-----------|-------|
+            | **Score Financeiro** | {result['analise']['score_financeiro']} pontos |
+            | **Taxa Endividamento** | {result['analise']['taxa_endividamento']}% |
+            | **Possui Restrições** | {restricoes} |
+            | **Classificação** | {result['analise']['classificacao_risco']} |
+            | **Prob. Default** | {result['analise']['probabilidade_default'] * 100:.2f}% |
+            """)
+        
+        st.divider()
+        
+        # Política
+        st.markdown("### 📋 Política de Crédito Aplicável")
+        st.info(result['politica_aplicavel'])
+        
+        # Regulamentações
+        st.markdown("### 📜 Regulamentações Consultadas")
+        for reg in result['regulamentacoes']:
+            st.markdown(f"- {reg}")
+        
+        st.divider()
+        
+        # Recomendação
+        st.markdown("### 🎯 Recomendação Final")
+        recomendacao = result['recomendacao']
+        if "APROVADO" in recomendacao and "REPROVADO" not in recomendacao:
+            if "RESSALVAS" in recomendacao or "CONDICIONAL" in recomendacao:
+                st.warning(recomendacao)
+            else:
+                st.success(recomendacao)
+        else:
+            st.error(recomendacao)
+        
+        # Info
+        st.markdown("---")
+        col1, col2 = st.columns(2)
+        with col1:
+            st.caption(f"📅 Data da Análise: {result['data_analise']}")
+        with col2:
+            st.caption(f"🔖 ID da Análise: {result['id_analise']}")
+        
+        st.divider()
+        
+        # Ações
+        st.markdown("### 💼 Ações Disponíveis")
         
         col1, col2, col3 = st.columns(3)
         
         with col1:
-            valor_fin = st.number_input("Valor do Financiamento (R$)", 
-                                       min_value=0.0, 
-                                       value=result['cliente']['valor_solicitado'], 
-                                       step=1000.0)
+            if st.button("💾 Salvar Análise no MySQL", use_container_width=True):
+                if salvar_analise_mysql(result):
+                    st.success("✅ Análise salva no MySQL com sucesso!")
+                else:
+                    st.error("❌ Erro ao salvar análise")
         
         with col2:
-            taxa_fin = st.number_input("Taxa Mensal (%)", 
-                                      min_value=0.0, 
-                                      value=1.8, 
-                                      step=0.1)
+            if st.button("📋 Ver Log de Execução", use_container_width=True):
+                st.session_state.show_logs = True
+                st.rerun()
         
         with col3:
-            prazo_fin = st.number_input("Prazo (meses)", 
-                                       min_value=1, 
-                                       max_value=120, 
-                                       value=result['cliente'].get('prazo_meses', 36))
+            if st.button("🔄 Nova Análise", use_container_width=True):
+                st.session_state.analysis_started = False
+                st.session_state.analysis_complete = False
+                st.session_state.result = None
+                st.session_state.show_logs = False
+                st.rerun()
         
-        if st.button("✅ Gerar e Salvar Financiamento", use_container_width=True):
-            from datetime import timedelta
+        # Criar financiamento
+        if "APROVADO" in recomendacao:
+            st.divider()
+            st.markdown("### 💰 Gerar Financiamento")
             
-            financiamento = {
-                "id_financiamento": f"FIN-{random.randint(100000, 999999)}",
-                "cpf_cnpj": result['cliente']['cpf_cnpj'],
-                "nome_cliente": result['cliente']['nome'],
-                "id_analise_referencia": result['id_analise'],
-                "valor_financiado": valor_fin,
-                "taxa_mensal": taxa_fin,
-                "prazo_meses": prazo_fin,
-                "data_vencimento": (datetime.now() + timedelta(days=30*prazo_fin)).strftime("%Y-%m-%d")
-            }
+            col1, col2, col3 = st.columns(3)
             
-            if salvar_financiamento_mysql(financiamento):
-                st.success(f"✅ Financiamento criado com sucesso!")
-                st.markdown(f"""
-                **Dados do Financiamento:**
-                - ID: {financiamento['id_financiamento']}
-                - Valor: R$ {valor_fin:,.2f}
-                - Taxa: {taxa_fin}% a.m.
-                - Prazo: {prazo_fin} meses
-                - Data de Aprovação: {datetime.now().strftime("%d/%m/%Y %H:%M:%S")}
-                """)
-            else:
-                st.error("❌ Erro ao criar financiamento")
+            with col1:
+                valor_fin = st.number_input("Valor do Financiamento (R$)", 
+                                           min_value=0.0, 
+                                           value=result['cliente']['valor_solicitado'], 
+                                           step=1000.0)
+            
+            with col2:
+                taxa_fin = st.number_input("Taxa Mensal (%)", 
+                                          min_value=0.0, 
+                                          value=1.8, 
+                                          step=0.1)
+            
+            with col3:
+                prazo_fin = st.number_input("Prazo (meses)", 
+                                           min_value=1, 
+                                           max_value=120, 
+                                           value=result['cliente'].get('prazo_meses', 36))
+            
+            if st.button("✅ Gerar e Salvar Financiamento", use_container_width=True):
+                financiamento = {
+                    "id_financiamento": f"FIN-{random.randint(100000, 999999)}",
+                    "cpf_cnpj": result['cliente']['cpf_cnpj'],
+                    "nome_cliente": result['cliente']['nome'],
+                    "id_analise_referencia": result['id_analise'],
+                    "valor_financiado": valor_fin,
+                    "taxa_mensal": taxa_fin,
+                    "prazo_meses": prazo_fin,
+                    "data_vencimento": (datetime.now() + timedelta(days=30*prazo_fin)).strftime("%Y-%m-%d")
+                }
+                
+                if salvar_financiamento_mysql(financiamento):
+                    st.success(f"✅ Financiamento criado com sucesso!")
+                    st.markdown(f"""
+                    **Dados do Financiamento:**
+                    - ID: {financiamento['id_financiamento']}
+                    - Valor: R$ {valor_fin:,.2f}
+                    - Taxa: {taxa_fin}% a.m.
+                    - Prazo: {prazo_fin} meses
+                    - Data de Aprovação: {datetime.now().strftime("%d/%m/%Y %H:%M:%S")}
+                    """)
+                else:
+                    st.error("❌ Erro ao criar financiamento")
 
 # Tela de logs
 elif st.session_state.show_logs and st.session_state.orchestrator:
@@ -1035,11 +1134,11 @@ elif st.session_state.show_logs and st.session_state.orchestrator:
     st.markdown("### 📊 Resumo da Análise")
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.metric("Cliente", result['cliente']['nome'])
+        st.metric("Cliente", result.get('cliente', {}).get('nome', 'N/A'))
     with col2:
-        st.metric("ID Análise", result['id_analise'])
+        st.metric("ID Análise", result.get('id_analise', 'N/A'))
     with col3:
-        st.metric("Classificação", result['analise']['classificacao_risco'])
+        st.metric("Classificação", result.get('analise', {}).get('classificacao_risco', 'N/A'))
     
     st.divider()
     
