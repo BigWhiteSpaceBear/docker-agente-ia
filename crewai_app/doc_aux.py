@@ -1,6 +1,7 @@
 import os
 import time
 import random
+import tools.database_tools as database_tools
 import streamlit as st
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, List
@@ -88,19 +89,6 @@ def criar_tabelas_mysql():
         
         cursor = conn.cursor()
         
-        # Tabela de clientes
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS clientes (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                cpf_cnpj VARCHAR(20) UNIQUE,
-                nome VARCHAR(255),
-                renda_mensal DECIMAL(12,2),
-                email VARCHAR(255),
-                telefone VARCHAR(20),
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        """)
-        
         # Tabela de análises
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS analises_risco (
@@ -116,8 +104,7 @@ def criar_tabelas_mysql():
                 probabilidade_default DECIMAL(5,4),
                 recomendacao VARCHAR(255),
                 data_analise DATETIME,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (cpf_cnpj) REFERENCES clientes(cpf_cnpj)
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         """)
         
@@ -137,7 +124,6 @@ def criar_tabelas_mysql():
                 data_vencimento DATETIME,
                 saldo_devedor DECIMAL(12,2),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (cpf_cnpj) REFERENCES clientes(cpf_cnpj),
                 FOREIGN KEY (id_analise_referencia) REFERENCES analises_risco(id_analise)
             )
         """)
@@ -148,89 +134,6 @@ def criar_tabelas_mysql():
         return True
     except Exception as e:
         st.error(f"Erro ao criar tabelas: {str(e)}")
-        return False
-
-def buscar_cliente(cpf_cnpj: str) -> Optional[Dict]:
-    """Busca dados do cliente na tabela clientes"""
-    try:
-        conn = get_mysql_connection()
-        if not conn:
-            return None
-        
-        cursor = conn.cursor(dictionary=True)
-        
-        query = """
-            SELECT * FROM clientes 
-            WHERE cpf_cnpj = %s
-        """
-        
-        cursor.execute(query, (cpf_cnpj,))
-        cliente = cursor.fetchone()
-        cursor.close()
-        conn.close()
-        return cliente
-    except Exception as e:
-        st.error(f"Erro ao buscar cliente: {str(e)}")
-        return None
-
-def inserir_cliente(client_data: Dict) -> bool:
-    """Insere um novo cliente na tabela clientes"""
-    try:
-        conn = get_mysql_connection()
-        if not conn:
-            return False
-        
-        cursor = conn.cursor()
-        
-        query = """
-            INSERT INTO clientes 
-            (cpf_cnpj, nome, renda_mensal)
-            VALUES (%s, %s, %s)
-        """
-        
-        values = (
-            client_data.get('cpf_cnpj'),
-            client_data.get('nome'),
-            client_data.get('renda_mensal')
-        )
-        
-        cursor.execute(query, values)
-        conn.commit()
-        cursor.close()
-        conn.close()
-        return True
-    except Exception as e:
-        st.error(f"Erro ao inserir cliente: {str(e)}")
-        return False
-
-def atualizar_cliente(client_data: Dict) -> bool:
-    """Atualiza dados do cliente na tabela clientes"""
-    try:
-        conn = get_mysql_connection()
-        if not conn:
-            return False
-        
-        cursor = conn.cursor()
-        
-        query = """
-            UPDATE clientes 
-            SET nome = %s, renda_mensal = %s
-            WHERE cpf_cnpj = %s
-        """
-        
-        values = (
-            client_data.get('nome'),
-            client_data.get('renda_mensal'),
-            client_data.get('cpf_cnpj')
-        )
-        
-        cursor.execute(query, values)
-        conn.commit()
-        cursor.close()
-        conn.close()
-        return True
-    except Exception as e:
-        st.error(f"Erro ao atualizar cliente: {str(e)}")
         return False
 
 def salvar_analise_mysql(result: Dict):
@@ -568,29 +471,9 @@ class AgentOrchestrator:
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.3)
         
-        self.add_log(LogLevel.MCP, agent.name, "Conectando ao MySQL", mcp_connection="mysql://localhost:3306/credit_db")
-        log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
-        
-        # Busca cliente na tabela clientes
-        cpf_cnpj = client_data.get('cpf_cnpj', '')
-        cliente_db = buscar_cliente(cpf_cnpj)
-        if cliente_db:
-            # Atualiza dados se necessário
-            if cliente_db['nome'] != client_data.get('nome') or cliente_db['renda_mensal'] != client_data.get('renda_mensal'):
-                atualizar_cliente(client_data)
-                self.add_log(LogLevel.INFO, agent.name, "Dados do cliente atualizados no banco")
-            else:
-                self.add_log(LogLevel.INFO, agent.name, "Dados do cliente recuperados do banco")
-            client_data['renda_mensal'] = cliente_db['renda_mensal']  # Usa renda do banco se diferente
-        else:
-            # Insere novo cliente
-            if inserir_cliente(client_data):
-                self.add_log(LogLevel.SUCCESS, agent.name, "Novo cliente inserido no banco")
-            else:
-                error_msg = "Erro ao inserir novo cliente no banco"
-                self.add_log(LogLevel.ERROR, agent.name, error_msg)
-                raise ValueError(error_msg)
+        # self.add_log(LogLevel.MCP, agent.name, "Conectando ao MySQL", mcp_connection="mysql://localhost:3306/rag_flow")
+        # log_placeholder.markdown(self.get_logs_text())
+        # time.sleep(0.3)
         
         self.add_log(LogLevel.SUCCESS, agent.name, f"Dados recuperados: {client_data.get('nome', 'N/A')}")
         log_placeholder.markdown(self.get_logs_text())
@@ -605,17 +488,17 @@ class AgentOrchestrator:
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.3)
         
-        # Validação básica de formato
-        cpf_cnpj_str = cpf_cnpj.replace('.', '').replace('-', '').replace('/', '')
-        if not cpf_cnpj_str.isdigit() or len(cpf_cnpj_str) not in [11, 14]:
-            error_msg = f"CPF/CNPJ inválido: {cpf_cnpj} (formato incorreto)"
-            self.add_log(LogLevel.ERROR, agent.name, error_msg)
-            log_placeholder.markdown(self.get_logs_text())
+        cpf_cnpj_aux = str(client_data.get('cpf_cnpj', ''))
+        # Simulação simples de validação (pode ser expandida com biblioteca real como validate-docbr)
+        cpf_cnpj_valido = database_tools.validar_cpf_cnpj(cpf_cnpj_aux)
+        if cpf_cnpj_valido['valido'] == False:
+            self.add_log(LogLevel.ERROR, agent.name,cpf_cnpj_valido)
+            error_msg = f"CPF/CNPJ inválido: {client_data.get('cpf_cnpj', 'N/A')}"
             raise ValueError(error_msg)
-        
-        self.add_log(LogLevel.SUCCESS, agent.name, f"CPF/CNPJ válido: {cpf_cnpj}")
+            
+        self.add_log(LogLevel.SUCCESS, agent.name, f"CPF/CNPJ válido: {client_data.get('cpf_cnpj', 'N/A')}")
         log_placeholder.markdown(self.get_logs_text())
-        result['cpf_valido'] = True
+        result['cpf_valido'] = cpf_cnpj_valido['valido']
         
         agent.current_task = "Consultando histórico"
         self.add_log(LogLevel.INFO, agent.name, "Consultando histórico de crédito", task="consultar_historico_credito")
@@ -626,11 +509,9 @@ class AgentOrchestrator:
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.3)
         
-        self.add_log(LogLevel.MCP, agent.name, "Query SQL executada", mcp_connection="mysql://localhost:3306/credit_db")
-        log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
-        
+            
         # Consulta real ao banco para histórico
+        cpf_cnpj = client_data.get('cpf_cnpj', '')
         financiamentos = obter_financiamentos_ativos(cpf_cnpj)
         historico = {
             "total_emprestimos": len(financiamentos),
@@ -882,7 +763,7 @@ class AgentOrchestrator:
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.3)
         
-        self.add_log(LogLevel.MCP, agent.name, "INSERT INTO analises_risco", mcp_connection="mysql://localhost:3306/credit_db")
+        self.add_log(LogLevel.MCP, agent.name, "INSERT INTO analises_risco", mcp_connection="mysql://localhost:3306/rag_flow")
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.3)
         
@@ -985,7 +866,7 @@ if not st.session_state.analysis_started:
     
     with col1:
         nome = st.text_input("Nome Completo", value="João Silva Santos")
-        cpf_cnpj = st.text_input("CPF/CNPJ", value="12345678900")  # Sem pontuação para validação
+        cpf_cnpj = st.text_input("CPF/CNPJ", value="161.426.930-01")
         renda_mensal = st.number_input("Renda Mensal (R$)", min_value=0.0, value=8500.00, step=100.0)
     
     with col2:
