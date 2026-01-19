@@ -837,3 +837,11 @@ peewee.OperationalError: (2003, "Can't connect to MySQL server on 'mysql' ([Errn
 2026-01-20 04:31:23,613 INFO     20 update_progress lock_value: 1d781206-345a-4c76-b24d-610b8be9a2d9
 2026-01-20 05:13:31,255 ERROR    20 The requested URL /api/v1/search was not found
 2026-01-20 05:13:32,176 ERROR    20 The requested URL /api/v1/search was not found
+2026-01-20 05:30:35,460 ERROR    20 The requested URL /api/v1/search was not found
+2026-01-20 05:30:36,368 ERROR    20 The requested URL /api/v1/search was not found
+2026-01-20 05:42:03,995 ERROR    20 The requested URL /api/v1/search was not found
+2026-01-20 05:42:04,902 ERROR    20 The requested URL /api/v1/search was not found
+2026-01-20 05:52:39,867 ERROR    20 The requested URL /api/v1/search was not found
+2026-01-20 05:52:40,775 ERROR    20 The requested URL /api/v1/search was not found
+2026-01-20 05:53:05,349 ERROR    20 The requested URL /api/v1/search was not found
+2026-01-20 05:53:06,257 ERROR    20 The requested URL /api/v1/search was not found

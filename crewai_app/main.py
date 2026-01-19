@@ -250,9 +250,6 @@ def processar_cliente_com_dialog(
         st.text_input("📱 Telefone *", key=telefone_key, placeholder="(11) 99999-9999")
 
         st.divider()
-
-        st.divider()
-
         col1, col2 = st.columns(2)
 
         with col1:
@@ -287,15 +284,21 @@ def processar_cliente_com_dialog(
                     }
                     st.session_state.cliente_erros_validacao = []
                     st.session_state.dialog_aberto = False
-
+                    st.session_state.pop(email_key, None)
+                    st.session_state.pop(telefone_key, None)
                 st.rerun()
+                st.stop()
 
         with col2:
             if st.button("✗ Cancelar", use_container_width=True, key=f"cancel_{cpf_cnpj}"):
+                st.session_state.cliente_dialog_cancelado = True
                 st.session_state.cliente_dados_completos = None
                 st.session_state.cliente_erros_validacao = []
                 st.session_state.dialog_aberto = False
+                st.session_state.pop(email_key, None)
+                st.session_state.pop(telefone_key, None)
                 st.rerun()
+                st.stop()
 
 
     # Renderiza o diálogo se estiver aberto
@@ -330,6 +333,7 @@ def processar_cliente_com_dialog(
         st.session_state.cliente_dados_completos = None
         st.session_state.cliente_erros_validacao = []
         st.session_state.dialog_aberto = False
+        st.session_state.cliente_cpf_atual = None
         st.stop()
 
     # Aguardando preenchimento
