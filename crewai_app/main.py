@@ -174,6 +174,169 @@ def buscar_cliente(cpf_cnpj: str) -> Optional[Dict]:
         st.error(f"Erro ao buscar cliente: {str(e)}")
         return None
 
+def processar_cliente_com_dialog(
+    client_data: Dict[str, Any],
+    buscar_cliente,
+    inserir_cliente,
+    atualizar_cliente,
+    agent_name: str,
+    add_log
+) -> Optional[Dict[str, Any]]:
+
+    cpf_cnpj = client_data.get("cpf_cnpj", "")
+
+    # ========== INICIALIZA SESSION STATE ==========
+    if "cliente_dados_completos" not in st.session_state:
+        st.session_state.cliente_dados_completos = None
+
+    if "cliente_erros_validacao" not in st.session_state:
+        st.session_state.cliente_erros_validacao = []
+
+    if "dialog_aberto" not in st.session_state:
+        st.session_state.dialog_aberto = False
+
+    if "cliente_cpf_atual" not in st.session_state:
+        st.session_state.cliente_cpf_atual = None
+
+    # Flag para o usuário abortar o fluxo (Cancelar/Fechar)
+    if "cliente_dialog_cancelado" not in st.session_state:
+        st.session_state.cliente_dialog_cancelado = False
+
+    cliente_db = buscar_cliente(cpf_cnpj)
+
+    if cliente_db:
+        # ========== CLIENTE JÁ EXISTE ==========
+        if (cliente_db["nome"] != client_data.get("nome") or
+            cliente_db["renda_mensal"] != client_data.get("renda_mensal")):
+            atualizar_cliente(client_data)
+            add_log("INFO", agent_name, "Dados do cliente atualizados no banco")
+        else:
+            add_log("INFO", agent_name, "Dados do cliente recuperados do banco")
+
+        client_data["renda_mensal"] = cliente_db["renda_mensal"]
+        client_data["email"] = cliente_db.get("email", "")
+        client_data["telefone"] = cliente_db.get("telefone", "")
+        return client_data
+
+    # ========== NOVO CLIENTE DETECTADO ==========
+    if cpf_cnpj != st.session_state.cliente_cpf_atual:
+        st.session_state.cliente_cpf_atual = cpf_cnpj
+        st.session_state.dialog_aberto = True
+        st.session_state.cliente_dados_completos = None
+        st.session_state.cliente_erros_validacao = []
+        st.session_state.cliente_dialog_cancelado = False
+
+    @st.dialog("Completar Dados do Cliente", width="large")
+    def dialog_novo_cliente():
+        st.subheader("📝 Novo Cliente Detectado")
+
+        st.info(
+            f"**CPF/CNPJ:** {cpf_cnpj}\n\n"
+            f"**Nome:** {client_data.get('nome')}\n\n"
+            f"**Renda Mensal:** R$ {client_data.get('renda_mensal'):,.2f}"
+        )
+
+        st.divider()
+
+        # Mostra erros anteriores (fora do callback)
+        if st.session_state.cliente_erros_validacao:
+            st.error("\n".join(st.session_state.cliente_erros_validacao))
+
+        email_key = f"email_{cpf_cnpj}"
+        telefone_key = f"telefone_{cpf_cnpj}"
+
+        # Inputs: valores ficam no st.session_state[email_key] e st.session_state[telefone_key]
+        st.text_input("📧 Email *", key=email_key, placeholder="seu@email.com")
+        st.text_input("📱 Telefone *", key=telefone_key, placeholder="(11) 99999-9999")
+
+        st.divider()
+
+        st.divider()
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            if st.button("✓ Confirmar", use_container_width=True, type="primary", key=f"btn_{cpf_cnpj}"):
+                erros = []
+
+                email = (st.session_state.get(email_key) or "").strip()
+                telefone = (st.session_state.get(telefone_key) or "").strip()
+
+                if not email:
+                    erros.append("Email é obrigatório")
+                elif "@" not in email or "." not in email:
+                    erros.append("Email inválido")
+
+                if not telefone:
+                    erros.append("Telefone é obrigatório")
+                else:
+                    apenas_numeros = "".join(c for c in telefone if c.isdigit())
+                    if len(apenas_numeros) < 10:
+                        erros.append("Telefone deve ter pelo menos 10 dígitos")
+
+                if erros:
+                    st.session_state.cliente_erros_validacao = erros
+                else:
+                    st.session_state.cliente_dados_completos = {
+                        "cpf_cnpj": cpf_cnpj,
+                        "nome": client_data.get("nome"),
+                        "renda_mensal": client_data.get("renda_mensal"),
+                        "email": email,
+                        "telefone": telefone,
+                        "created_at": datetime.now(),
+                    }
+                    st.session_state.cliente_erros_validacao = []
+                    st.session_state.dialog_aberto = False
+
+                st.rerun()
+
+        with col2:
+            if st.button("✗ Cancelar", use_container_width=True, key=f"cancel_{cpf_cnpj}"):
+                st.session_state.cliente_dados_completos = None
+                st.session_state.cliente_erros_validacao = []
+                st.session_state.dialog_aberto = False
+                st.rerun()
+
+
+    # Renderiza o diálogo se estiver aberto
+    if st.session_state.dialog_aberto:
+        dialog_novo_cliente()
+
+    # Se o usuário cancelou/fechou, interrompe o fluxo de forma controlada
+    if st.session_state.cliente_dialog_cancelado:
+        st.session_state.cliente_dialog_cancelado = False
+        st.session_state.cliente_dados_completos = None
+        st.session_state.cliente_erros_validacao = []
+        st.session_state.dialog_aberto = False
+        st.session_state.cliente_cpf_atual = None
+        add_log("WARNING", agent_name, "Cadastro do cliente cancelado pelo usuário")
+        raise ValueError("Cadastro do cliente foi cancelado. Inicie uma nova análise para continuar.")
+
+    # Se confirmou e já tem dados completos, insere no banco e segue o fluxo
+    if st.session_state.cliente_dados_completos:
+        dados = st.session_state.cliente_dados_completos
+
+        if inserir_cliente(dados):
+            add_log("SUCCESS", agent_name, "Novo cliente inserido no banco")
+            st.session_state.cliente_dados_completos = None
+            st.session_state.cliente_erros_validacao = []
+            st.session_state.dialog_aberto = False
+            st.session_state.cliente_cpf_atual = None
+            st.success("✓ Cliente cadastrado com sucesso!")
+            return dados
+
+        add_log("ERROR", agent_name, "Erro ao inserir novo cliente no banco")
+        st.error("❌ Erro ao inserir cliente no banco de dados.")
+        st.session_state.cliente_dados_completos = None
+        st.session_state.cliente_erros_validacao = []
+        st.session_state.dialog_aberto = False
+        st.stop()
+
+    # Aguardando preenchimento
+    st.warning("⏳ Aguardando preenchimento dos dados...")
+    st.stop()
+
+   
 def inserir_cliente(client_data: Dict) -> bool:
     """Insere um novo cliente na tabela clientes"""
     try:
@@ -185,14 +348,16 @@ def inserir_cliente(client_data: Dict) -> bool:
         
         query = """
             INSERT INTO clientes 
-            (cpf_cnpj, nome, renda_mensal)
-            VALUES (%s, %s, %s)
+            (cpf_cnpj, nome, renda_mensal, email, telefone)
+            VALUES (%s, %s, %s, %s, %s)
         """
         
         values = (
             client_data.get('cpf_cnpj'),
             client_data.get('nome'),
-            client_data.get('renda_mensal')
+            client_data.get('renda_mensal'),
+            client_data.get('email'),
+            client_data.get('telefone'),
         )
         
         cursor.execute(query, values)
@@ -582,6 +747,7 @@ class AgentOrchestrator:
         log_placeholder.markdown(self.get_logs_text())
         result['cpf_valido'] = cpf_cnpj_valido['valido']
         
+               
         agent.current_task = "Buscando dados do cliente"
         self.add_log(LogLevel.INFO, agent.name, "Buscando dados do cliente", task="buscar_dados_cliente")
         log_placeholder.markdown(self.get_logs_text())
@@ -590,62 +756,53 @@ class AgentOrchestrator:
         self.add_log(LogLevel.TOOL, agent.name, "Executando tool", tool="buscar_dados_cliente")
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.3)
+                     
+        resultado = processar_cliente_com_dialog(
+            client_data=client_data,
+            buscar_cliente=buscar_cliente,
+            inserir_cliente=inserir_cliente,
+            atualizar_cliente=atualizar_cliente,
+            agent_name=agent.name,
+            add_log=self.add_log
+        )
+    
+        if resultado:
+            client_data = resultado
+            
+            self.add_log(LogLevel.SUCCESS, agent.name, f"Dados recuperados: {client_data.get('nome', 'N/A')}")
+            log_placeholder.markdown(self.get_logs_text())
+            result['cliente'] = client_data
         
-        self.add_log(LogLevel.MCP, agent.name, "Conectando ao MySQL", mcp_connection="mysql://localhost:3306/credit_db")
-        log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
+            agent.current_task = "Consultando histórico"
+            self.add_log(LogLevel.INFO, agent.name, "Consultando histórico de crédito", task="consultar_historico_credito")
+            log_placeholder.markdown(self.get_logs_text())
+            time.sleep(0.3)
         
-        # Busca cliente na tabela clientes
-        cpf_cnpj = client_data.get('cpf_cnpj', '')
-        cliente_db = buscar_cliente(cpf_cnpj)
-        if cliente_db:
-            # Atualiza dados se necessário
-            if cliente_db['nome'] != client_data.get('nome') or cliente_db['renda_mensal'] != client_data.get('renda_mensal'):
-                atualizar_cliente(client_data)
-                self.add_log(LogLevel.INFO, agent.name, "Dados do cliente atualizados no banco")
-            else:
-                self.add_log(LogLevel.INFO, agent.name, "Dados do cliente recuperados do banco")
-            client_data['renda_mensal'] = cliente_db['renda_mensal']  # Usa renda do banco se diferente
-        else:
-            # Insere novo cliente
-            if inserir_cliente(client_data):
-                self.add_log(LogLevel.SUCCESS, agent.name, "Novo cliente inserido no banco")
-            else:
-                error_msg = "Erro ao inserir novo cliente no banco"
-                self.add_log(LogLevel.ERROR, agent.name, error_msg)
-                raise ValueError(error_msg)
+            self.add_log(LogLevel.TOOL, agent.name, "Executando tool", tool="consultar_historico_credito")
+            log_placeholder.markdown(self.get_logs_text())
+            time.sleep(0.3)
         
-        self.add_log(LogLevel.SUCCESS, agent.name, f"Dados recuperados: {client_data.get('nome', 'N/A')}")
-        log_placeholder.markdown(self.get_logs_text())
-        result['cliente'] = client_data
-        
- 
-        
-        
-        
-        agent.current_task = "Consultando histórico"
-        self.add_log(LogLevel.INFO, agent.name, "Consultando histórico de crédito", task="consultar_historico_credito")
-        log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
-        
-        self.add_log(LogLevel.TOOL, agent.name, "Executando tool", tool="consultar_historico_credito")
-        log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
-        
-        self.add_log(LogLevel.MCP, agent.name, "Query SQL executada", mcp_connection="mysql://localhost:3306/credit_db")
-        log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
+            self.add_log(LogLevel.MCP, agent.name, "Query SQL executada", mcp_connection="mysql://localhost:3306/credit_db")
+            log_placeholder.markdown(self.get_logs_text())
+            time.sleep(0.3)
         
         # Consulta real ao banco para histórico
-        financiamentos = obter_financiamentos_ativos(cpf_cnpj)
-        historico = {
-            "total_emprestimos": len(financiamentos),
-            "saldo_devedor_total": calcular_saldo_total_devedor(financiamentos),
-            "financiamentos": financiamentos
-        }
-        result['historico_credito'] = historico
-        self.add_log(LogLevel.SUCCESS, agent.name, f"Histórico: {historico['total_emprestimos']} empréstimos, Saldo devedor total: R$ {historico['saldo_devedor_total']:.2f}")
-        log_placeholder.markdown(self.get_logs_text())
+        
+            cpf_cnpj = client_data.get('cpf_cnpj', '')
+            financiamentos = obter_financiamentos_ativos(cpf_cnpj)
+            historico = {
+                "total_emprestimos": len(financiamentos),
+                "saldo_devedor_total": calcular_saldo_total_devedor(financiamentos),
+                "financiamentos": financiamentos
+            }
+            result['historico_credito'] = historico
+            self.add_log(LogLevel.SUCCESS, agent.name, f"Histórico: {historico['total_emprestimos']} empréstimos, Saldo devedor total: R$ {historico['saldo_devedor_total']:.2f}")
+            log_placeholder.markdown(self.get_logs_text())
+        else:
+            # Aguardando preenchimento do diálogo
+            st.info("⏳ Aguardando dados do cliente...")
+        
+        
         
         return result
     

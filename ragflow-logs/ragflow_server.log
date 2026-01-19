@@ -709,3 +709,131 @@ Traceback (most recent call last):
 peewee.OperationalError: (2003, "Can't connect to MySQL server on 'mysql' ([Errno 111] Connection refused)")
 2026-01-18 05:11:58,132 ERROR    20 The requested URL /api/v1/search was not found
 2026-01-18 05:11:59,042 ERROR    20 The requested URL /api/v1/search was not found
+2026-01-18 20:22:20,300 INFO     24 ragflow_server log path: /ragflow/logs/ragflow_server.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-18 20:22:20,301 INFO     24 
+        ____   ___    ______ ______ __
+       / __ \ /   |  / ____// ____// /____  _      __
+      / /_/ // /| | / / __ / /_   / // __ \| | /| / /
+     / _, _// ___ |/ /_/ // __/  / // /_/ /| |/ |/ /
+    /_/ |_|/_/  |_|\____//_/    /_/ \____/ |__/|__/
+
+    
+2026-01-18 20:22:20,302 INFO     24 RAGFlow version: v0.23.1
+2026-01-18 20:22:20,303 INFO     24 project base: /ragflow
+2026-01-18 20:22:20,304 INFO     24 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-18 20:22:20,306 WARNING  24 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-18 20:22:20,310 WARNING  24 Load term.freq FAIL!
+2026-01-18 20:22:20,317 WARNING  24 Realtime synonym is disabled, since no redis connection.
+2026-01-18 20:22:20,321 WARNING  24 Load term.freq FAIL!
+2026-01-18 20:22:20,327 WARNING  24 Realtime synonym is disabled, since no redis connection.
+2026-01-18 20:22:20,328 INFO     24 MAX_CONTENT_LENGTH: 134217728
+2026-01-18 20:22:20,329 INFO     24 MAX_FILE_COUNT_PER_USER: 0
+2026-01-18 20:22:27,422 INFO     24 Init message_id sequence done, current max id is 1.
+2026-01-18 20:22:27,424 INFO     24 No memory found, no need to init memory size.
+2026-01-18 20:22:27,425 INFO     24 init web data success:6.620162725448608
+2026-01-18 20:22:27,426 INFO     24 Recursively importing plugins from path `/ragflow/plugin/embedded_plugins`
+2026-01-18 20:22:27,428 INFO     24 Loaded llm_tools plugin BadCalculatorPlugin version 1.0.0
+2026-01-18 20:22:27,429 INFO     24 RAGFlow HTTP server start...
+2026-01-18 20:22:27,695 INFO     24 Running on http://0.0.0.0:9380 (CTRL + C to quit)
+2026-01-18 20:22:28,430 INFO     24 Starting update_progress thread (delayed)
+2026-01-18 20:22:28,431 INFO     24 update_progress lock_value: c15ce07d-d1f1-4e67-b952-2dee89718f47
+2026-01-18 20:55:50,643 ERROR    24 The requested URL /api/v1/search was not found
+2026-01-18 20:55:51,570 ERROR    24 The requested URL /api/v1/search was not found
+2026-01-18 20:56:31,782 ERROR    24 The requested URL /api/v1/search was not found
+2026-01-18 20:56:32,696 ERROR    24 The requested URL /api/v1/search was not found
+2026-01-18 21:22:56,066 ERROR    24 The requested URL /api/v1/search was not found
+2026-01-18 21:22:56,996 ERROR    24 The requested URL /api/v1/search was not found
+2026-01-18 21:40:59,149 ERROR    24 The requested URL /api/v1/search was not found
+2026-01-18 21:41:00,071 ERROR    24 The requested URL /api/v1/search was not found
+2026-01-19 07:49:49,486 INFO     19 ragflow_server log path: /ragflow/logs/ragflow_server.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-19 07:49:49,487 INFO     19 
+        ____   ___    ______ ______ __
+       / __ \ /   |  / ____// ____// /____  _      __
+      / /_/ // /| | / / __ / /_   / // __ \| | /| / /
+     / _, _// ___ |/ /_/ // __/  / // /_/ /| |/ |/ /
+    /_/ |_|/_/  |_|\____//_/    /_/ \____/ |__/|__/
+
+    
+2026-01-19 07:49:49,488 INFO     19 RAGFlow version: v0.23.1
+2026-01-19 07:49:49,488 INFO     19 project base: /ragflow
+2026-01-19 07:49:49,489 INFO     19 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-19 07:49:49,491 WARNING  19 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-19 07:49:49,496 WARNING  19 Load term.freq FAIL!
+2026-01-19 07:49:49,503 WARNING  19 Realtime synonym is disabled, since no redis connection.
+2026-01-19 07:49:49,507 WARNING  19 Load term.freq FAIL!
+2026-01-19 07:49:49,513 WARNING  19 Realtime synonym is disabled, since no redis connection.
+2026-01-19 07:49:49,515 INFO     19 MAX_CONTENT_LENGTH: 134217728
+2026-01-19 07:49:49,516 INFO     19 MAX_FILE_COUNT_PER_USER: 0
+2026-01-19 07:49:56,592 INFO     19 Init message_id sequence done, current max id is 1.
+2026-01-19 07:49:56,594 INFO     19 No memory found, no need to init memory size.
+2026-01-19 07:49:56,594 INFO     19 init web data success:6.525514841079712
+2026-01-19 07:49:56,596 INFO     19 Recursively importing plugins from path `/ragflow/plugin/embedded_plugins`
+2026-01-19 07:49:56,597 INFO     19 Loaded llm_tools plugin BadCalculatorPlugin version 1.0.0
+2026-01-19 07:49:56,599 INFO     19 RAGFlow HTTP server start...
+2026-01-19 07:49:56,923 INFO     19 Running on http://0.0.0.0:9380 (CTRL + C to quit)
+2026-01-19 07:49:57,599 INFO     19 Starting update_progress thread (delayed)
+2026-01-19 07:49:57,600 INFO     19 update_progress lock_value: 44411112-fd75-43a5-b2fa-528632a85e15
+2026-01-19 07:59:55,760 ERROR    19 The requested URL /api/v1/search was not found
+2026-01-19 07:59:56,669 ERROR    19 The requested URL /api/v1/search was not found
+2026-01-19 08:05:05,534 ERROR    19 The requested URL /api/v1/search was not found
+2026-01-19 08:05:06,443 ERROR    19 The requested URL /api/v1/search was not found
+2026-01-20 04:31:16,075 INFO     20 ragflow_server log path: /ragflow/logs/ragflow_server.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-20 04:31:16,076 INFO     20 
+        ____   ___    ______ ______ __
+       / __ \ /   |  / ____// ____// /____  _      __
+      / /_/ // /| | / / __ / /_   / // __ \| | /| / /
+     / _, _// ___ |/ /_/ // __/  / // /_/ /| |/ |/ /
+    /_/ |_|/_/  |_|\____//_/    /_/ \____/ |__/|__/
+
+    
+2026-01-20 04:31:16,076 INFO     20 RAGFlow version: v0.23.1
+2026-01-20 04:31:16,077 INFO     20 project base: /ragflow
+2026-01-20 04:31:16,078 INFO     20 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-20 04:31:16,080 WARNING  20 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-20 04:31:16,083 WARNING  20 Load term.freq FAIL!
+2026-01-20 04:31:16,089 WARNING  20 Realtime synonym is disabled, since no redis connection.
+2026-01-20 04:31:16,093 WARNING  20 Load term.freq FAIL!
+2026-01-20 04:31:16,098 WARNING  20 Realtime synonym is disabled, since no redis connection.
+2026-01-20 04:31:16,099 INFO     20 MAX_CONTENT_LENGTH: 134217728
+2026-01-20 04:31:16,100 INFO     20 MAX_FILE_COUNT_PER_USER: 0
+2026-01-20 04:31:22,605 INFO     20 Init message_id sequence done, current max id is 1.
+2026-01-20 04:31:22,606 INFO     20 No memory found, no need to init memory size.
+2026-01-20 04:31:22,607 INFO     20 init web data success:5.948369026184082
+2026-01-20 04:31:22,608 INFO     20 Recursively importing plugins from path `/ragflow/plugin/embedded_plugins`
+2026-01-20 04:31:22,610 INFO     20 Loaded llm_tools plugin BadCalculatorPlugin version 1.0.0
+2026-01-20 04:31:22,611 INFO     20 RAGFlow HTTP server start...
+2026-01-20 04:31:22,850 INFO     20 Running on http://0.0.0.0:9380 (CTRL + C to quit)
+2026-01-20 04:31:23,611 INFO     20 Starting update_progress thread (delayed)
+2026-01-20 04:31:23,613 INFO     20 update_progress lock_value: 1d781206-345a-4c76-b24d-610b8be9a2d9
+2026-01-20 05:13:31,255 ERROR    20 The requested URL /api/v1/search was not found
+2026-01-20 05:13:32,176 ERROR    20 The requested URL /api/v1/search was not found
