@@ -182,6 +182,11 @@ def processar_cliente_com_dialog(
     agent_name: str,
     add_log
 ) -> Optional[Dict[str, Any]]:
+    """
+    Processa cliente com diálogo modal.
+    Retorna None se diálogo está aberto aguardando confirmação.
+    Retorna dados do cliente se confirmado e salvo.
+    """
 
     cpf_cnpj = client_data.get("cpf_cnpj", "")
 
@@ -198,9 +203,11 @@ def processar_cliente_com_dialog(
     if "cliente_cpf_atual" not in st.session_state:
         st.session_state.cliente_cpf_atual = None
 
-    # Flag para o usuário abortar o fluxo (Cancelar/Fechar)
     if "cliente_dialog_cancelado" not in st.session_state:
         st.session_state.cliente_dialog_cancelado = False
+
+    if "cliente_confirmado" not in st.session_state:
+        st.session_state.cliente_confirmado = False
 
     cliente_db = buscar_cliente(cpf_cnpj)
 
@@ -225,6 +232,7 @@ def processar_cliente_com_dialog(
         st.session_state.cliente_dados_completos = None
         st.session_state.cliente_erros_validacao = []
         st.session_state.cliente_dialog_cancelado = False
+        st.session_state.cliente_confirmado = False
 
     @st.dialog("Completar Dados do Cliente", width="large")
     def dialog_novo_cliente():
@@ -238,14 +246,12 @@ def processar_cliente_com_dialog(
 
         st.divider()
 
-        # Mostra erros anteriores (fora do callback)
         if st.session_state.cliente_erros_validacao:
             st.error("\n".join(st.session_state.cliente_erros_validacao))
 
         email_key = f"email_{cpf_cnpj}"
         telefone_key = f"telefone_{cpf_cnpj}"
 
-        # Inputs: valores ficam no st.session_state[email_key] e st.session_state[telefone_key]
         st.text_input("📧 Email *", key=email_key, placeholder="seu@email.com")
         st.text_input("📱 Telefone *", key=telefone_key, placeholder="(11) 99999-9999")
 
@@ -273,6 +279,7 @@ def processar_cliente_com_dialog(
 
                 if erros:
                     st.session_state.cliente_erros_validacao = erros
+                    st.rerun()
                 else:
                     st.session_state.cliente_dados_completos = {
                         "cpf_cnpj": cpf_cnpj,
@@ -284,10 +291,10 @@ def processar_cliente_com_dialog(
                     }
                     st.session_state.cliente_erros_validacao = []
                     st.session_state.dialog_aberto = False
+                    st.session_state.cliente_confirmado = True
                     st.session_state.pop(email_key, None)
                     st.session_state.pop(telefone_key, None)
-                st.rerun()
-                st.stop()
+                    st.rerun()
 
         with col2:
             if st.button("✗ Cancelar", use_container_width=True, key=f"cancel_{cpf_cnpj}"):
@@ -298,47 +305,46 @@ def processar_cliente_com_dialog(
                 st.session_state.pop(email_key, None)
                 st.session_state.pop(telefone_key, None)
                 st.rerun()
-                st.stop()
-
 
     # Renderiza o diálogo se estiver aberto
     if st.session_state.dialog_aberto:
         dialog_novo_cliente()
 
-    # Se o usuário cancelou/fechou, interrompe o fluxo de forma controlada
+    # Se o usuário cancelou/fechou
     if st.session_state.cliente_dialog_cancelado:
         st.session_state.cliente_dialog_cancelado = False
         st.session_state.cliente_dados_completos = None
         st.session_state.cliente_erros_validacao = []
         st.session_state.dialog_aberto = False
         st.session_state.cliente_cpf_atual = None
-        add_log("WARNING", agent_name, "Cadastro do cliente cancelado pelo usuário")
-        raise ValueError("Cadastro do cliente foi cancelado. Inicie uma nova análise para continuar.")
+        raise ValueError("Cadastro do cliente foi cancelado pelo usuário")
 
-    # Se confirmou e já tem dados completos, insere no banco e segue o fluxo
-    if st.session_state.cliente_dados_completos:
+    # Se confirmou e já tem dados completos, insere no banco
+    if st.session_state.cliente_dados_completos and st.session_state.cliente_confirmado:
         dados = st.session_state.cliente_dados_completos
 
         if inserir_cliente(dados):
             add_log("SUCCESS", agent_name, "Novo cliente inserido no banco")
+            
+            # Limpa estado para próximo cliente
             st.session_state.cliente_dados_completos = None
             st.session_state.cliente_erros_validacao = []
             st.session_state.dialog_aberto = False
             st.session_state.cliente_cpf_atual = None
-            st.success("✓ Cliente cadastrado com sucesso!")
+            st.session_state.cliente_confirmado = False
+            
+            # Retorna dados para continuar
             return dados
 
         add_log("ERROR", agent_name, "Erro ao inserir novo cliente no banco")
-        st.error("❌ Erro ao inserir cliente no banco de dados.")
-        st.session_state.cliente_dados_completos = None
-        st.session_state.cliente_erros_validacao = []
-        st.session_state.dialog_aberto = False
-        st.session_state.cliente_cpf_atual = None
-        st.stop()
+        raise ValueError("Erro ao inserir cliente no banco de dados")
 
-    # Aguardando preenchimento
-    st.warning("⏳ Aguardando preenchimento dos dados...")
-    st.stop()
+    # Se diálogo está aberto, retorna None (aguardando confirmação)
+    if st.session_state.dialog_aberto and not st.session_state.cliente_confirmado:
+        return None
+
+    # Se chegou aqui sem dados, retorna None
+    return None
 
    
 def inserir_cliente(client_data: Dict) -> bool:
@@ -1177,8 +1183,7 @@ if not st.session_state.analysis_started:
     st.divider()
     
     if st.button("🚀 Iniciar Análise", use_container_width=True):
-        st.session_state.analysis_started = True
-        st.session_state.client_data = {
+        client_data = {
             "nome": nome,
             "cpf_cnpj": cpf_cnpj,
             "renda_mensal": renda_mensal,
@@ -1186,7 +1191,41 @@ if not st.session_state.analysis_started:
             "prazo_meses": prazo_meses,
             "finalidade": finalidade
         }
-        st.rerun()
+    
+        # ✅ NOVO: Chama processar_cliente_com_dialog ANTES de iniciar análise
+        try:
+            resultado = processar_cliente_com_dialog(
+                client_data=client_data,
+                buscar_cliente=buscar_cliente,
+                inserir_cliente=inserir_cliente,
+                atualizar_cliente=atualizar_cliente,
+                agent_name="Sistema",
+                add_log=lambda level, agent, msg, **kwargs: None  # Log dummy
+            )
+        
+            # ✅ NOVO: Se resultado é None, significa que diálogo está aberto
+            if resultado is None:
+                # Diálogo está aguardando preenchimento, não inicia análise ainda
+                st.warning("⏳ Preencha os dados do cliente no diálogo para continuar...")
+                st.stop()
+        
+            # ✅ NOVO: Se resultado tem dados, cliente foi confirmado
+            if resultado:
+                # Atualiza client_data com dados confirmados
+                client_data.update(resultado)
+            
+                # Agora sim, inicia a análise
+                st.session_state.analysis_started = True
+                st.session_state.client_data = client_data
+                st.rerun()
+            else:
+                st.error("Erro ao processar cliente")
+                st.stop()
+    
+        except ValueError as e:
+            # Se usuário cancelou o diálogo
+            st.error(f"❌ {str(e)}")
+            st.stop()
 
 # Tela de processamento
 elif st.session_state.analysis_started and not st.session_state.analysis_complete:
