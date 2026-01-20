@@ -851,3 +851,146 @@ peewee.OperationalError: (2003, "Can't connect to MySQL server on 'mysql' ([Errn
 2026-01-20 09:39:02,120 ERROR    20 The requested URL /api/v1/search was not found
 2026-01-20 10:03:32,978 ERROR    20 The requested URL /api/v1/search was not found
 2026-01-20 10:03:33,889 ERROR    20 The requested URL /api/v1/search was not found
+2026-01-21 06:15:29,466 INFO     22 ragflow_server log path: /ragflow/logs/ragflow_server.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-21 06:15:29,468 INFO     22 
+        ____   ___    ______ ______ __
+       / __ \ /   |  / ____// ____// /____  _      __
+      / /_/ // /| | / / __ / /_   / // __ \| | /| / /
+     / _, _// ___ |/ /_/ // __/  / // /_/ /| |/ |/ /
+    /_/ |_|/_/  |_|\____//_/    /_/ \____/ |__/|__/
+
+    
+2026-01-21 06:15:29,470 INFO     22 RAGFlow version: v0.23.1
+2026-01-21 06:15:29,472 INFO     22 project base: /ragflow
+2026-01-21 06:15:29,474 INFO     22 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-21 06:15:29,477 WARNING  22 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-21 06:15:29,486 WARNING  22 Load term.freq FAIL!
+2026-01-21 06:15:29,499 WARNING  22 Realtime synonym is disabled, since no redis connection.
+2026-01-21 06:15:29,511 WARNING  22 Load term.freq FAIL!
+2026-01-21 06:15:29,521 WARNING  22 Realtime synonym is disabled, since no redis connection.
+2026-01-21 06:15:29,532 INFO     22 MAX_CONTENT_LENGTH: 134217728
+2026-01-21 06:15:29,537 INFO     22 MAX_FILE_COUNT_PER_USER: 0
+2026-01-21 06:15:53,270 INFO     22 Init message_id sequence done, current max id is 1.
+2026-01-21 06:15:53,277 INFO     22 No memory found, no need to init memory size.
+2026-01-21 06:15:53,279 INFO     22 init web data success:9.16326355934143
+2026-01-21 06:15:53,290 INFO     22 Recursively importing plugins from path `/ragflow/plugin/embedded_plugins`
+2026-01-21 06:15:53,325 INFO     22 Loaded llm_tools plugin BadCalculatorPlugin version 1.0.0
+2026-01-21 06:15:53,332 INFO     22 RAGFlow HTTP server start...
+2026-01-21 06:15:54,333 INFO     22 Starting update_progress thread (delayed)
+2026-01-21 06:15:54,345 INFO     22 update_progress lock_value: a252e84d-6a26-4214-8266-965ca56843b3
+2026-01-21 06:15:55,958 INFO     22 Running on http://0.0.0.0:9380 (CTRL + C to quit)
+2026-01-21 06:21:12,847 ERROR    22 update_progress exception
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/pymysql/connections.py", line 661, in connect
+    sock = socket.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 828, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 963, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno -3] Temporary failure in name resolution
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/peewee.py", line 3232, in connect
+    self._state.set_connection(self._connect())
+                               ^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/playhouse/pool.py", line 76, in inner
+    return fn(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/playhouse/pool.py", line 169, in _connect
+    conn = super(PooledDatabase, self)._connect()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/peewee.py", line 4201, in _connect
+    conn = mysql.connect(db=self.database, autocommit=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/pymysql/connections.py", line 365, in __init__
+    self.connect()
+  File "/ragflow/.venv/lib/python3.12/site-packages/pymysql/connections.py", line 723, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on 'mysql' ([Errno -3] Temporary failure in name resolution)")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/ragflow/api/ragflow_server.py", line 56, in update_progress
+    DocumentService.update_progress()
+  File "/ragflow/.venv/lib/python3.12/site-packages/peewee.py", line 3128, in inner
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/api/db/services/document_service.py", line 889, in update_progress
+    cls._sync_progress(docs)
+  File "/ragflow/.venv/lib/python3.12/site-packages/peewee.py", line 3127, in inner
+    with ConnectionContext(self.db):
+  File "/ragflow/.venv/lib/python3.12/site-packages/peewee.py", line 3122, in __enter__
+    self.db.connect()
+  File "/ragflow/.venv/lib/python3.12/site-packages/playhouse/pool.py", line 121, in connect
+    return super(PooledDatabase, self).connect(reuse_if_open)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/peewee.py", line 3231, in connect
+    with __exception_wrapper__:
+  File "/ragflow/.venv/lib/python3.12/site-packages/peewee.py", line 3059, in __exit__
+    reraise(new_type, new_type(exc_value, *exc_args), traceback)
+  File "/ragflow/.venv/lib/python3.12/site-packages/peewee.py", line 192, in reraise
+    raise value.with_traceback(tb)
+  File "/ragflow/.venv/lib/python3.12/site-packages/peewee.py", line 3232, in connect
+    self._state.set_connection(self._connect())
+                               ^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/playhouse/pool.py", line 76, in inner
+    return fn(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/playhouse/pool.py", line 169, in _connect
+    conn = super(PooledDatabase, self)._connect()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/peewee.py", line 4201, in _connect
+    conn = mysql.connect(db=self.database, autocommit=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/pymysql/connections.py", line 365, in __init__
+    self.connect()
+  File "/ragflow/.venv/lib/python3.12/site-packages/pymysql/connections.py", line 723, in connect
+    raise exc
+peewee.OperationalError: (2003, "Can't connect to MySQL server on 'mysql' ([Errno -3] Temporary failure in name resolution)")
+2026-01-21 06:43:06,490 INFO     18 ragflow_server log path: /ragflow/logs/ragflow_server.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-21 06:43:06,492 INFO     18 
+        ____   ___    ______ ______ __
+       / __ \ /   |  / ____// ____// /____  _      __
+      / /_/ // /| | / / __ / /_   / // __ \| | /| / /
+     / _, _// ___ |/ /_/ // __/  / // /_/ /| |/ |/ /
+    /_/ |_|/_/  |_|\____//_/    /_/ \____/ |__/|__/
+
+    
+2026-01-21 06:43:06,495 INFO     18 RAGFlow version: v0.23.1
+2026-01-21 06:43:06,497 INFO     18 project base: /ragflow
+2026-01-21 06:43:06,499 INFO     18 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-21 06:43:06,502 WARNING  18 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-21 06:43:06,509 WARNING  18 Load term.freq FAIL!
+2026-01-21 06:43:06,517 WARNING  18 Realtime synonym is disabled, since no redis connection.
+2026-01-21 06:43:06,523 WARNING  18 Load term.freq FAIL!
+2026-01-21 06:43:06,530 WARNING  18 Realtime synonym is disabled, since no redis connection.
+2026-01-21 06:43:06,533 INFO     18 MAX_CONTENT_LENGTH: 134217728
+2026-01-21 06:43:06,535 INFO     18 MAX_FILE_COUNT_PER_USER: 0
+2026-01-21 06:52:37,148 INFO     18 Close text detector.
+2026-01-21 06:52:38,247 INFO     18 Close text recognizer.

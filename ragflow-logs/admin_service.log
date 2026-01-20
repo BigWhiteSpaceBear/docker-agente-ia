@@ -571,3 +571,237 @@
  * Running on http://127.0.0.1:9381
  * Running on http://172.20.0.9:9381
 2026-01-20 04:31:04,862 INFO     29 [33mPress CTRL+C to quit[0m
+2026-01-21 06:13:44,254 INFO     26 admin_service log path: /ragflow/logs/admin_service.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-21 06:13:44,259 INFO     26 
+        ____  ___   ______________                 ___       __          _     
+       / __ \/   | / ____/ ____/ /___ _      __   /   | ____/ /___ ___  (_)___ 
+      / /_/ / /| |/ / __/ /_  / / __ \ | /| / /  / /| |/ __  / __ `__ \/ / __ \
+     / _, _/ ___ / /_/ / __/ / / /_/ / |/ |/ /  / ___ / /_/ / / / / / / / / / /
+    /_/ |_/_/  |_\____/_/   /_/\____/|__/|__/  /_/  |_\__,_/_/ /_/ /_/_/_/ /_/ 
+    
+2026-01-21 06:13:44,333 INFO     26 RAGFlow version: v0.23.1
+2026-01-21 06:13:44,335 INFO     26 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-21 06:13:44,339 WARNING  26 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-21 06:13:44,430 INFO     26 GET http://es01:9200/ [status:200 duration:0.084s]
+2026-01-21 06:13:44,438 INFO     26 HEAD http://es01:9200/ [status:200 duration:0.005s]
+2026-01-21 06:13:44,440 INFO     26 Use Elasticsearch http://es01:9200 as the doc engine.
+2026-01-21 06:13:44,443 INFO     26 Elasticsearch http://es01:9200 is healthy.
+2026-01-21 06:13:44,445 INFO     26 Use Elasticsearch http://es01:9200 as the doc engine.
+2026-01-21 06:13:44,448 INFO     26 Elasticsearch http://es01:9200 is healthy.
+2026-01-21 06:13:44,456 WARNING  26 Load term.freq FAIL!
+2026-01-21 06:13:44,461 WARNING  26 Realtime synonym is disabled, since no redis connection.
+2026-01-21 06:13:44,476 WARNING  26 Load term.freq FAIL!
+2026-01-21 06:13:44,480 WARNING  26 Realtime synonym is disabled, since no redis connection.
+2026-01-21 06:16:02,867 INFO     157 admin_service log path: /ragflow/logs/admin_service.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-21 06:16:02,869 INFO     157 
+        ____  ___   ______________                 ___       __          _     
+       / __ \/   | / ____/ ____/ /___ _      __   /   | ____/ /___ ___  (_)___ 
+      / /_/ / /| |/ / __/ /_  / / __ \ | /| / /  / /| |/ __  / __ `__ \/ / __ \
+     / _, _/ ___ / /_/ / __/ / / /_/ / |/ |/ /  / ___ / /_/ / / / / / / / / / /
+    /_/ |_/_/  |_\____/_/   /_/\____/|__/|__/  /_/  |_\__,_/_/ /_/ /_/_/_/ /_/ 
+    
+2026-01-21 06:16:02,955 INFO     157 RAGFlow version: v0.23.1
+2026-01-21 06:16:02,958 INFO     157 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-21 06:16:02,964 WARNING  157 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-21 06:16:02,973 INFO     157 GET http://es01:9200/ [status:N/A duration:0.003s]
+2026-01-21 06:16:02,975 WARNING  157 Node <Urllib3HttpNode(http://es01:9200)> has failed for 1 times in a row, putting on 1 second timeout
+2026-01-21 06:16:02,977 WARNING  157 Retrying request after failure (attempt 0 of 3)
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/elastic_transport/_transport.py", line 328, in perform_request
+    meta, raw_data = node.perform_request(
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/elastic_transport/_node/_http_urllib3.py", line 202, in perform_request
+    raise err from None
+elastic_transport.ConnectionError: Connection error caused by: NewConnectionError(HTTPConnection(host='es01', port=9200): Failed to establish a new connection: [Errno 111] Connection refused)
+2026-01-21 06:16:02,983 INFO     157 GET http://es01:9200/ [status:N/A duration:0.001s]
+2026-01-21 06:16:02,985 WARNING  157 Node <Urllib3HttpNode(http://es01:9200)> has failed for 2 times in a row, putting on 2 second timeout
+2026-01-21 06:16:02,987 WARNING  157 Retrying request after failure (attempt 1 of 3)
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/elastic_transport/_transport.py", line 328, in perform_request
+    meta, raw_data = node.perform_request(
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/elastic_transport/_node/_http_urllib3.py", line 202, in perform_request
+    raise err from None
+elastic_transport.ConnectionError: Connection error caused by: NewConnectionError(HTTPConnection(host='es01', port=9200): Failed to establish a new connection: [Errno 111] Connection refused)
+2026-01-21 06:16:02,991 INFO     157 GET http://es01:9200/ [status:N/A duration:0.001s]
+2026-01-21 06:16:02,993 WARNING  157 Node <Urllib3HttpNode(http://es01:9200)> has failed for 3 times in a row, putting on 4 second timeout
+2026-01-21 06:16:02,995 WARNING  157 Retrying request after failure (attempt 2 of 3)
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/elastic_transport/_transport.py", line 328, in perform_request
+    meta, raw_data = node.perform_request(
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/elastic_transport/_node/_http_urllib3.py", line 202, in perform_request
+    raise err from None
+elastic_transport.ConnectionError: Connection error caused by: NewConnectionError(HTTPConnection(host='es01', port=9200): Failed to establish a new connection: [Errno 111] Connection refused)
+2026-01-21 06:16:02,999 INFO     157 GET http://es01:9200/ [status:N/A duration:0.001s]
+2026-01-21 06:16:03,001 WARNING  157 Node <Urllib3HttpNode(http://es01:9200)> has failed for 4 times in a row, putting on 8 second timeout
+2026-01-21 06:16:03,004 WARNING  157 Connection error caused by: ConnectionError(Connection error caused by: NewConnectionError(HTTPConnection(host='es01', port=9200): Failed to establish a new connection: [Errno 111] Connection refused)). Waiting Elasticsearch http://es01:9200 to be healthy.
+2026-01-21 06:16:08,013 INFO     157 GET http://es01:9200/ [status:N/A duration:0.005s]
+2026-01-21 06:16:08,020 WARNING  157 Node <Urllib3HttpNode(http://es01:9200)> has failed for 1 times in a row, putting on 1 second timeout
+2026-01-21 06:16:08,022 WARNING  157 Retrying request after failure (attempt 0 of 3)
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/elastic_transport/_transport.py", line 328, in perform_request
+    meta, raw_data = node.perform_request(
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/elastic_transport/_node/_http_urllib3.py", line 202, in perform_request
+    raise err from None
+elastic_transport.ConnectionError: Connection error caused by: NewConnectionError(HTTPConnection(host='es01', port=9200): Failed to establish a new connection: [Errno 111] Connection refused)
+2026-01-21 06:16:08,026 INFO     157 GET http://es01:9200/ [status:N/A duration:0.001s]
+2026-01-21 06:16:08,028 WARNING  157 Node <Urllib3HttpNode(http://es01:9200)> has failed for 2 times in a row, putting on 2 second timeout
+2026-01-21 06:16:08,030 WARNING  157 Retrying request after failure (attempt 1 of 3)
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/elastic_transport/_transport.py", line 328, in perform_request
+    meta, raw_data = node.perform_request(
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/elastic_transport/_node/_http_urllib3.py", line 202, in perform_request
+    raise err from None
+elastic_transport.ConnectionError: Connection error caused by: NewConnectionError(HTTPConnection(host='es01', port=9200): Failed to establish a new connection: [Errno 111] Connection refused)
+2026-01-21 06:16:08,034 INFO     157 GET http://es01:9200/ [status:N/A duration:0.001s]
+2026-01-21 06:16:08,035 WARNING  157 Node <Urllib3HttpNode(http://es01:9200)> has failed for 3 times in a row, putting on 4 second timeout
+2026-01-21 06:16:08,038 WARNING  157 Retrying request after failure (attempt 2 of 3)
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/elastic_transport/_transport.py", line 328, in perform_request
+    meta, raw_data = node.perform_request(
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/elastic_transport/_node/_http_urllib3.py", line 202, in perform_request
+    raise err from None
+elastic_transport.ConnectionError: Connection error caused by: NewConnectionError(HTTPConnection(host='es01', port=9200): Failed to establish a new connection: [Errno 111] Connection refused)
+2026-01-21 06:16:08,041 INFO     157 GET http://es01:9200/ [status:N/A duration:0.001s]
+2026-01-21 06:16:08,043 WARNING  157 Node <Urllib3HttpNode(http://es01:9200)> has failed for 4 times in a row, putting on 8 second timeout
+2026-01-21 06:16:08,045 WARNING  157 Connection error caused by: ConnectionError(Connection error caused by: NewConnectionError(HTTPConnection(host='es01', port=9200): Failed to establish a new connection: [Errno 111] Connection refused)). Waiting Elasticsearch http://es01:9200 to be healthy.
+2026-01-21 06:16:13,047 INFO     157 Resurrected node <Urllib3HttpNode(http://es01:9200)> (force=False)
+2026-01-21 06:16:13,050 INFO     157 HEAD http://es01:9200/ [status:N/A duration:0.001s]
+2026-01-21 06:16:13,053 WARNING  157 Node <Urllib3HttpNode(http://es01:9200)> has failed for 5 times in a row, putting on 16 second timeout
+2026-01-21 06:16:13,059 WARNING  157 Retrying request after failure (attempt 0 of 3)
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/elastic_transport/_transport.py", line 328, in perform_request
+    meta, raw_data = node.perform_request(
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/elastic_transport/_node/_http_urllib3.py", line 202, in perform_request
+    raise err from None
+elastic_transport.ConnectionError: Connection error caused by: NewConnectionError(HTTPConnection(host='es01', port=9200): Failed to establish a new connection: [Errno 111] Connection refused)
+2026-01-21 06:16:13,061 INFO     157 Resurrected node <Urllib3HttpNode(http://es01:9200)> (force=False)
+2026-01-21 06:16:13,064 INFO     157 HEAD http://es01:9200/ [status:N/A duration:0.001s]
+2026-01-21 06:16:13,066 WARNING  157 Node <Urllib3HttpNode(http://es01:9200)> has failed for 6 times in a row, putting on 30 second timeout
+2026-01-21 06:16:13,068 WARNING  157 Retrying request after failure (attempt 1 of 3)
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/elastic_transport/_transport.py", line 328, in perform_request
+    meta, raw_data = node.perform_request(
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/elastic_transport/_node/_http_urllib3.py", line 202, in perform_request
+    raise err from None
+elastic_transport.ConnectionError: Connection error caused by: NewConnectionError(HTTPConnection(host='es01', port=9200): Failed to establish a new connection: [Errno 111] Connection refused)
+2026-01-21 06:16:13,070 INFO     157 Resurrected node <Urllib3HttpNode(http://es01:9200)> (force=False)
+2026-01-21 06:16:13,072 INFO     157 HEAD http://es01:9200/ [status:N/A duration:0.001s]
+2026-01-21 06:16:13,073 WARNING  157 Node <Urllib3HttpNode(http://es01:9200)> has failed for 7 times in a row, putting on 30 second timeout
+2026-01-21 06:16:13,075 WARNING  157 Retrying request after failure (attempt 2 of 3)
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/elastic_transport/_transport.py", line 328, in perform_request
+    meta, raw_data = node.perform_request(
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/elastic_transport/_node/_http_urllib3.py", line 202, in perform_request
+    raise err from None
+elastic_transport.ConnectionError: Connection error caused by: NewConnectionError(HTTPConnection(host='es01', port=9200): Failed to establish a new connection: [Errno 111] Connection refused)
+2026-01-21 06:16:13,078 INFO     157 HEAD http://es01:9200/ [status:N/A duration:0.001s]
+2026-01-21 06:16:13,079 WARNING  157 Node <Urllib3HttpNode(http://es01:9200)> has failed for 8 times in a row, putting on 30 second timeout
+2026-01-21 06:16:13,081 ERROR    157 Elasticsearch http://es01:9200 is unhealthy in 10s.
+2026-01-21 06:34:57,603 INFO     28 admin_service log path: /ragflow/logs/admin_service.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-21 06:34:57,605 INFO     28 
+        ____  ___   ______________                 ___       __          _     
+       / __ \/   | / ____/ ____/ /___ _      __   /   | ____/ /___ ___  (_)___ 
+      / /_/ / /| |/ / __/ /_  / / __ \ | /| / /  / /| |/ __  / __ `__ \/ / __ \
+     / _, _/ ___ / /_/ / __/ / / /_/ / |/ |/ /  / ___ / /_/ / / / / / / / / / /
+    /_/ |_/_/  |_\____/_/   /_/\____/|__/|__/  /_/  |_\__,_/_/ /_/ /_/_/_/ /_/ 
+    
+2026-01-21 06:34:57,670 INFO     28 RAGFlow version: v0.23.1
+2026-01-21 06:34:57,672 INFO     28 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-21 06:34:57,675 WARNING  28 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-21 06:34:57,695 INFO     28 GET http://es01:9200/ [status:200 duration:0.015s]
+2026-01-21 06:34:57,701 INFO     28 HEAD http://es01:9200/ [status:200 duration:0.003s]
+2026-01-21 06:34:57,704 INFO     28 Use Elasticsearch http://es01:9200 as the doc engine.
+2026-01-21 06:34:57,706 INFO     28 Elasticsearch http://es01:9200 is healthy.
+2026-01-21 06:34:57,707 INFO     28 Use Elasticsearch http://es01:9200 as the doc engine.
+2026-01-21 06:34:57,709 INFO     28 Elasticsearch http://es01:9200 is healthy.
+2026-01-21 06:34:57,713 WARNING  28 Load term.freq FAIL!
+2026-01-21 06:34:57,718 WARNING  28 Realtime synonym is disabled, since no redis connection.
+2026-01-21 06:34:57,727 WARNING  28 Load term.freq FAIL!
+2026-01-21 06:34:57,733 WARNING  28 Realtime synonym is disabled, since no redis connection.
+2026-01-21 06:34:57,935 WARNING  28 Unknown configuration key: os
+2026-01-21 06:34:57,938 WARNING  28 Unknown configuration key: oceanbase
+2026-01-21 06:34:57,941 WARNING  28 Unknown configuration key: user_default_llm
+2026-01-21 06:34:57,943 INFO     28 RAGFlow Admin service start...
+2026-01-21 06:34:57,967 INFO     28 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:9381
+ * Running on http://172.18.0.9:9381
+2026-01-21 06:34:57,973 INFO     28 [33mPress CTRL+C to quit[0m
+2026-01-21 06:42:25,966 INFO     28 admin_service log path: /ragflow/logs/admin_service.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-21 06:42:25,969 INFO     28 
+        ____  ___   ______________                 ___       __          _     
+       / __ \/   | / ____/ ____/ /___ _      __   /   | ____/ /___ ___  (_)___ 
+      / /_/ / /| |/ / __/ /_  / / __ \ | /| / /  / /| |/ __  / __ `__ \/ / __ \
+     / _, _/ ___ / /_/ / __/ / / /_/ / |/ |/ /  / ___ / /_/ / / / / / / / / / /
+    /_/ |_/_/  |_\____/_/   /_/\____/|__/|__/  /_/  |_\__,_/_/ /_/ /_/_/_/ /_/ 
+    
+2026-01-21 06:42:26,034 INFO     28 RAGFlow version: v0.23.1
+2026-01-21 06:42:26,036 INFO     28 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-21 06:42:26,039 WARNING  28 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-21 06:42:26,054 INFO     28 GET http://es01:9200/ [status:200 duration:0.008s]
+2026-01-21 06:42:26,062 INFO     28 HEAD http://es01:9200/ [status:200 duration:0.006s]
+2026-01-21 06:42:26,065 INFO     28 Use Elasticsearch http://es01:9200 as the doc engine.
+2026-01-21 06:42:26,066 INFO     28 Elasticsearch http://es01:9200 is healthy.
+2026-01-21 06:42:26,068 INFO     28 Use Elasticsearch http://es01:9200 as the doc engine.
+2026-01-21 06:42:26,070 INFO     28 Elasticsearch http://es01:9200 is healthy.
+2026-01-21 06:42:26,075 WARNING  28 Load term.freq FAIL!
+2026-01-21 06:42:26,080 WARNING  28 Realtime synonym is disabled, since no redis connection.
+2026-01-21 06:42:26,114 WARNING  28 Load term.freq FAIL!
+2026-01-21 06:42:26,134 WARNING  28 Realtime synonym is disabled, since no redis connection.
+2026-01-21 06:42:26,208 WARNING  28 Unknown configuration key: os
+2026-01-21 06:42:26,215 WARNING  28 Unknown configuration key: oceanbase
+2026-01-21 06:42:26,219 WARNING  28 Unknown configuration key: user_default_llm
+2026-01-21 06:42:26,221 INFO     28 RAGFlow Admin service start...
+2026-01-21 06:42:26,285 INFO     28 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:9381
+ * Running on http://172.18.0.9:9381
+2026-01-21 06:42:26,290 INFO     28 [33mPress CTRL+C to quit[0m

@@ -817,75 +817,156 @@ class AgentOrchestrator:
         return result
     
     def _run_risk_analyst(self, agent: AgentInfo, data: Dict, log_placeholder) -> Dict:
-        """Executa o Agente Analista de Risco com cálculos reais"""
+        """Executa o Agente Analista de Risco"""
         result = {}
         
         cliente = data.get('cliente', {})
-        historico = data.get('historico_credito', {})
-        
-        agent.current_task = "Calculando score"
-        self.add_log(LogLevel.INFO, agent.name, "Calculando score financeiro", task="calcular_score_financeiro")
-        log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
-        
-        self.add_log(LogLevel.TOOL, agent.name, "Executando tool", tool="calcular_score_financeiro")
-        log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
-        
-        # Cálculo real de score (exemplo de fórmula: baseado em renda, endividamento histórico, etc.)
+        cpf_cnpj = cliente.get('cpf_cnpj', '').strip()
         renda_mensal = cliente.get('renda_mensal', 0)
-        total_emprestimos = historico.get('total_emprestimos', 0)
-        score = int(300 + (renda_mensal / 100) - (total_emprestimos * 50))
-        score = max(300, min(850, score))  # Clamp entre 300 e 850
+        valor_solicitado = cliente.get('valor_solicitado', 0)
+        
+        if not cpf_cnpj:
+            self.add_log(LogLevel.ERROR, agent.name, "CPF/CNPJ não informado")
+            raise ValueError("CPF/CNPJ obrigatório para análise de risco")
+
+        # -------------------------------------------------------------------------
+        # 1. Calcula taxa de comprometimento / endividamento
+        # -------------------------------------------------------------------------
+        agent.current_task = "Calculando taxa de endividamento"
+        self.add_log(LogLevel.INFO, agent.name, "Calculando taxa_endividamento", task="analisar_endividamento")
+        log_placeholder.markdown(self.get_logs_text())
+        time.sleep(0.4)
+
+        if renda_mensal <= 0:
+            taxa = 100.0
+            self.add_log(LogLevel.ERROR, agent.name, "Renda mensal inválida ou zerada → taxa = 100%")
+        else:
+            parcela_estimada = valor_solicitado / 36  # supondo 36x como base conservadora
+            taxa = ( float( parcela_estimada ) / float( renda_mensal ) ) * 100
+            taxa = min(taxa, 100.0)  # limite superior
+
+        result['taxa_endividamento'] = round(taxa, 2)
+
+        if taxa > 45:
+            self.add_log(LogLevel.WARNING, agent.name, f"Taxa alta: {taxa:.2f}% → comprometimento elevado")
+        elif taxa > 30:
+            self.add_log(LogLevel.WARNING, agent.name, f"Taxa moderada: {taxa:.2f}%")
+        else:
+            self.add_log(LogLevel.SUCCESS, agent.name, f"Taxa: {taxa:.2f}% — adequada")
+        
+        log_placeholder.markdown(self.get_logs_text())
+
+        # -------------------------------------------------------------------------
+        # 2. Consulta restrições via API externa (MockAPI no exemplo)
+        # -------------------------------------------------------------------------
+        agent.current_task = "Consultando restrições cadastrais"
+        self.add_log(LogLevel.INFO, agent.name, "Iniciando consulta externa", task="verificar_restricoes")
+        log_placeholder.markdown(self.get_logs_text())
+        time.sleep(0.4)
+
+        self.add_log(LogLevel.TOOL, agent.name, "Chamando API de restrições", tool="consulta_restricoes_api")
+        log_placeholder.markdown(self.get_logs_text())
+
+        api_url = f"https://696bf31d624d7ddccaa261de.mockapi.io/api/consulta/consultaRestricoes/{cpf_cnpj}"
+
+        try:
+            self.add_log(LogLevel.MCP, agent.name, f"GET {api_url}", mcp_connection="api://mockapi-restricoes")
+            log_placeholder.markdown(self.get_logs_text())
+            time.sleep(0.5)
+
+            response = requests.get(api_url, timeout=8)
+            
+            if response.status_code == 200:
+                dados_api = response.json()
+                
+                # ---------------------------------------------------------------
+                # Ajustado para o formato específico: 
+                # {"Nome":"João Silva Santos","Restricao":false,"CPF":"16142693001"}
+                # ---------------------------------------------------------------
+                
+                if isinstance(dados_api, dict):
+                    tem_restricao = dados_api.get("Restricao", False)  # Booleano direto
+                    nome_api = dados_api.get("Nome", "")
+                    cpf_api = dados_api.get("CPF", "")
+                    
+                    # Validação extra: verifica se CPF retornado bate com o consultado
+                    if cpf_api != cpf_cnpj:
+                        self.add_log(LogLevel.WARNING, agent.name, f"CPF retornado ({cpf_api}) não coincide com o consultado ({cpf_cnpj})")
+                        tem_restricao = True  # Considera como erro/restricao por segurança
+                    
+                    # Opcional: comparar nome se disponível no cliente
+                    if nome_api and cliente.get('nome', '').strip().lower() != nome_api.lower():
+                        self.add_log(LogLevel.INFO, agent.name, f"Nome retornado: {nome_api} (vs. informado: {cliente.get('nome', 'N/A')})")
+                    
+                    result['possui_restricoes'] = tem_restricao
+                    result['detalhes_restricoes'] = dados_api  # Salva o JSON completo para relatórios
+                    
+                    if tem_restricao:
+                        self.add_log(LogLevel.WARNING, agent.name, "⚠️ Restrição cadastral encontrada")
+                    else:
+                        self.add_log(LogLevel.SUCCESS, agent.name, "✅ Sem restrições cadastrais")
+                else:
+                    self.add_log(LogLevel.ERROR, agent.name, "Formato de resposta inválido (esperado dict)")
+                    result['possui_restricoes'] = True  # Assume restrição por segurança
+                
+            elif response.status_code == 404:
+                self.add_log(LogLevel.SUCCESS, agent.name, "Cliente sem registro de restrições (404)")
+                result['possui_restricoes'] = False
+                
+            else:
+                self.add_log(
+                    LogLevel.WARNING, 
+                    agent.name, 
+                    f"API retornou status {response.status_code} — assumindo sem restrição"
+                )
+                result['possui_restricoes'] = False
+
+        except requests.Timeout:
+            self.add_log(LogLevel.ERROR, agent.name, "Timeout na consulta de restrições → assumindo sem restrição")
+            result['possui_restricoes'] = False
+        except requests.RequestException as e:
+            self.add_log(LogLevel.ERROR, agent.name, f"Falha na API de restrições: {str(e)}")
+            result['possui_restricoes'] = False
+        except Exception as e:
+            self.add_log(LogLevel.ERROR, agent.name, f"Erro inesperado na consulta: {str(e)}")
+            result['possui_restricoes'] = False
+
+        log_placeholder.markdown(self.get_logs_text())
+
+        # -------------------------------------------------------------------------
+        # 3. Calcula score financeiro simples (você pode melhorar bastante aqui)
+        # -------------------------------------------------------------------------
+        agent.current_task = "Calculando score financeiro"
+        self.add_log(LogLevel.INFO, agent.name, "Calculando score_financeiro", task="calcular_score_financeiro")
+        log_placeholder.markdown(self.get_logs_text())
+        time.sleep(0.4)
+
+        score = 700  # base boa
+        
+        if taxa > 50:
+            score -= 250
+        elif taxa > 35:
+            score -= 120
+            
+        if result.get('possui_restricoes', False):
+            score -= 300
+            
+        if renda_mensal < 2000:
+            score -= 80
+        elif renda_mensal < 4000:
+            score -= 30
+
+        score = max(300, min(850, score))  # faixa típica
         result['score_financeiro'] = score
-        self.add_log(LogLevel.SUCCESS, agent.name, f"Score calculado: {score} pontos")
+
+        classificacao = "BAIXO" if score >= 700 else "MÉDIO" if score >= 500 else "ALTO"
+        result['classificacao_risco'] = classificacao
+
+        self.add_log(LogLevel.SUCCESS, agent.name, f"Score: {score} → {classificacao}")
         log_placeholder.markdown(self.get_logs_text())
-        
-        agent.current_task = "Analisando endividamento"
-        self.add_log(LogLevel.INFO, agent.name, "Analisando endividamento", task="analisar_endividamento")
-        log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
-        
-        self.add_log(LogLevel.TOOL, agent.name, "Executando tool", tool="analisar_endividamento")
-        log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
-        
-        # Cálculo real de taxa de endividamento: saldo devedor total / renda mensal * 100
-        saldo_devedor_total = historico.get('saldo_devedor_total', 0)
-        taxa = round((saldo_devedor_total / renda_mensal * 100) if renda_mensal > 0 else 0, 2)
-        result['taxa_endividamento'] = taxa
-        
-        if taxa > 40:
-            self.add_log(LogLevel.WARNING, agent.name, f"Taxa alta: {taxa}%")
-        else:
-            self.add_log(LogLevel.SUCCESS, agent.name, f"Taxa: {taxa}%")
-        log_placeholder.markdown(self.get_logs_text())
-        
-        agent.current_task = "Verificando restrições"
-        self.add_log(LogLevel.INFO, agent.name, "Verificando restrições", task="verificar_restricoes")
-        log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
-        
-        self.add_log(LogLevel.TOOL, agent.name, "Executando tool", tool="verificar_restricoes")
-        log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
-        
-        self.add_log(LogLevel.MCP, agent.name, "Consultando base externa", mcp_connection="api://serasa.com.br/restricoes")
-        log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
-        
-        # Simulação de restrições (pode integrar API real como Serasa; por agora, baseado se taxa > 50 ou random)
-        restricoes = taxa > 50 or random.choice([True, False])
-        result['possui_restricoes'] = restricoes
-        
-        if restricoes:
-            self.add_log(LogLevel.WARNING, agent.name, "⚠️ Restrições encontradas")
-        else:
-            self.add_log(LogLevel.SUCCESS, agent.name, "Sem restrições")
-        log_placeholder.markdown(self.get_logs_text())
-        
+
         return result
-    
+
     def _run_ml_predictor(self, agent: AgentInfo, data: Dict, log_placeholder) -> Dict:
         """Executa o Agente Preditor de ML"""
         result = {}
@@ -938,74 +1019,135 @@ class AgentOrchestrator:
         return result
     
     def _run_rag_consultant(self, agent: AgentInfo, data: Dict, log_placeholder) -> Dict:
-        """Executa o Agente Consultor RAG com chamadas reais à API"""
+        """Executa o Agente Consultor RAG com chamadas reais à API do RAGFlow"""
         result = {}
         
-        agent.current_task = "Consultando RAGFlow"
-        self.add_log(LogLevel.INFO, agent.name, "Consultando políticas de crédito", task="consultar_politicas_credito")
-        log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
+        classificacao = data.get('classificacao_risco', 'MÉDIO')  # Obtido do analista de risco anterior
         
+        # -------------------------------------------------------------------------
+        # 1. Consulta políticas de crédito via RAGFlow
+        # -------------------------------------------------------------------------
+        agent.current_task = "Consultando políticas de crédito no RAGFlow"
+        self.add_log(LogLevel.INFO, agent.name, "Preparando query para políticas de crédito", task="consultar_politicas_credito")
+        log_placeholder.markdown(self.get_logs_text())
+        time.sleep(0.4)
+
         self.add_log(LogLevel.TOOL, agent.name, "Executando tool", tool="consultar_politicas_credito")
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.3)
+
+        query_politica = f"Política de crédito para risco {classificacao}. Forneça detalhes sobre critérios de aprovação, limites e condições."
         
-        self.add_log(LogLevel.MCP, agent.name, "Conectando ao RAGFlow", mcp_connection=f"ragflow://{RAGFLOW_BASE_URL}")
+        self.add_log(LogLevel.MCP, agent.name, f"POST {RAGFLOW_BASE_URL}/search | Query: {query_politica[:50]}...", mcp_connection="api://ragflow/search")
         log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
-        
-        self.add_log(LogLevel.INFO, agent.name, f"Buscando no dataset: {DATASET_ID[:15]}...")
-        log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
-        
-        self.add_log(LogLevel.MCP, agent.name, "Busca semântica em documentos", mcp_connection="ragflow://semantic_search")
-        log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
-        
-        # Chamada real à API RAGFlow para políticas
-        classificacao = data.get('classificacao_risco', 'MÉDIO')
-        query_politica = f"Política de crédito para risco {classificacao}"
+        time.sleep(0.5)
+
         rag_response = consult_rag(query_politica)
+        
         if "error" in rag_response:
-            politica = f"Erro ao consultar RAG: {rag_response['error']}"
+            politica = f"Erro ao consultar RAGFlow: {rag_response['error']}"
             self.add_log(LogLevel.ERROR, agent.name, politica)
+            result['politica_aplicavel'] = "Política não disponível devido a erro na consulta. Usando default: Aprovação condicional para risco médio."
         else:
-            # Assumindo que a resposta tem 'result' ou similar; ajuste conforme API real
-            politica = rag_response.get('result', f"Política para {classificacao}: Aprovação condicional.")
-        
-        result['politica_aplicavel'] = politica
-        self.add_log(LogLevel.SUCCESS, agent.name, "Política identificada")
+            # -------------------------------------------------------------------------
+            # Ajuste conforme formato real da resposta do RAGFlow
+            # Assumindo que a API retorna algo como:
+            # {"result": "texto da política", "sources": [...], "confidence": 0.85}
+            # ou similar. Ajuste as chaves aqui com base na documentação real do RAGFlow.
+            # Se for uma lista de chunks, concatene ou selecione o melhor.
+            # -------------------------------------------------------------------------
+            if isinstance(rag_response, dict):
+                politica = rag_response.get('result', '') or rag_response.get('response', '') or rag_response.get('answer', '')
+                if not politica:
+                    politica = rag_response.get('chunks', [{}])[0].get('content', '') if 'chunks' in rag_response else ''
+                
+                sources = rag_response.get('sources', []) or rag_response.get('references', [])
+                if sources:
+                    self.add_log(LogLevel.INFO, agent.name, f"Encontradas {len(sources)} fontes de referência")
+                
+                confidence = rag_response.get('confidence', 0.0) or rag_response.get('score', 0.0)
+                if confidence < 0.7:
+                    self.add_log(LogLevel.WARNING, agent.name, f"Baixa confiança na resposta: {confidence:.2f}")
+            else:
+                politica = str(rag_response)  # Fallback se não for dict
+            
+            if not politica.strip():
+                politica = f"Política padrão para risco {classificacao}: Aprovação condicional com análise manual."
+                self.add_log(LogLevel.WARNING, agent.name, "Resposta vazia do RAGFlow — usando fallback")
+            else:
+                self.add_log(LogLevel.SUCCESS, agent.name, "Política de crédito obtida com sucesso")
+            
+            result['politica_aplicavel'] = politica
+            result['politica_sources'] = sources if 'sources' in locals() else []  # Opcional: guardar fontes para relatório
+
         log_placeholder.markdown(self.get_logs_text())
-        
-        agent.current_task = "Buscando regulamentações"
-        self.add_log(LogLevel.INFO, agent.name, "Consultando regulamentações BACEN", task="buscar_regulamentacoes")
+
+        # -------------------------------------------------------------------------
+        # 2. Consulta regulamentações via RAGFlow
+        # -------------------------------------------------------------------------
+        agent.current_task = "Consultando regulamentações BACEN no RAGFlow"
+        self.add_log(LogLevel.INFO, agent.name, "Preparando query para regulamentações", task="buscar_regulamentacoes")
         log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
-        
+        time.sleep(0.4)
+
         self.add_log(LogLevel.TOOL, agent.name, "Executando tool", tool="buscar_regulamentacoes")
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.3)
-        
-        self.add_log(LogLevel.MCP, agent.name, "Query: regulamentações BACEN", mcp_connection="ragflow://query")
+
+        query_reg = f"Regulamentações BACEN relevantes para análise de crédito de risco {classificacao}. Liste resoluções e circulares principais."
+
+        self.add_log(LogLevel.MCP, agent.name, f"POST {RAGFLOW_BASE_URL}/search | Query: {query_reg[:50]}...", mcp_connection="api://ragflow/search")
         log_placeholder.markdown(self.get_logs_text())
-        time.sleep(0.3)
-        
-        # Chamada real à API RAGFlow para regulamentações
-        query_reg = "Regulamentações BACEN para crédito"
+        time.sleep(0.5)
+
         rag_response_reg = consult_rag(query_reg)
+        
         if "error" in rag_response_reg:
             regulamentacoes = [f"Erro: {rag_response_reg['error']}"]
             self.add_log(LogLevel.ERROR, agent.name, regulamentacoes[0])
+            result['regulamentacoes'] = [
+                "Resolução CMN 4.949/2021 - Política de crédito (fallback)",
+                "Circular BACEN 3.978/2020 - Prevenção à lavagem (fallback)"
+            ]
         else:
-            # Assumindo lista em 'results'; ajuste conforme API
-            regulamentacoes = rag_response_reg.get('results', [
-                "Resolução CMN 4.949/2021 - Política de crédito",
-                "Circular BACEN 3.978/2020 - Prevenção à lavagem",
-                "Resolução CMN 4.557/2017 - Gerenciamento de risco"
-            ])
-        
-        result['regulamentacoes'] = regulamentacoes
-        self.add_log(LogLevel.SUCCESS, agent.name, f"Encontradas {len(regulamentacoes)} regulamentações")
+            # -------------------------------------------------------------------------
+            # Ajuste similar para formato da resposta
+            # -------------------------------------------------------------------------
+            if isinstance(rag_response_reg, dict):
+                reg_text = rag_response_reg.get('result', '') or rag_response_reg.get('response', '') or rag_response_reg.get('answer', '')
+                if not reg_text:
+                    reg_text = ' '.join([chunk.get('content', '') for chunk in rag_response_reg.get('chunks', [])])
+                
+                # Tentar extrair lista de regulamentações do texto
+                # Simples split por linhas ou vírgulas; para melhor, use regex ou parsing
+                regulamentacoes = [line.strip() for line in reg_text.split('\n') if line.strip() and ('Resolução' in line or 'Circular' in line)]
+                
+                if not regulamentacoes:
+                    regulamentacoes = reg_text.split(';') or reg_text.split(',')
+                
+                sources = rag_response_reg.get('sources', []) or rag_response_reg.get('references', [])
+                if sources:
+                    self.add_log(LogLevel.INFO, agent.name, f"Encontradas {len(sources)} fontes de referência")
+                
+                confidence = rag_response_reg.get('confidence', 0.0) or rag_response_reg.get('score', 0.0)
+                if confidence < 0.7:
+                    self.add_log(LogLevel.WARNING, agent.name, f"Baixa confiança na resposta: {confidence:.2f}")
+            else:
+                regulamentacoes = str(rag_response_reg).split('\n')
+            
+            if not regulamentacoes or all(not r.strip() for r in regulamentacoes):
+                regulamentacoes = [
+                    "Resolução CMN 4.949/2021 - Política de crédito (fallback)",
+                    "Circular BACEN 3.978/2020 - Prevenção à lavagem (fallback)",
+                    "Resolução CMN 4.557/2017 - Gerenciamento de risco (fallback)"
+                ]
+                self.add_log(LogLevel.WARNING, agent.name, "Resposta vazia do RAGFlow — usando fallback")
+            else:
+                self.add_log(LogLevel.SUCCESS, agent.name, f"Encontradas {len(regulamentacoes)} regulamentações relevantes")
+            
+            result['regulamentacoes'] = [r.strip() for r in regulamentacoes if r.strip()]
+            result['regulamentacoes_sources'] = sources if 'sources' in locals() else []  # Opcional
+
         log_placeholder.markdown(self.get_logs_text())
         
         return result
