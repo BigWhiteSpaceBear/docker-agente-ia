@@ -13,7 +13,7 @@ import requests
 # 1. CONFIGURAÇÕES
 # =================================================================
 RAGFLOW_API_KEY = os.getenv("RAGFLOW_API_KEY", "ragflow-h8lAb6uJntx98I5VOE6LGCtxUlE1UQOK9JIrLr3rv1s")
-RAGFLOW_BASE_URL = os.getenv("RAGFLOW_API_URL", "http://ragflow:9380/api/v1")
+RAGFLOW_BASE_URL = os.getenv("RAGFLOW_API_URL", "http://ragflow-cpu:9380/api/v1")
 DATASET_ID = os.getenv("RAGFLOW_DATASET_ID", "ffa94e65f0d111f0b9b666b15b6be987")
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://ollama:11434")
 
