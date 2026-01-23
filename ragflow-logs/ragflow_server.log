@@ -994,3 +994,560 @@ peewee.OperationalError: (2003, "Can't connect to MySQL server on 'mysql' ([Errn
 2026-01-21 06:43:06,535 INFO     18 MAX_FILE_COUNT_PER_USER: 0
 2026-01-21 06:52:37,148 INFO     18 Close text detector.
 2026-01-21 06:52:38,247 INFO     18 Close text recognizer.
+2026-01-22 07:46:37,422 INFO     24 ragflow_server log path: /ragflow/logs/ragflow_server.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-22 07:46:37,423 INFO     24 
+        ____   ___    ______ ______ __
+       / __ \ /   |  / ____// ____// /____  _      __
+      / /_/ // /| | / / __ / /_   / // __ \| | /| / /
+     / _, _// ___ |/ /_/ // __/  / // /_/ /| |/ |/ /
+    /_/ |_|/_/  |_|\____//_/    /_/ \____/ |__/|__/
+
+    
+2026-01-22 07:46:37,424 INFO     24 RAGFlow version: v0.23.1
+2026-01-22 07:46:37,425 INFO     24 project base: /ragflow
+2026-01-22 07:46:37,425 INFO     24 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-22 07:46:37,428 WARNING  24 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-22 07:46:37,433 WARNING  24 Load term.freq FAIL!
+2026-01-22 07:46:37,442 WARNING  24 Realtime synonym is disabled, since no redis connection.
+2026-01-22 07:46:37,446 WARNING  24 Load term.freq FAIL!
+2026-01-22 07:46:37,451 WARNING  24 Realtime synonym is disabled, since no redis connection.
+2026-01-22 07:46:37,452 INFO     24 MAX_CONTENT_LENGTH: 134217728
+2026-01-22 07:46:37,453 INFO     24 MAX_FILE_COUNT_PER_USER: 0
+2026-01-22 07:46:44,444 INFO     24 Init message_id sequence done, current max id is 1.
+2026-01-22 07:46:44,446 INFO     24 No memory found, no need to init memory size.
+2026-01-22 07:46:44,447 INFO     24 init web data success:6.544011116027832
+2026-01-22 07:46:44,449 INFO     24 Recursively importing plugins from path `/ragflow/plugin/embedded_plugins`
+2026-01-22 07:46:44,452 INFO     24 Loaded llm_tools plugin BadCalculatorPlugin version 1.0.0
+2026-01-22 07:46:44,453 INFO     24 RAGFlow HTTP server start...
+2026-01-22 07:46:44,742 INFO     24 Running on http://0.0.0.0:9380 (CTRL + C to quit)
+2026-01-22 07:46:45,453 INFO     24 Starting update_progress thread (delayed)
+2026-01-22 07:46:45,455 INFO     24 update_progress lock_value: 6e41b840-1205-4008-882a-cf527116f61b
+2026-01-22 07:47:03,634 WARNING  24 load_user got exception Signature b'Dr68yHhCX5W68MMFH24WBkFEv0I' does not match
+2026-01-22 07:47:03,637 ERROR    24 Unhandled exception during request
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1500, in full_dispatch_request
+    result = await self.dispatch_request(request_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1597, in dispatch_request
+    return await self.ensure_async(handler)(**request_.view_args)  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/api/apps/__init__.py", line 168, in wrapper
+    raise Unauthorized()
+quart_auth.extension.Unauthorized: 401 Unauthorized: The server could not verify that you are authorized to access the URL requested. You either supplied the wrong credentials (e.g. a bad password), or your browser doesn't understand how to supply the credentials required.
+2026-01-22 07:47:03,640 WARNING  24 load_user got exception Signature b'Dr68yHhCX5W68MMFH24WBkFEv0I' does not match
+2026-01-22 07:47:03,646 WARNING  24 load_user got exception Signature b'Dr68yHhCX5W68MMFH24WBkFEv0I' does not match
+2026-01-22 07:47:03,646 ERROR    24 Unhandled exception during request
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1500, in full_dispatch_request
+    result = await self.dispatch_request(request_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1597, in dispatch_request
+    return await self.ensure_async(handler)(**request_.view_args)  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/api/apps/__init__.py", line 168, in wrapper
+    raise Unauthorized()
+quart_auth.extension.Unauthorized: 401 Unauthorized: The server could not verify that you are authorized to access the URL requested. You either supplied the wrong credentials (e.g. a bad password), or your browser doesn't understand how to supply the credentials required.
+2026-01-22 07:47:03,648 ERROR    24 Unhandled exception during request
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1500, in full_dispatch_request
+    result = await self.dispatch_request(request_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1597, in dispatch_request
+    return await self.ensure_async(handler)(**request_.view_args)  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/api/apps/__init__.py", line 168, in wrapper
+    raise Unauthorized()
+quart_auth.extension.Unauthorized: 401 Unauthorized: The server could not verify that you are authorized to access the URL requested. You either supplied the wrong credentials (e.g. a bad password), or your browser doesn't understand how to supply the credentials required.
+2026-01-22 07:47:03,649 WARNING  24 load_user got exception Signature b'Dr68yHhCX5W68MMFH24WBkFEv0I' does not match
+2026-01-22 07:47:03,654 ERROR    24 Unhandled exception during request
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1500, in full_dispatch_request
+    result = await self.dispatch_request(request_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1597, in dispatch_request
+    return await self.ensure_async(handler)(**request_.view_args)  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/api/apps/__init__.py", line 168, in wrapper
+    raise Unauthorized()
+quart_auth.extension.Unauthorized: 401 Unauthorized: The server could not verify that you are authorized to access the URL requested. You either supplied the wrong credentials (e.g. a bad password), or your browser doesn't understand how to supply the credentials required.
+2026-01-22 07:55:36,142 INFO     20 ragflow_server log path: /ragflow/logs/ragflow_server.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-22 07:55:36,144 INFO     20 
+        ____   ___    ______ ______ __
+       / __ \ /   |  / ____// ____// /____  _      __
+      / /_/ // /| | / / __ / /_   / // __ \| | /| / /
+     / _, _// ___ |/ /_/ // __/  / // /_/ /| |/ |/ /
+    /_/ |_|/_/  |_|\____//_/    /_/ \____/ |__/|__/
+
+    
+2026-01-22 07:55:36,145 INFO     20 RAGFlow version: v0.23.1
+2026-01-22 07:55:36,147 INFO     20 project base: /ragflow
+2026-01-22 07:55:36,149 INFO     20 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-22 07:55:36,153 WARNING  20 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-22 07:55:36,163 WARNING  20 Load term.freq FAIL!
+2026-01-22 07:55:36,181 WARNING  20 Realtime synonym is disabled, since no redis connection.
+2026-01-22 07:55:36,204 WARNING  20 Load term.freq FAIL!
+2026-01-22 07:55:36,228 WARNING  20 Realtime synonym is disabled, since no redis connection.
+2026-01-22 07:55:36,232 INFO     20 MAX_CONTENT_LENGTH: 134217728
+2026-01-22 07:55:36,245 INFO     20 MAX_FILE_COUNT_PER_USER: 0
+2026-01-22 07:55:51,626 INFO     20 No need to init message_id sequence, current max id is 1.
+2026-01-22 07:55:51,642 INFO     20 No memory found, no need to init memory size.
+2026-01-22 07:55:51,645 INFO     20 init web data success:14.435430765151978
+2026-01-22 07:55:51,648 INFO     20 Recursively importing plugins from path `/ragflow/plugin/embedded_plugins`
+2026-01-22 07:55:51,651 INFO     20 Loaded llm_tools plugin BadCalculatorPlugin version 1.0.0
+2026-01-22 07:55:51,681 INFO     20 RAGFlow HTTP server start...
+2026-01-22 07:55:52,547 INFO     20 Running on http://0.0.0.0:9380 (CTRL + C to quit)
+2026-01-22 07:55:52,681 INFO     20 Starting update_progress thread (delayed)
+2026-01-22 07:55:52,686 INFO     20 update_progress lock_value: 7e4919d2-c3c7-491a-9c44-7be9863e1713
+2026-01-23 06:51:35,823 INFO     22 ragflow_server log path: /ragflow/logs/ragflow_server.log, log levels: {'peewee': 'WARNING', 'pdfminer': 'WARNING', 'root': 'INFO'}
+2026-01-23 06:51:35,824 INFO     22 
+        ____   ___    ______ ______ __
+       / __ \ /   |  / ____// ____// /____  _      __
+      / /_/ // /| | / / __ / /_   / // __ \| | /| / /
+     / _, _// ___ |/ /_/ // __/  / // /_/ /| |/ |/ /
+    /_/ |_|/_/  |_|\____//_/    /_/ \____/ |__/|__/
+
+    
+2026-01-23 06:51:35,825 INFO     22 RAGFlow version: v0.23.1
+2026-01-23 06:51:35,826 INFO     22 project base: /ragflow
+2026-01-23 06:51:35,827 INFO     22 Current configs, from /ragflow/conf/service_conf.yaml:
+	ragflow: {'host': '0.0.0.0', 'http_port': 9380}
+	admin: {'host': '0.0.0.0', 'http_port': 9381}
+	mysql: {'name': 'rag_flow', 'user': 'root', 'password': '********', 'host': 'mysql', 'port': 3306, 'max_connections': 900, 'stale_timeout': 300, 'max_allowed_packet': 1073741824}
+	minio: {'user': 'rag_flow', 'password': '********', 'host': 'minio:9000', 'bucket': '', 'prefix_path': ''}
+	es: {'hosts': 'http://es01:9200', 'username': 'elastic', 'password': '********'}
+	os: {'hosts': 'http://opensearch01:9201', 'username': 'admin', 'password': '********'}
+	infinity: {'uri': 'infinity:23817', 'db_name': 'default_db'}
+	oceanbase: {'scheme': 'oceanbase', 'config': {'db_name': 'ragflow_doc', 'user': 'root@ragflow', 'password': 'infini_rag_flow', 'host': 'oceanbase', 'port': 2881}}
+	redis: {'db': 1, 'username': '', 'password': '********', 'host': 'redis:6379'}
+	user_default_llm: {'default_models': {'embedding_model': {'api_key': 'xxx', 'base_url': 'http://tei:80'}}}
+2026-01-23 06:51:35,829 WARNING  22 SECURITY WARNING: Using auto-generated SECRET_KEY.
+2026-01-23 06:51:35,834 WARNING  22 Load term.freq FAIL!
+2026-01-23 06:51:35,844 WARNING  22 Realtime synonym is disabled, since no redis connection.
+2026-01-23 06:51:35,848 WARNING  22 Load term.freq FAIL!
+2026-01-23 06:51:35,854 WARNING  22 Realtime synonym is disabled, since no redis connection.
+2026-01-23 06:51:35,855 INFO     22 MAX_CONTENT_LENGTH: 134217728
+2026-01-23 06:51:35,856 INFO     22 MAX_FILE_COUNT_PER_USER: 0
+2026-01-23 06:51:44,030 INFO     22 Init message_id sequence done, current max id is 1.
+2026-01-23 06:51:44,032 INFO     22 No memory found, no need to init memory size.
+2026-01-23 06:51:44,033 INFO     22 init web data success:7.661722183227539
+2026-01-23 06:51:44,035 INFO     22 Recursively importing plugins from path `/ragflow/plugin/embedded_plugins`
+2026-01-23 06:51:44,038 INFO     22 Loaded llm_tools plugin BadCalculatorPlugin version 1.0.0
+2026-01-23 06:51:44,039 INFO     22 RAGFlow HTTP server start...
+2026-01-23 06:51:44,353 INFO     22 Running on http://0.0.0.0:9380 (CTRL + C to quit)
+2026-01-23 06:51:45,039 INFO     22 Starting update_progress thread (delayed)
+2026-01-23 06:51:45,041 INFO     22 update_progress lock_value: f6f22be2-afb2-49d9-a7cf-a5090f5c6625
+2026-01-23 07:05:06,651 ERROR    22 The requested URL /api/v1/search was not found
+2026-01-23 07:13:13,000 WARNING  22 load_user got exception Signature b'tFStA0DtRkOCCVjGckB_lv_x7YY' does not match
+2026-01-23 07:13:13,002 ERROR    22 Unhandled exception during request
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1500, in full_dispatch_request
+    result = await self.dispatch_request(request_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1597, in dispatch_request
+    return await self.ensure_async(handler)(**request_.view_args)  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/api/apps/__init__.py", line 168, in wrapper
+    raise Unauthorized()
+quart_auth.extension.Unauthorized: 401 Unauthorized: The server could not verify that you are authorized to access the URL requested. You either supplied the wrong credentials (e.g. a bad password), or your browser doesn't understand how to supply the credentials required.
+2026-01-23 07:13:13,021 WARNING  22 load_user got exception Signature b'tFStA0DtRkOCCVjGckB_lv_x7YY' does not match
+2026-01-23 07:13:13,022 ERROR    22 Unhandled exception during request
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1500, in full_dispatch_request
+    result = await self.dispatch_request(request_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1597, in dispatch_request
+    return await self.ensure_async(handler)(**request_.view_args)  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/api/apps/__init__.py", line 168, in wrapper
+    raise Unauthorized()
+quart_auth.extension.Unauthorized: 401 Unauthorized: The server could not verify that you are authorized to access the URL requested. You either supplied the wrong credentials (e.g. a bad password), or your browser doesn't understand how to supply the credentials required.
+2026-01-23 07:13:13,074 WARNING  22 load_user got exception Signature b'tFStA0DtRkOCCVjGckB_lv_x7YY' does not match
+2026-01-23 07:13:13,075 ERROR    22 Unhandled exception during request
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1500, in full_dispatch_request
+    result = await self.dispatch_request(request_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1597, in dispatch_request
+    return await self.ensure_async(handler)(**request_.view_args)  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/api/apps/__init__.py", line 168, in wrapper
+    raise Unauthorized()
+quart_auth.extension.Unauthorized: 401 Unauthorized: The server could not verify that you are authorized to access the URL requested. You either supplied the wrong credentials (e.g. a bad password), or your browser doesn't understand how to supply the credentials required.
+2026-01-23 07:13:13,077 WARNING  22 load_user got exception Signature b'tFStA0DtRkOCCVjGckB_lv_x7YY' does not match
+2026-01-23 07:13:13,079 ERROR    22 Unhandled exception during request
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1500, in full_dispatch_request
+    result = await self.dispatch_request(request_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1597, in dispatch_request
+    return await self.ensure_async(handler)(**request_.view_args)  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/api/apps/__init__.py", line 168, in wrapper
+    raise Unauthorized()
+quart_auth.extension.Unauthorized: 401 Unauthorized: The server could not verify that you are authorized to access the URL requested. You either supplied the wrong credentials (e.g. a bad password), or your browser doesn't understand how to supply the credentials required.
+2026-01-23 07:13:50,483 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:15:55,618 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:15:57,510 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:16:18,349 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:16:28,852 INFO     22 [HISTORY][
+  {
+    "role": "user",
+    "content": "Hello! How are you doing!"
+  }
+]
+2026-01-23 07:16:28,869 INFO     22 
+LiteLLM completion() model= llama3.1; provider = ollama_chat
+2026-01-23 07:16:47,940 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:17:41,883 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:17:41,902 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:17:59,661 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:18:06,494 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:18:40,660 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:18:40,694 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:18:53,587 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:19:11,702 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:19:11,738 INFO     22 HEAD http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f [status:404 duration:0.096s]
+2026-01-23 07:20:47,608 INFO     22 HEAD http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f [status:404 duration:0.006s]
+2026-01-23 07:20:47,617 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:21:01,251 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:21:18,128 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:21:18,156 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:21:19,137 INFO     22 HEAD http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f [status:404 duration:0.003s]
+2026-01-23 07:21:23,623 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:25:35,076 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:25:35,672 INFO     22 HEAD http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f [status:200 duration:0.090s]
+2026-01-23 07:25:52,375 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:25:55,676 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:26:19,072 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:26:43,368 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.099s]
+2026-01-23 07:27:38,066 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:28:39,365 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:28:43,762 INFO     22 HEAD http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f [status:200 duration:0.098s]
+2026-01-23 07:28:43,862 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.092s]
+2026-01-23 07:37:19,657 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:37:19,667 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:37:20,679 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 07:37:20,683 INFO     22 HEAD http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f [status:200 duration:0.004s]
+2026-01-23 07:37:20,694 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.007s]
+2026-01-23 07:37:26,017 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.439s]
+2026-01-23 07:37:26,138 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.103s]
+2026-01-23 07:37:26,245 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.084s]
+2026-01-23 07:37:26,347 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.084s]
+2026-01-23 07:37:26,495 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.126s]
+2026-01-23 07:37:26,598 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.083s]
+2026-01-23 07:37:26,693 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.073s]
+2026-01-23 07:37:27,064 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.354s]
+2026-01-23 07:37:27,157 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.071s]
+2026-01-23 07:37:27,277 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.101s]
+2026-01-23 07:37:27,391 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.094s]
+2026-01-23 07:37:27,509 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.099s]
+2026-01-23 07:37:27,675 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.118s]
+2026-01-23 07:37:27,807 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.109s]
+2026-01-23 07:37:27,927 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.094s]
+2026-01-23 07:37:28,034 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.084s]
+2026-01-23 07:37:28,129 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.071s]
+2026-01-23 07:37:28,211 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.060s]
+2026-01-23 07:37:28,295 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.065s]
+2026-01-23 07:37:28,447 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.127s]
+2026-01-23 07:37:28,579 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.108s]
+2026-01-23 07:37:28,748 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.145s]
+2026-01-23 07:37:28,901 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.113s]
+2026-01-23 07:37:29,012 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_update_by_query?refresh=true&slices=5 [status:200 duration:0.091s]
+2026-01-23 07:37:45,705 ERROR    22 The requested URL /api/v1/search was not found
+2026-01-23 07:37:46,913 ERROR    22 The requested URL /api/v1/search was not found
+2026-01-23 07:49:47,948 ERROR    22 The requested URL /api/v1/search was not found
+2026-01-23 07:49:49,158 ERROR    22 The requested URL /api/v1/search was not found
+2026-01-23 08:18:24,012 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 08:18:24,104 INFO     22 HEAD http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f [status:200 duration:0.071s]
+2026-01-23 08:18:24,123 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.012s]
+2026-01-23 08:18:25,030 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 08:32:50,909 ERROR    22 The requested URL /api/v1/ was not found
+2026-01-23 08:32:51,436 ERROR    22 The requested URL /favicon.ico was not found
+2026-01-23 08:33:06,051 ERROR    22 Unhandled exception during request
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1500, in full_dispatch_request
+    result = await self.dispatch_request(request_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1591, in dispatch_request
+    self.raise_routing_exception(request_)
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1578, in raise_routing_exception
+    raise request.routing_exception
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/ctx.py", line 73, in match_request
+    ) = self.url_adapter.match(  # type: ignore
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 624, in match
+    raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+werkzeug.exceptions.MethodNotAllowed: 405 Method Not Allowed: The method is not allowed for the requested URL.
+2026-01-23 08:36:19,011 ERROR    22 Unhandled exception during request
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1500, in full_dispatch_request
+    result = await self.dispatch_request(request_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1591, in dispatch_request
+    self.raise_routing_exception(request_)
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1578, in raise_routing_exception
+    raise request.routing_exception
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/ctx.py", line 73, in match_request
+    ) = self.url_adapter.match(  # type: ignore
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 624, in match
+    raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+werkzeug.exceptions.MethodNotAllowed: 405 Method Not Allowed: The method is not allowed for the requested URL.
+2026-01-23 08:37:25,186 ERROR    22 Unhandled exception during request
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1500, in full_dispatch_request
+    result = await self.dispatch_request(request_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1591, in dispatch_request
+    self.raise_routing_exception(request_)
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1578, in raise_routing_exception
+    raise request.routing_exception
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/ctx.py", line 73, in match_request
+    ) = self.url_adapter.match(  # type: ignore
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 624, in match
+    raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+werkzeug.exceptions.MethodNotAllowed: 405 Method Not Allowed: The method is not allowed for the requested URL.
+2026-01-23 08:37:48,331 ERROR    22 Unhandled exception during request
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1500, in full_dispatch_request
+    result = await self.dispatch_request(request_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1591, in dispatch_request
+    self.raise_routing_exception(request_)
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1578, in raise_routing_exception
+    raise request.routing_exception
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/ctx.py", line 73, in match_request
+    ) = self.url_adapter.match(  # type: ignore
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 624, in match
+    raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+werkzeug.exceptions.MethodNotAllowed: 405 Method Not Allowed: The method is not allowed for the requested URL.
+2026-01-23 08:38:43,795 ERROR    22 Unhandled exception during request
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1500, in full_dispatch_request
+    result = await self.dispatch_request(request_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1591, in dispatch_request
+    self.raise_routing_exception(request_)
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1578, in raise_routing_exception
+    raise request.routing_exception
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/ctx.py", line 73, in match_request
+    ) = self.url_adapter.match(  # type: ignore
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 624, in match
+    raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+werkzeug.exceptions.MethodNotAllowed: 405 Method Not Allowed: The method is not allowed for the requested URL.
+2026-01-23 08:38:57,422 ERROR    22 Unhandled exception during request
+Traceback (most recent call last):
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1500, in full_dispatch_request
+    result = await self.dispatch_request(request_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1591, in dispatch_request
+    self.raise_routing_exception(request_)
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/app.py", line 1578, in raise_routing_exception
+    raise request.routing_exception
+  File "/ragflow/.venv/lib/python3.12/site-packages/quart/ctx.py", line 73, in match_request
+    ) = self.url_adapter.match(  # type: ignore
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ragflow/.venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 624, in match
+    raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+werkzeug.exceptions.MethodNotAllowed: 405 Method Not Allowed: The method is not allowed for the requested URL.
+2026-01-23 08:39:35,965 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 08:39:35,972 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 08:39:37,044 INFO     22 HEAD http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f [status:200 duration:0.063s]
+2026-01-23 08:39:37,054 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.006s]
+2026-01-23 09:13:09,555 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 09:13:09,616 INFO     22 HEAD http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f [status:200 duration:0.079s]
+2026-01-23 09:13:09,644 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.020s]
+2026-01-23 09:14:36,231 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 09:14:36,259 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 09:14:37,242 INFO     22 HEAD http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f [status:200 duration:0.003s]
+2026-01-23 09:14:37,252 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.006s]
+2026-01-23 09:14:42,783 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 09:15:50,525 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 09:17:51,021 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 09:17:54,390 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 09:17:55,381 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 09:17:56,397 INFO     22 HEAD http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f [status:200 duration:0.003s]
+2026-01-23 09:17:56,405 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.005s]
+2026-01-23 09:18:34,634 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 09:18:34,663 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 09:18:35,644 INFO     22 HEAD http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f [status:200 duration:0.003s]
+2026-01-23 09:18:35,652 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.005s]
+2026-01-23 09:23:20,854 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 09:23:20,868 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 09:23:21,863 INFO     22 HEAD http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f [status:200 duration:0.003s]
+2026-01-23 09:23:21,872 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.006s]
+2026-01-23 09:26:46,705 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.564s]
+2026-01-23 09:54:23,299 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 09:54:23,426 INFO     22 HEAD http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f [status:200 duration:0.091s]
+2026-01-23 09:54:23,438 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.008s]
+2026-01-23 10:04:06,017 INFO     22 HEAD http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f [status:200 duration:0.005s]
+2026-01-23 10:04:06,019 WARNING  22 Database connection issue (attempt 1/5): (0, '')
+2026-01-23 10:04:06,029 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.007s]
+2026-01-23 11:06:41,020 INFO     22 [HISTORY][
+  {
+    "role": "system",
+    "content": "## Role\nYou are a text analyzer.\n\n## Task\nExtract the most important keywords/phrases of a given piece of text content.\n\n## Requirements\n- Summarize the text content, and give the top 3 important keywords/phrases.\n- The keywords MUST be in the same language as the given piece of text content.\n- The keywords are delimited by ENGLISH COMMA.\n- Output keywords ONLY.\n\n---\n\n## Text Content\nPolítica de crédito para risco MÉDIO. Forneça detalhes sobre critérios de aprovação, limites e condições."
+  },
+  {
+    "role": "user",
+    "content": "Output: "
+  }
+]
+2026-01-23 11:06:41,053 INFO     22 
+LiteLLM completion() model= llama3.1; provider = ollama_chat
+2026-01-23 11:06:50,767 ERROR    22 Request failed: 
+NoneType: None
+2026-01-23 11:06:50,859 INFO     22 [HISTORY][
+  {
+    "role": "system",
+    "content": "## Role\nYou are a text analyzer.\n\n## Task\nExtract the most important keywords/phrases of a given piece of text content.\n\n## Requirements\n- Summarize the text content, and give the top 3 important keywords/phrases.\n- The keywords MUST be in the same language as the given piece of text content.\n- The keywords are delimited by ENGLISH COMMA.\n- Output keywords ONLY.\n\n---\n\n## Text Content\nPolítica de crédito para risco MÉDIO. Forneça detalhes sobre critérios de aprovação, limites e condições."
+  },
+  {
+    "role": "user",
+    "content": "Output: "
+  }
+]
+2026-01-23 11:06:50,866 INFO     22 
+LiteLLM completion() model= llama3.1; provider = ollama_chat
+2026-01-23 11:07:00,775 ERROR    22 Request failed: 
+NoneType: None
+2026-01-23 11:07:02,090 INFO     22 [HISTORY][
+  {
+    "role": "system",
+    "content": "## Role\nYou are a text analyzer.\n\n## Task\nExtract the most important keywords/phrases of a given piece of text content.\n\n## Requirements\n- Summarize the text content, and give the top 3 important keywords/phrases.\n- The keywords MUST be in the same language as the given piece of text content.\n- The keywords are delimited by ENGLISH COMMA.\n- Output keywords ONLY.\n\n---\n\n## Text Content\nRegulamentações BACEN relevantes para análise de crédito de risco MÉDIO. Liste resoluções e circulares principais."
+  },
+  {
+    "role": "user",
+    "content": "Output: "
+  }
+]
+2026-01-23 11:07:02,093 INFO     22 
+LiteLLM completion() model= llama3.1; provider = ollama_chat
+2026-01-23 11:07:10,381 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.864s]
+2026-01-23 11:09:29,320 INFO     22 [HISTORY][
+  {
+    "role": "system",
+    "content": "## Role\nYou are a text analyzer.\n\n## Task\nExtract the most important keywords/phrases of a given piece of text content.\n\n## Requirements\n- Summarize the text content, and give the top 3 important keywords/phrases.\n- The keywords MUST be in the same language as the given piece of text content.\n- The keywords are delimited by ENGLISH COMMA.\n- Output keywords ONLY.\n\n---\n\n## Text Content\nPolítica de crédito para risco MÉDIO. Forneça detalhes sobre critérios de aprovação, limites e condições."
+  },
+  {
+    "role": "user",
+    "content": "Output: "
+  }
+]
+2026-01-23 11:09:29,324 INFO     22 
+LiteLLM completion() model= llama3.1; provider = ollama_chat
+2026-01-23 11:09:34,122 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.286s]
+2026-01-23 11:09:35,513 INFO     22 [HISTORY][
+  {
+    "role": "system",
+    "content": "## Role\nYou are a text analyzer.\n\n## Task\nExtract the most important keywords/phrases of a given piece of text content.\n\n## Requirements\n- Summarize the text content, and give the top 3 important keywords/phrases.\n- The keywords MUST be in the same language as the given piece of text content.\n- The keywords are delimited by ENGLISH COMMA.\n- Output keywords ONLY.\n\n---\n\n## Text Content\nRegulamentações BACEN relevantes para análise de crédito de risco MÉDIO. Liste resoluções e circulares principais."
+  },
+  {
+    "role": "user",
+    "content": "Output: "
+  }
+]
+2026-01-23 11:09:35,515 INFO     22 
+LiteLLM completion() model= llama3.1; provider = ollama_chat
+2026-01-23 11:09:40,594 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.222s]
+2026-01-23 11:12:54,679 INFO     22 [HISTORY][
+  {
+    "role": "system",
+    "content": "## Role\nYou are a text analyzer.\n\n## Task\nExtract the most important keywords/phrases of a given piece of text content.\n\n## Requirements\n- Summarize the text content, and give the top 3 important keywords/phrases.\n- The keywords MUST be in the same language as the given piece of text content.\n- The keywords are delimited by ENGLISH COMMA.\n- Output keywords ONLY.\n\n---\n\n## Text Content\nPolítica de crédito para risco MÉDIO. Forneça detalhes sobre critérios de aprovação, limites e condições."
+  },
+  {
+    "role": "user",
+    "content": "Output: "
+  }
+]
+2026-01-23 11:12:54,681 INFO     22 
+LiteLLM completion() model= llama3.1; provider = ollama_chat
+2026-01-23 11:12:59,389 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.230s]
+2026-01-23 11:13:00,794 INFO     22 [HISTORY][
+  {
+    "role": "system",
+    "content": "## Role\nYou are a text analyzer.\n\n## Task\nExtract the most important keywords/phrases of a given piece of text content.\n\n## Requirements\n- Summarize the text content, and give the top 3 important keywords/phrases.\n- The keywords MUST be in the same language as the given piece of text content.\n- The keywords are delimited by ENGLISH COMMA.\n- Output keywords ONLY.\n\n---\n\n## Text Content\nRegulamentações BACEN relevantes para análise de crédito de risco MÉDIO. Liste resoluções e circulares principais."
+  },
+  {
+    "role": "user",
+    "content": "Output: "
+  }
+]
+2026-01-23 11:13:00,796 INFO     22 
+LiteLLM completion() model= llama3.1; provider = ollama_chat
+2026-01-23 11:13:05,700 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.192s]
+2026-01-23 11:24:02,646 INFO     22 [HISTORY][
+  {
+    "role": "system",
+    "content": "## Role\nYou are a text analyzer.\n\n## Task\nExtract the most important keywords/phrases of a given piece of text content.\n\n## Requirements\n- Summarize the text content, and give the top 3 important keywords/phrases.\n- The keywords MUST be in the same language as the given piece of text content.\n- The keywords are delimited by ENGLISH COMMA.\n- Output keywords ONLY.\n\n---\n\n## Text Content\nPolítica de crédito para risco MÉDIO. Forneça detalhes sobre critérios de aprovação, limites e condições."
+  },
+  {
+    "role": "user",
+    "content": "Output: "
+  }
+]
+2026-01-23 11:24:02,649 INFO     22 
+LiteLLM completion() model= llama3.1; provider = ollama_chat
+2026-01-23 11:24:21,034 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.327s]
+2026-01-23 11:24:22,505 INFO     22 [HISTORY][
+  {
+    "role": "system",
+    "content": "## Role\nYou are a text analyzer.\n\n## Task\nExtract the most important keywords/phrases of a given piece of text content.\n\n## Requirements\n- Summarize the text content, and give the top 3 important keywords/phrases.\n- The keywords MUST be in the same language as the given piece of text content.\n- The keywords are delimited by ENGLISH COMMA.\n- Output keywords ONLY.\n\n---\n\n## Text Content\nRegulamentações BACEN relevantes para análise de crédito de risco MÉDIO. Liste resoluções e circulares principais."
+  },
+  {
+    "role": "user",
+    "content": "Output: "
+  }
+]
+2026-01-23 11:24:22,509 INFO     22 
+LiteLLM completion() model= llama3.1; provider = ollama_chat
+2026-01-23 11:24:27,713 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.155s]
+2026-01-23 11:27:29,462 INFO     22 [HISTORY][
+  {
+    "role": "system",
+    "content": "## Role\nYou are a text analyzer.\n\n## Task\nExtract the most important keywords/phrases of a given piece of text content.\n\n## Requirements\n- Summarize the text content, and give the top 3 important keywords/phrases.\n- The keywords MUST be in the same language as the given piece of text content.\n- The keywords are delimited by ENGLISH COMMA.\n- Output keywords ONLY.\n\n---\n\n## Text Content\nPolítica de crédito para risco MÉDIO. Forneça detalhes sobre critérios de aprovação, limites e condições."
+  },
+  {
+    "role": "user",
+    "content": "Output: "
+  }
+]
+2026-01-23 11:27:29,466 INFO     22 
+LiteLLM completion() model= llama3.1; provider = ollama_chat
+2026-01-23 11:27:34,487 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.201s]
+2026-01-23 11:27:35,966 INFO     22 [HISTORY][
+  {
+    "role": "system",
+    "content": "## Role\nYou are a text analyzer.\n\n## Task\nExtract the most important keywords/phrases of a given piece of text content.\n\n## Requirements\n- Summarize the text content, and give the top 3 important keywords/phrases.\n- The keywords MUST be in the same language as the given piece of text content.\n- The keywords are delimited by ENGLISH COMMA.\n- Output keywords ONLY.\n\n---\n\n## Text Content\nRegulamentações BACEN relevantes para análise de crédito de risco MÉDIO. Liste resoluções e circulares principais."
+  },
+  {
+    "role": "user",
+    "content": "Output: "
+  }
+]
+2026-01-23 11:27:35,969 INFO     22 
+LiteLLM completion() model= llama3.1; provider = ollama_chat
+2026-01-23 11:27:41,246 INFO     22 POST http://es01:9200/ragflow_905a2476f72311f0b3a892e0b789fe7f/_search [status:200 duration:0.154s]

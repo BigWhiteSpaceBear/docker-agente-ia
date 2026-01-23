@@ -1,0 +1,51 @@
+Política de Análise de Risco de Crédito
+
+Versão: 1.0
+
+Data de Aprovação: 13/01/2026
+
+1. Objetivo
+
+Esta política tem como objetivo definir a metodologia e os critérios para a análise e classificação do risco de crédito das operações realizadas pela instituição. A finalidade é assegurar que as decisões de crédito sejam baseadas em uma avaliação criteriosa da capacidade de pagamento dos clientes e do risco intrínseco de cada operação, protegendo os ativos da instituição.
+
+2. Metodologia de Análise
+
+A análise de risco de crédito será fundamentada em uma abordagem quantitativa e qualitativa, considerando os "5 Cs do Crédito":
+
+- Caráter: Avaliação da reputação e do histórico de crédito do proponente. Inclui a análise de pontualidade em pagamentos anteriores e a consulta a bureaus de crédito.
+- Capacidade: Verificação da capacidade do proponente de honrar o compromisso financeiro. A análise se baseia na comprovação de renda, no fluxo de caixa e no cálculo da relação entre dívida e renda (DTI - Debt-to-Income Ratio).
+- Capital: Análise da situação financeira e patrimonial do proponente. Considera-se o patrimônio líquido, a liquidez dos ativos e a estrutura de capital (no caso de empresas).
+- Condições: Avaliação das condições macroeconômicas e do setor de atuação do proponente que possam impactar sua capacidade de pagamento.
+- Colateral (Garantias): Análise das garantias oferecidas na operação, que servem como mitigador de risco em caso de inadimplência.
+
+3. Classificação de Risco
+
+As propostas de crédito serão classificadas em níveis de risco, de acordo com o sistema de pontuação (credit scoring) da instituição. A pontuação é calculada com base em diversas variáveis, como histórico de pagamentos, nível de endividamento, estabilidade da renda, entre outras.
+
+4. Documentação Necessária
+
+A análise de risco exige a apresentação de documentação completa e legível. A lista de documentos pode variar conforme o produto de crédito e o perfil do cliente, mas geralmente inclui:
+
+4.1. Pessoa Física
+
+- Documento de Identificação com foto (RG, CNH)
+- CPF
+- Comprovante de Residência recente (últimos 3 meses)
+- Comprovante de Renda (holerites, extratos bancários, declaração de IR)
+
+4.2. Pessoa Jurídica
+
+- Contrato Social e alterações
+- Cartão CNPJ
+- Documentos dos sócios
+- Faturamento dos últimos 12 meses
+- Balanços e Demonstrações Financeiras (DRE, DFC)
+- Certidões Negativas de Débitos (CNDs)
+
+5. Monitoramento
+
+A carteira de crédito será monitorada continuamente para identificar sinais de deterioração do risco. Clientes que apresentem atrasos nos pagamentos, aumento do endividamento ou outras alterações negativas em seu perfil serão reavaliados e poderão ter seus limites de crédito revistos ou bloqueados.
+
+6. Revisão da Política
+
+Esta política será revisada anualmente para incorporar novas tecnologias de análise de risco, alterações regulatórias e as melhores práticas de mercado.

@@ -8,13 +8,14 @@ from typing import Optional, Dict, Any, List
 from dataclasses import dataclass, field
 from enum import Enum
 import requests
+import re
 
 # =================================================================
 # 1. CONFIGURAÇÕES
 # =================================================================
-RAGFLOW_API_KEY = os.getenv("RAGFLOW_API_KEY", "ragflow-h8lAb6uJntx98I5VOE6LGCtxUlE1UQOK9JIrLr3rv1s")
-RAGFLOW_BASE_URL = os.getenv("RAGFLOW_API_URL", "http://ragflow-cpu:9380/api/v1")
-DATASET_ID = os.getenv("RAGFLOW_DATASET_ID", "ffa94e65f0d111f0b9b666b15b6be987")
+RAGFLOW_API_KEY = "ragflow-GUY7ZV-fxRZXJDhVJfK1eYXAdsJzWajNN_8mnIIqg8I"
+RAGFLOW_BASE_URL = "http://ragflow-cpu:9380/api/v1"
+DATASET_ID = "c26eacc8f7e811f09a1aae5f51f02bdf"
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://ollama:11434")
 
 # Configuração MySQL
@@ -173,6 +174,9 @@ def buscar_cliente(cpf_cnpj: str) -> Optional[Dict]:
     except Exception as e:
         st.error(f"Erro ao buscar cliente: {str(e)}")
         return None
+
+def strip_em_tags(text: str) -> str:
+    return re.sub(r"</?em>", "", text)
 
 def processar_cliente_com_dialog(
     client_data: Dict[str, Any],
@@ -523,25 +527,81 @@ def calcular_saldo_total_devedor(financiamentos: List[Dict]) -> float:
 # =================================================================
 # 4. FUNÇÕES AUXILIARES
 # =================================================================
-def consult_rag(query: str) -> Dict:
-    """Consulta a API do RAGFlow"""
-    try:
-        url = f"{RAGFLOW_BASE_URL}/search"  # Assumindo endpoint /search; ajuste se necessário
-        headers = {
-            "Authorization": f"Bearer {RAGFLOW_API_KEY}",
-            "Content-Type": "application/json"
-        }
-        data = {
-            "dataset_id": DATASET_ID,
-            "query": query
-        }
-        response = requests.post(url, headers=headers, json=data)
-        if response.status_code == 200:
-            return response.json()
-        else:
-            return {"error": response.text}
-    except Exception as e:
-        return {"error": str(e)}
+def consult_rag(query: str, max_retries: int = 2) -> Dict[str, Any]:
+    url = f"{RAGFLOW_BASE_URL}/retrieval"
+
+    api_key = (RAGFLOW_API_KEY or "").strip()
+    if not api_key:
+        return {"success": False, "error": "RAGFLOW_API_KEY vazio", "chunks": [], "data": {}}
+
+    # Normaliza para evitar "Bearer Bearer ..."
+    if api_key.lower().startswith("bearer "):
+        auth_header = api_key  # já veio completo
+    else:
+        auth_header = f"Bearer {api_key}"
+
+    headers = {
+        "Authorization": auth_header,
+        "Content-Type": "application/json",
+    }
+
+    payload = {
+        "question": query,
+        "dataset_ids": [DATASET_ID],
+        "page": 1,
+        "page_size": 10,
+        "similarity_threshold": 0.2,
+        "keyword": True,
+        "highlight": True,
+        # opcionais (defaults da doc):
+        # "top_k": 1024,
+        # "vector_similarity_weight": 0.3,
+    }
+
+    last_error: Dict[str, Any] = {"success": False, "error": "Falha não inicializada", "chunks": [], "data": {}}
+
+    for attempt in range(max_retries):
+        try:
+            resp = requests.post(url, headers=headers, json=payload, timeout=120)
+
+            # Erro HTTP
+            if resp.status_code != 200:
+                last_error = {
+                    "success": False,
+                    "error": f"HTTP {resp.status_code}",
+                    "status_code": resp.status_code,
+                    "response_text": resp.text[:500],
+                    "chunks": [],
+                    "data": {},
+                }
+                continue
+
+            result = resp.json()
+            code = result.get("code")
+            data = result.get("data")
+
+            # Se data vier False/None (como no seu caso), trate como falha (auth/perm/etc.)
+            if not isinstance(data, dict):
+                msg = result.get("message") or "Resposta inválida (data não é objeto). Possível falha de autorização."
+                last_error = {"success": False, "error": msg, "code": code, "chunks": [], "data": {}}
+                continue
+
+            if code != 0:
+                msg = result.get("message", "Erro desconhecido")
+                last_error = {"success": False, "error": msg, "code": code, "chunks": [], "data": data or {}}
+                continue
+
+            chunks = data.get("chunks", [])
+            return {"success": True, "chunks": chunks, "data": data}
+
+        except requests.Timeout:
+            last_error = {"success": False, "error": "Timeout na conexão com RAGFlow (10s)", "chunks": [], "data": {}}
+        except requests.ConnectionError as e:
+            last_error = {"success": False, "error": f"Erro de conexão: {str(e)}", "chunks": [], "data": {}}
+        except Exception as e:
+            last_error = {"success": False, "error": f"Erro inesperado: {str(e)}", "chunks": [], "data": {}}
+
+    return last_error
 
 # =================================================================
 # 5. FUNÇÕES DE RENDERIZAÇÃO
@@ -695,13 +755,13 @@ class AgentOrchestrator:
                 log_placeholder.markdown(self.get_logs_text())
                 time.sleep(0.3)
                 
-                # Executa tasks do agente
+                # # Executa tasks do agente
                 if agent_key == "data_collector":
-                    collected_data.update(self._run_data_collector(agent, client_data, log_placeholder))
+                     collected_data.update(self._run_data_collector(agent, client_data, log_placeholder))
                 elif agent_key == "risk_analyst":
-                    collected_data.update(self._run_risk_analyst(agent, collected_data, log_placeholder))
+                     collected_data.update(self._run_risk_analyst(agent, collected_data, log_placeholder))
                 elif agent_key == "ml_predictor":
-                    collected_data.update(self._run_ml_predictor(agent, collected_data, log_placeholder))
+                     collected_data.update(self._run_ml_predictor(agent, collected_data, log_placeholder))
                 elif agent_key == "rag_consultant":
                     collected_data.update(self._run_rag_consultant(agent, collected_data, log_placeholder))
                 elif agent_key == "reporter":
@@ -784,17 +844,17 @@ class AgentOrchestrator:
             result['cliente'] = client_data
         
             agent.current_task = "Consultando histórico"
-            self.add_log(LogLevel.INFO, agent.name, "Consultando histórico de crédito", task="consultar_historico_credito")
-            log_placeholder.markdown(self.get_logs_text())
-            time.sleep(0.3)
+            # self.add_log(LogLevel.INFO, agent.name, "Consultando histórico de crédito", task="consultar_historico_credito")
+            # log_placeholder.markdown(self.get_logs_text())
+            # time.sleep(0.3)
         
             self.add_log(LogLevel.TOOL, agent.name, "Executando tool", tool="consultar_historico_credito")
             log_placeholder.markdown(self.get_logs_text())
             time.sleep(0.3)
         
-            self.add_log(LogLevel.MCP, agent.name, "Query SQL executada", mcp_connection="mysql://localhost:3306/credit_db")
-            log_placeholder.markdown(self.get_logs_text())
-            time.sleep(0.3)
+            # self.add_log(LogLevel.MCP, agent.name, "Query SQL executada", mcp_connection="mysql://localhost:3306/financiamentos")
+            # log_placeholder.markdown(self.get_logs_text())
+            # time.sleep(0.3)
         
         # Consulta real ao banco para histórico
         
@@ -870,7 +930,7 @@ class AgentOrchestrator:
         api_url = f"https://696bf31d624d7ddccaa261de.mockapi.io/api/consulta/consultaRestricoes/{cpf_cnpj}"
 
         try:
-            self.add_log(LogLevel.MCP, agent.name, f"GET {api_url}", mcp_connection="api://mockapi-restricoes")
+            self.add_log(LogLevel.MCP, agent.name, f"GET", mcp_connection=f"{api_url}")
             log_placeholder.markdown(self.get_logs_text())
             time.sleep(0.5)
 
@@ -1021,12 +1081,12 @@ class AgentOrchestrator:
     def _run_rag_consultant(self, agent: AgentInfo, data: Dict, log_placeholder) -> Dict:
         """Executa o Agente Consultor RAG com chamadas reais à API do RAGFlow"""
         result = {}
-        
-        classificacao = data.get('classificacao_risco', 'MÉDIO')  # Obtido do analista de risco anterior
-        
-        # -------------------------------------------------------------------------
-        # 1. Consulta políticas de crédito via RAGFlow
-        # -------------------------------------------------------------------------
+    
+        classificacao = data.get('classificacao_risco', 'MÉDIO')
+    
+    # -------------------------------------------------------------------------
+    # 1. Consulta políticas de crédito via RAGFlow
+    # -------------------------------------------------------------------------
         agent.current_task = "Consultando políticas de crédito no RAGFlow"
         self.add_log(LogLevel.INFO, agent.name, "Preparando query para políticas de crédito", task="consultar_politicas_credito")
         log_placeholder.markdown(self.get_logs_text())
@@ -1037,54 +1097,62 @@ class AgentOrchestrator:
         time.sleep(0.3)
 
         query_politica = f"Política de crédito para risco {classificacao}. Forneça detalhes sobre critérios de aprovação, limites e condições."
-        
-        self.add_log(LogLevel.MCP, agent.name, f"POST {RAGFLOW_BASE_URL}/search | Query: {query_politica[:50]}...", mcp_connection="api://ragflow/search")
+    
+        self.add_log(LogLevel.MCP, agent.name, f"POST {RAGFLOW_BASE_URL}/retrieval | Query: {query_politica[:50]}...", mcp_connection="api://ragflow/retrieval")
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.5)
 
         rag_response = consult_rag(query_politica)
         
-        if "error" in rag_response:
-            politica = f"Erro ao consultar RAGFlow: {rag_response['error']}"
+        # ✅ VERIFICAÇÃO CORRIGIDA
+        if not rag_response.get("success"):
+        # Erro na consulta
+            politica = f"Erro ao consultar RAGFlow: {rag_response.get('error', 'Erro desconhecido')}"
             self.add_log(LogLevel.ERROR, agent.name, politica)
             result['politica_aplicavel'] = "Política não disponível devido a erro na consulta. Usando default: Aprovação condicional para risco médio."
         else:
-            # -------------------------------------------------------------------------
-            # Ajuste conforme formato real da resposta do RAGFlow
-            # Assumindo que a API retorna algo como:
-            # {"result": "texto da política", "sources": [...], "confidence": 0.85}
-            # ou similar. Ajuste as chaves aqui com base na documentação real do RAGFlow.
-            # Se for uma lista de chunks, concatene ou selecione o melhor.
-            # -------------------------------------------------------------------------
-            if isinstance(rag_response, dict):
-                politica = rag_response.get('result', '') or rag_response.get('response', '') or rag_response.get('answer', '')
-                if not politica:
-                    politica = rag_response.get('chunks', [{}])[0].get('content', '') if 'chunks' in rag_response else ''
-                
-                sources = rag_response.get('sources', []) or rag_response.get('references', [])
-                if sources:
-                    self.add_log(LogLevel.INFO, agent.name, f"Encontradas {len(sources)} fontes de referência")
-                
-                confidence = rag_response.get('confidence', 0.0) or rag_response.get('score', 0.0)
-                if confidence < 0.7:
-                    self.add_log(LogLevel.WARNING, agent.name, f"Baixa confiança na resposta: {confidence:.2f}")
-            else:
-                politica = str(rag_response)  # Fallback se não for dict
+        # ✅ SUCESSO - Processar chunks
+            chunks = rag_response.get('chunks', [])
+            if chunks:
+            # Extrair conteúdo do primeiro chunk (mais relevante)
+                politica = chunks[0].get('content', '')
             
-            if not politica.strip():
+            # Opcional: usar versão com highlight
+                # politica_highlight = chunks[0].get('highlight', politica)
+                # politica_limpa = strip_em_tags(politica_highlight)
+            # Obter confiança (similarity score)
+                similarity = chunks[0].get('similarity', 0)
+            
+            # Extrair fontes
+                sources = [
+                {
+                    'documento': chunks[0].get('document_keyword', 'Desconhecido'),
+                    'confianca': similarity,
+                    'chunk_id': chunks[0].get('id', '')
+                }
+                ]
+            
+                if similarity < 0.7:
+                    self.add_log(LogLevel.WARNING, agent.name, f"Baixa confiança na resposta: {similarity:.1%}")
+                else:
+                    self.add_log(LogLevel.SUCCESS, agent.name, f"Política obtida com confiança: {similarity:.1%}")
+            
+                result['politica_aplicavel'] = politica
+                result['politica_sources'] = sources
+                result['politica_confianca'] = similarity
+            else:
+            # Nenhum chunk retornado
                 politica = f"Política padrão para risco {classificacao}: Aprovação condicional com análise manual."
-                self.add_log(LogLevel.WARNING, agent.name, "Resposta vazia do RAGFlow — usando fallback")
-            else:
-                self.add_log(LogLevel.SUCCESS, agent.name, "Política de crédito obtida com sucesso")
-            
-            result['politica_aplicavel'] = politica
-            result['politica_sources'] = sources if 'sources' in locals() else []  # Opcional: guardar fontes para relatório
+                self.add_log(LogLevel.WARNING, agent.name, f"Nenhum resultado encontrado no RAGFlow — usando fallback")
+                result['politica_aplicavel'] = politica
+                result['politica_sources'] = []
+                result['politica_confianca'] = 0
 
         log_placeholder.markdown(self.get_logs_text())
 
-        # -------------------------------------------------------------------------
-        # 2. Consulta regulamentações via RAGFlow
-        # -------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
+    # 2. Consulta regulamentações via RAGFlow
+    # -------------------------------------------------------------------------
         agent.current_task = "Consultando regulamentações BACEN no RAGFlow"
         self.add_log(LogLevel.INFO, agent.name, "Preparando query para regulamentações", task="buscar_regulamentacoes")
         log_placeholder.markdown(self.get_logs_text())
@@ -1096,62 +1164,62 @@ class AgentOrchestrator:
 
         query_reg = f"Regulamentações BACEN relevantes para análise de crédito de risco {classificacao}. Liste resoluções e circulares principais."
 
-        self.add_log(LogLevel.MCP, agent.name, f"POST {RAGFLOW_BASE_URL}/search | Query: {query_reg[:50]}...", mcp_connection="api://ragflow/search")
+        self.add_log(LogLevel.MCP, agent.name, f"POST {RAGFLOW_BASE_URL}/retrieval | Query: {query_reg[:50]}...", mcp_connection="api://ragflow/retrieval")
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.5)
 
         rag_response_reg = consult_rag(query_reg)
-        
-        if "error" in rag_response_reg:
-            regulamentacoes = [f"Erro: {rag_response_reg['error']}"]
+    
+    # ✅ VERIFICAÇÃO CORRIGIDA
+        if not rag_response_reg.get("success"):
+        # Erro na consulta
+            regulamentacoes = [f"Erro: {rag_response_reg.get('error', 'Erro desconhecido')}"]
             self.add_log(LogLevel.ERROR, agent.name, regulamentacoes[0])
             result['regulamentacoes'] = [
-                "Resolução CMN 4.949/2021 - Política de crédito (fallback)",
-                "Circular BACEN 3.978/2020 - Prevenção à lavagem (fallback)"
+            "Resolução CMN 4.949/2021 - Política de crédito (fallback)",
+            "Circular BACEN 3.978/2020 - Prevenção à lavagem (fallback)"
             ]
         else:
-            # -------------------------------------------------------------------------
-            # Ajuste similar para formato da resposta
-            # -------------------------------------------------------------------------
-            if isinstance(rag_response_reg, dict):
-                reg_text = rag_response_reg.get('result', '') or rag_response_reg.get('response', '') or rag_response_reg.get('answer', '')
-                if not reg_text:
-                    reg_text = ' '.join([chunk.get('content', '') for chunk in rag_response_reg.get('chunks', [])])
-                
-                # Tentar extrair lista de regulamentações do texto
-                # Simples split por linhas ou vírgulas; para melhor, use regex ou parsing
-                regulamentacoes = [line.strip() for line in reg_text.split('\n') if line.strip() and ('Resolução' in line or 'Circular' in line)]
-                
-                if not regulamentacoes:
-                    regulamentacoes = reg_text.split(';') or reg_text.split(',')
-                
-                sources = rag_response_reg.get('sources', []) or rag_response_reg.get('references', [])
-                if sources:
-                    self.add_log(LogLevel.INFO, agent.name, f"Encontradas {len(sources)} fontes de referência")
-                
-                confidence = rag_response_reg.get('confidence', 0.0) or rag_response_reg.get('score', 0.0)
-                if confidence < 0.7:
-                    self.add_log(LogLevel.WARNING, agent.name, f"Baixa confiança na resposta: {confidence:.2f}")
-            else:
-                regulamentacoes = str(rag_response_reg).split('\n')
-            
-            if not regulamentacoes or all(not r.strip() for r in regulamentacoes):
+        
+            chunks = rag_response_reg.get('chunks', [])
+        
+            if chunks:
+                reg_text = '\n'.join([chunk.get('content', '') for chunk in chunks])
                 regulamentacoes = [
-                    "Resolução CMN 4.949/2021 - Política de crédito (fallback)",
-                    "Circular BACEN 3.978/2020 - Prevenção à lavagem (fallback)",
-                    "Resolução CMN 4.557/2017 - Gerenciamento de risco (fallback)"
+                    line.strip() 
+                    for line in reg_text.split('\n') 
+                        if line.strip() and any(keyword in line for keyword in ['Resolução', 'Circular', 'Normativa', 'Lei'])
                 ]
-                self.add_log(LogLevel.WARNING, agent.name, "Resposta vazia do RAGFlow — usando fallback")
-            else:
-                self.add_log(LogLevel.SUCCESS, agent.name, f"Encontradas {len(regulamentacoes)} regulamentações relevantes")
             
-            result['regulamentacoes'] = [r.strip() for r in regulamentacoes if r.strip()]
-            result['regulamentacoes_sources'] = sources if 'sources' in locals() else []  # Opcional
+                if not regulamentacoes:
+                    regulamentacoes = [chunk.get('content', '') for chunk in chunks if chunk.get('content', '').strip()]
+            
+            # Verificar confiança
+                if chunks:
+                    confidence = chunks[0].get('similarity', 0)
+                    if confidence < 0.7:
+                        self.add_log(LogLevel.WARNING, agent.name, f"Baixa confiança: {confidence:.1%}")
+                    else:
+                        self.add_log(LogLevel.SUCCESS, agent.name, f"Encontradas {len(regulamentacoes)} regulamentações relevantes")
+            
+                result['regulamentacoes'] = regulamentacoes if regulamentacoes else [
+                "Resolução CMN 4.949/2021 - Política de crédito (fallback)",
+                "Circular BACEN 3.978/2020 - Prevenção à lavagem (fallback)"
+                ]
+            else:
+            # Nenhum chunk retornado
+                regulamentacoes = [
+                "Resolução CMN 4.949/2021 - Política de crédito (fallback)",
+                "Circular BACEN 3.978/2020 - Prevenção à lavagem (fallback)",
+                "Resolução CMN 4.557/2017 - Gerenciamento de risco (fallback)"
+                ]
+                self.add_log(LogLevel.WARNING, agent.name, "Nenhum resultado encontrado — usando fallback")
+                result['regulamentacoes'] = regulamentacoes
 
         log_placeholder.markdown(self.get_logs_text())
-        
-        return result
     
+        return result
+      
     def _run_reporter(self, agent: AgentInfo, data: Dict, log_placeholder) -> Dict:
         """Executa o Agente Relator"""
         
@@ -1392,7 +1460,7 @@ elif st.session_state.analysis_started and not st.session_state.analysis_complet
     # Log inicial
     orchestrator.add_log(LogLevel.INFO, "Sistema", "Iniciando análise de risco financeiro...")
     orchestrator.add_log(LogLevel.INFO, "Sistema", f"Cliente: {st.session_state.client_data['nome']}")
-    orchestrator.add_log(LogLevel.INFO, "Sistema", f"Valor: R$ {st.session_state.client_data['valor_solicitado']:,.2f}")
+    orchestrator.add_log(LogLevel.INFO, "Sistema", f"Valor Solicitado: R$ {st.session_state.client_data['valor_solicitado']:,.2f}")
     log_placeholder.markdown(orchestrator.get_logs_text())
     
     # Executa

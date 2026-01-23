@@ -1,0 +1,58 @@
+Política de Compliance e Prevenção à Lavagem de Dinheiro e ao Financiamento do Terrorismo (PLD/FT)
+
+Versão: 1.0
+
+Data de Aprovação: 13/01/2026
+
+1. Objetivo
+
+Esta política estabelece as diretrizes e os procedimentos que devem ser observados pela instituição para prevenir e combater os crimes de lavagem de dinheiro e financiamento ao terrorismo (PLD/FT), em conformidade com a Lei nº 9.613/98 e as regulamentações do Banco Central do Brasil e do COAF (Conselho de Controle de Atividades Financeiras).
+
+2. Abrangência
+
+Esta política se aplica a todos os colaboradores, administradores, parceiros de negócios e prestadores de serviços da instituição, em todas as áreas e processos, especialmente na abertura de contas, na concessão de crédito e na realização de transações financeiras.
+
+3. Princípios Fundamentais
+
+- Tolerância Zero: A instituição adota uma postura de tolerância zero em relação à lavagem de dinheiro e ao financiamento do terrorismo.
+- Conheça seu Cliente (KYC - Know Your Customer): Implementação de procedimentos rigorosos para a identificação e qualificação de todos os clientes.
+- Conheça seu Funcionário (KYE - Know Your Employee): Adoção de práticas para garantir a integridade e a idoneidade dos colaboradores.
+- Monitoramento Contínuo: Acompanhamento constante das operações e transações dos clientes para identificar atividades atípicas ou suspeitas.
+- Comunicação ao COAF: Comunicação de todas as operações e situações suspeitas ao COAF, nos prazos e formas estabelecidos pela regulamentação.
+
+4. Procedimentos de PLD/FT
+
+4.1. Cadastro de Clientes (KYC)
+
+- Identificação: Coleta de informações e documentos para a completa identificação do cliente (pessoa física ou jurídica), incluindo beneficiários finais.
+- Qualificação: Análise da compatibilidade entre a capacidade financeira declarada, a atividade econômica e as operações realizadas pelo cliente.
+- Classificação de Risco: Os clientes serão classificados em categorias de risco (baixo, médio, alto) para fins de PLD/FT, determinando o nível de monitoramento a ser aplicado.
+- Pessoas Expostas Politicamente (PEP): Identificação e tratamento diferenciado para clientes que se enquadrem na definição de PEP, conforme regulamentação.
+
+4.2. Monitoramento e Análise de Operações
+
+- A instituição utilizará um sistema de monitoramento transacional para identificar operações que apresentem indícios de lavagem de dinheiro ou financiamento ao terrorismo.
+- Serão considerados sinais de alerta, entre outros:
+    - Operações com valores incompatíveis com a capacidade financeira do cliente.
+    - Transações fracionadas para fugir dos limites de comunicação.
+    - Operações envolvendo paraísos fiscais ou países com deficiências em PLD/FT.
+    - Resistência do cliente em fornecer informações ou apresentação de informações falsas.
+
+4.3. Comunicação ao COAF
+
+- Comunicação Automática: As operações que atingirem os limites de valor definidos pela regulamentação serão comunicadas automaticamente ao COAF.
+- Comunicação de Suspeita: Qualquer operação ou situação que, após análise, for considerada suspeita de lavagem de dinheiro ou financiamento ao terrorismo, será comunicada ao COAF em até 24 horas, independentemente de seu valor.
+
+5. Treinamento
+
+Todos os colaboradores da instituição deverão participar de treinamentos periódicos sobre PLD/FT, a fim de se manterem atualizados sobre a legislação, as políticas internas e os procedimentos para identificar e comunicar operações suspeitas.
+
+6. Governança
+
+- Diretor Responsável: A instituição designará um diretor estatutário como responsável pelo cumprimento da política de PLD/FT.
+- Área de Compliance: A área de Compliance será responsável pela implementação, disseminação e monitoramento desta política.
+- Auditoria Interna: A eficácia dos controles de PLD/FT será avaliada periodicamente pela auditoria interna.
+
+7. Revisão da Política
+
+Esta política será revisada anualmente ou sempre que houver alterações na legislação ou nas recomendações dos órgãos reguladores.

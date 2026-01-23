@@ -13,7 +13,7 @@ from crewai.tools import tool
 
 # Configuração do RAGFlow
 RAGFLOW_API_URL = os.getenv("RAGFLOW_API_URL", "http://ragflow-cpu:9380/api/v1")
-RAGFLOW_API_KEY = os.getenv("RAGFLOW_API_KEY", "")
+RAGFLOW_API_KEY = os.getenv("RAGFLOW_API_KEY", "ragflow-GUY7ZV-fxRZXJDhVJfK1eYXAdsJzWajNN_8mnIIqg8I")
 
 
 def consultar_ragflow(pergunta: str, dataset_id: str = None) -> str:
