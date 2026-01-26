@@ -1,14 +1,4 @@
-# README
-
-<details open>
-<summary></b>📗 Guia de Configuração</b></summary>
-
-- 🐳 [Docker Compose](#-docker-compose)
-- 🐬 [Docker environment variables](#-docker-environment-variables)
-- 🐋 [Service configuration](#-service-configuration)
-- 📋 [Setup Examples](#-setup-examples)
-
-</details>
+# README - 📗 Guia de Configuração
 
 ## Visão Geral
 
@@ -24,31 +14,29 @@ Pré-requisitos
 ## Etapa 1: Iniciar os Serviços Docker
 **1.1 Navegar até a pasta do projeto**
 
-
 **1.2 Iniciar todos os containers**
 Execute o comando para iniciar todos os serviços:
   `docker-compose up -d`
 
 Saída esperada:
 [+]: # "Running 8/8"
- ✔ Container es01                 Running
- ✔ Container mysql                Healthy
- ✔ Container minio                Running
- ✔ Container redis                Running
- ✔ Container ollama               Running
- ✔ Container ragflow              Running
- ✔ Container crewai_app           Running
 
- 1.3 Verificar o status dos containers
+- ✔ Container es01                 Running
+- ✔ Container mysql                Healthy
+- ✔ Container minio                Running
+- ✔ Container redis                Running
+- ✔ Container ollama               Running
+- ✔ Container ragflow              Running
+- ✔ Container crewai_app           Running
 
+**1.3 Verificar o status dos containers**
 Para confirmar que todos os serviços estão rodando corretamente:
 
 docker-compose ps
 
 Todos os containers devem aparecer com status Up ou Healthy.
 
-1.4 Aguardar a inicialização completa
-
+**1.4 Aguardar a inicialização completa**
 O RAGFlow pode levar de 3 a 5 minutos para inicializar completamente na primeira execução. Para acompanhar o progresso:
 
 Bash
@@ -60,13 +48,12 @@ Aguarde até ver a mensagem:
 
 Plain Text
 
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:9380
+* Running on all addresses (0.0.0.0)
+* Running on http://127.0.0.1:9380
 
-Etapa 2: Instalar Modelos do Ollama
+##Etapa 2: Instalar Modelos do Ollama
 
-2.1 Instalar o modelo de chat (Llama 3.1 )
-
+**2.1 Instalar o modelo de chat (Llama 3.1 )**
 O Ollama é um servidor de LLM local que fornece modelos de linguagem. Instale o modelo principal:
 
 Bash
@@ -85,8 +72,7 @@ pulling 5c40d7dd6c4f
 ...
 success
 
-2.2 Instalar o modelo de embedding
-
+**2.2 Instalar o modelo de embedding**
 Para que o RAGFlow possa vetorizar seus documentos, instale um modelo de embedding:
 
 Bash
@@ -101,8 +87,7 @@ docker exec -it ollama ollama pull mxbai-embed-large
 
 Nota: O modelo de embedding é menor (~300MB) e essencial para a busca semântica.
 
-2.3 Verificar modelos instalados
-
+**2.3 Verificar modelos instalados**
 Para confirmar que os modelos foram instalados corretamente:
 
 Bash
@@ -117,9 +102,9 @@ NAME                    ID              SIZE      MODIFIED
 llama3.1:latest         365c0bd3c000    4.7GB     2 minutes ago
 nomic-embed-text:latest 0d3e4823be78    274MB     1 minute ago
 
-Etapa 3: Configurar o RAGFlow
+## Etapa 3: Configurar o RAGFlow
 
-3.1 Acessar a interface do RAGFlow
+**3.1 Acessar a interface do RAGFlow**
 
 Abra seu navegador e acesse:
 
@@ -129,14 +114,13 @@ http://localhost
 
 Você deve ver a tela inicial do RAGFlow.
 
-3.2 Criar uma conta
+**3.2 Criar uma conta**
 
 1.Clique em Sign Up (ou Registrar )
 
 2.Preencha os dados:
 
 •Email: seu-email@exemplo.com
-
 •Senha: escolha uma senha segura
 •Confirmar Senha: repita a senha
 
@@ -144,15 +128,15 @@ Você deve ver a tela inicial do RAGFlow.
 
 4.Faça login com suas credenciais
 
-3.3 Configurar o Ollama como provedor de LLM
+**3.3 Configurar o Ollama como provedor de LLM**
 
-3.3.1 Acessar as configurações
+**3.3.1 Acessar as configurações**
 
 1.Clique no ícone de engrenagem (⚙️) no canto superior direito
 
 2.Selecione Model Providers ou Provedores de Modelo
 
-3.3.2 Adicionar o modelo de Chat
+**3.3.2 Adicionar o modelo de Chat**
 
 1.Clique em Add Model Provider ou Adicionar Provedor
 
@@ -175,7 +159,7 @@ Max tokens
 
 1.Clique em Save ou Salvar
 
-3.3.3 Adicionar o modelo de Embedding
+**3.3.3 Adicionar o modelo de Embedding**
 
 1. Clique novamente em Add Model Provider
 
@@ -200,15 +184,15 @@ Max tokens
 
 Resultado esperado: Ambos os modelos devem aparecer na lista de provedores com status ✓ (verificado).
 
-Etapa 4: Criar e Configurar um Dataset
+## Etapa 4: Criar e Configurar um Dataset
 
-4.1 Acessar a seção de Knowledge Base
+**4.1 Acessar a seção de Knowledge Base**
 
 1.No menu lateral, clique em Knowledge Base ou Base de Conhecimento
 
 2.Clique em Create Dataset ou Criar Dataset
 
-4.2 Configurar o Dataset
+**4.2 Configurar o Dataset**
 
 1.Preencha os dados:
 
@@ -226,10 +210,8 @@ Etapa 4: Criar e Configurar um Dataset
 
 3.Clique em Create ou Criar
 
-4.3 Fazer upload de arquivos
-
-4.3.1 Preparar os documentos
-
+**4.3 Fazer upload de arquivos**
+**4.3.1 Preparar os documentos**
 Prepare seus documentos em um dos formatos suportados:
 
 • PDF (.pdf)
@@ -244,8 +226,7 @@ Prepare seus documentos em um dos formatos suportados:
 
 Dica: Para melhores resultados, use documentos bem estruturados e sem muitas imagens.
 
-4.3.2 Fazer upload
-
+**4.3.2 Fazer upload**
 1.Acesse o dataset que você criou
 
 2.Clique em Upload ou Fazer Upload
@@ -256,20 +237,15 @@ Dica: Para melhores resultados, use documentos bem estruturados e sem muitas ima
 
 Exemplo de arquivos úteis:
 
-•
-Políticas de crédito da instituição
+- Políticas de crédito da instituição
 
-•
-Regulamentações do Banco Central
+- Regulamentações do Banco Central
 
-•
-Manuais de procedimentos
+- Manuais de procedimentos
 
-•
-Documentos de compliance
+- Documentos de compliance
 
-4.4 Aguardar o processamento
-
+**4.4 Aguardar o processamento**
 O RAGFlow processará os documentos:
 
 1.Extração de texto: Extrai o conteúdo dos arquivos
@@ -290,16 +266,13 @@ Você pode acompanhar o progresso na interface. Quando terminar, o status mudar�
 
 2.Você deve ver:
 
-•Número de documentos processados
+- Número de documentos processados
+- Número de chunks criados
+- Status de indexação
 
-•Número de chunks criados
+## Etapa 5: Testar o Sistema
 
-•Status de indexação
-
-Etapa 5: Testar o Sistema
-
-5.1 Fazer uma pergunta ao Dataset
-
+**5.1 Fazer uma pergunta ao Dataset**
 1.No dataset, clique em Chat ou Conversa
 
 2.Digite uma pergunta sobre o conteúdo dos seus documentos
@@ -316,44 +289,32 @@ O RAGFlow deve:
 
 3.Retornar uma resposta baseada nos documentos
 
-5.2 Verificar a qualidade das respostas
+**5.2 Verificar a qualidade das respostas**
+- As respostas devem ser baseadas nos documentos
+- Deve haver referências aos documentos usados
+- A resposta deve ser relevante e precisa
 
-•As respostas devem ser baseadas nos documentos
-•Deve haver referências aos documentos usados
-•A resposta deve ser relevante e precisa
-
-Etapa 6: Obter Credenciais para Integração
+## Etapa 6: Obter Credenciais para Integração
 
 Se você deseja integrar o RAGFlow com o sistema de agentes (CrewAI), você precisará:
 
-6.1 Obter a API Key
-
+**6.1 Obter a API Key**
 1.Vá em Settings > API Keys
-
 2.Clique em Create API Key ou Criar Chave de API
-
 3.Dê um nome descritivo (ex: "CrewAI Integration")
-
 4.Copie a chave gerada
-
 5.Guarde em local seguro - você não poderá ver novamente
 
-6.2 Obter o Dataset ID
-
+**6.2 Obter o Dataset ID**
 1.Vá em Knowledge Base
-
 2.Clique no dataset que você criou
-
 3.O ID está na URL: http://localhost/knowledge/datasets/{DATASET_ID}
-
 4.Copie o DATASET_ID
 
-6.3 Atualizar o arquivo .env
-
+**6.3 Atualizar o arquivo .env**
 Se estiver usando o sistema de agentes, atualize o arquivo .env:
 
 Plain Text
-
 RAGFLOW_API_KEY=sua-chave-aqui
 RAGFLOW_DATASET_ID=seu-dataset-id-aqui
 
@@ -364,23 +325,17 @@ Problema: Página "Welcome to nginx"
 Solução:
 
 1.Aguarde mais alguns minutos (até 5 minutos na primeira execução )
-
 2.Tente acessar http://localhost:9380 diretamente
-
 3.Verifique os logs: docker logs ragflow
 
 Problema: Ollama não responde
 
 Solução:
-
 Bash
-
 # Verifique se o container está rodando
 docker ps | grep ollama
-
 # Veja os logs
 docker logs ollama
-
 # Reinicie o container
 docker restart ollama
 
@@ -446,19 +401,14 @@ Cache
 Próximos Passos
 
 Após configurar o RAGFlow, você pode:
-
 1.Criar múltiplos datasets para diferentes áreas de conhecimento
-
 2.Integrar com o sistema de agentes (CrewAI ) para análises automáticas
-
 3.Configurar webhooks para automações
-
 4.Usar a API REST para integração com outras aplicações
-
 5.Fazer backup dos datasets regularmente
 
 Referências
 
-• RAGFlow Documentação: https://github.com/infiniflow/ragflow
-• Ollama Documentação: https://ollama.ai
-• Docker Compose: https://docs.docker.com/compose/
+- RAGFlow Documentação: https://github.com/infiniflow/ragflow
+- Ollama Documentação: https://ollama.ai
+- Docker Compose: https://docs.docker.com/compose/
