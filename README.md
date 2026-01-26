@@ -40,9 +40,8 @@ Todos os containers devem aparecer com status Up ou Healthy.
 O RAGFlow pode levar de 3 a 5 minutos para inicializar completamente na primeira execução. Para acompanhar o progresso:
 
 Bash
-
-docker logs -f ragflow
-docker logs -f ragflow
+`docker logs -f ragflow`
+`docker logs -f ragflow`
 
 Aguarde até ver a mensagem:
 
@@ -51,14 +50,13 @@ Plain Text
 * Running on all addresses (0.0.0.0)
 * Running on http://127.0.0.1:9380
 
-##Etapa 2: Instalar Modelos do Ollama
+## Etapa 2: Instalar Modelos do Ollama
 
 **2.1 Instalar o modelo de chat (Llama 3.1 )**
 O Ollama é um servidor de LLM local que fornece modelos de linguagem. Instale o modelo principal:
 
 Bash
-
-docker exec -it ollama ollama pull llama3.1
+`docker exec -it ollama ollama pull llama3.1`
 
 Este comando pode levar alguns minutos, dependendo da sua conexão de internet. O modelo tem aproximadamente 4.7GB.
 
@@ -75,24 +73,21 @@ success
 **2.2 Instalar o modelo de embedding**
 Para que o RAGFlow possa vetorizar seus documentos, instale um modelo de embedding:
 
-Bash
-
-docker exec -it ollama ollama pull nomic-embed-text
+**Bash**
+`docker exec -it ollama ollama pull nomic-embed-text`
 
 Ou, alternativamente:
 
-Bash
-
-docker exec -it ollama ollama pull mxbai-embed-large
+**Bash**
+`docker exec -it ollama ollama pull mxbai-embed-large`
 
 Nota: O modelo de embedding é menor (~300MB) e essencial para a busca semântica.
 
 **2.3 Verificar modelos instalados**
 Para confirmar que os modelos foram instalados corretamente:
 
-Bash
-
-docker exec -it ollama ollama list
+**Bash**
+`docker exec -it ollama ollama list`
 
 Saída esperada:
 
@@ -105,56 +100,48 @@ nomic-embed-text:latest 0d3e4823be78    274MB     1 minute ago
 ## Etapa 3: Configurar o RAGFlow
 
 **3.1 Acessar a interface do RAGFlow**
-
 Abra seu navegador e acesse:
 
 Plain Text
 
-http://localhost
+`http://localhost`
 
 Você deve ver a tela inicial do RAGFlow.
 
 **3.2 Criar uma conta**
-
 1.Clique em Sign Up (ou Registrar )
 
 2.Preencha os dados:
 
-•Email: seu-email@exemplo.com
-•Senha: escolha uma senha segura
-•Confirmar Senha: repita a senha
+- Email: seu-email@exemplo.com
+- Senha: escolha uma senha segura
+- Confirmar Senha: repita a senha
 
 3.Clique em Sign Up para criar a conta
 
 4.Faça login com suas credenciais
 
 **3.3 Configurar o Ollama como provedor de LLM**
-
 **3.3.1 Acessar as configurações**
-
 1.Clique no ícone de engrenagem (⚙️) no canto superior direito
-
-2.Selecione Model Providers ou Provedores de Modelo
+.Selecione Model Providers ou Provedores de Modelo
 
 **3.3.2 Adicionar o modelo de Chat**
-
 1.Clique em Add Model Provider ou Adicionar Provedor
-
 2.Selecione Ollama da lista
-
 3.Preencha os campos:
 
 Campo
 Valor
-Model type
+**Model type**
 chat
-Model name
+**Model name**
 llama3.1
-Base url
+**Base url**
 http://ollama:11434
-API-Key
+**API-Key**
 (deixe em branco )
-Max tokens
+**Max tokens**
 4096
 
 1.Clique em Save ou Salvar
@@ -162,22 +149,20 @@ Max tokens
 **3.3.3 Adicionar o modelo de Embedding**
 
 1. Clique novamente em Add Model Provider
-
 2. Selecione Ollama
-
 3. Preencha os campos:
 
 Campo
 Valor
-Model type
+**Model type**
 embedding
-Model name
+**Model name**
 nomic-embed-text
-Base url
+**Base url**
 http://ollama:11434
-API-Key
+**API-Key**
 (deixe em branco )
-Max tokens
+**Max tokens**
 512
 
 1.Clique em Save ou Salvar
@@ -187,26 +172,22 @@ Resultado esperado: Ambos os modelos devem aparecer na lista de provedores com s
 ## Etapa 4: Criar e Configurar um Dataset
 
 **4.1 Acessar a seção de Knowledge Base**
-
 1.No menu lateral, clique em Knowledge Base ou Base de Conhecimento
 
 2.Clique em Create Dataset ou Criar Dataset
 
 **4.2 Configurar o Dataset**
-
 1.Preencha os dados:
 
-•Dataset Name: Nome descritivo (ex: "Políticas de Crédito")
-
-•Description: Descrição do conteúdo (ex: "Documentos sobre políticas de crédito e regulamentações")
+- Dataset Name: Nome descritivo (ex: "Políticas de Crédito")
+- Description: Descrição do conteúdo (ex: "Documentos sobre políticas de crédito e regulamentações")
 
 2.Configure as opções:
+- Embedding Model: Selecione nomic-embed-text (ou o modelo que você instalou)
 
-• Embedding Model: Selecione nomic-embed-text (ou o modelo que você instalou)
+- Chunk Size: 800 (tamanho dos pedaços de texto)
 
-• Chunk Size: 800 (tamanho dos pedaços de texto)
-
-• Overlap: 100 (sobreposição entre chunks)
+- Overlap: 100 (sobreposição entre chunks)
 
 3.Clique em Create ou Criar
 
@@ -214,15 +195,11 @@ Resultado esperado: Ambos os modelos devem aparecer na lista de provedores com s
 **4.3.1 Preparar os documentos**
 Prepare seus documentos em um dos formatos suportados:
 
-• PDF (.pdf)
-
-• Word (.docx, .doc)
-
-• Texto (.txt)
-
-• Markdown (.md)
-
-• Imagens (.png, .jpg, .jpeg)
+- PDF (.pdf)
+- Word (.docx, .doc)
+- Texto (.txt)
+- Markdown (.md)
+- Imagens (.png, .jpg, .jpeg)
 
 Dica: Para melhores resultados, use documentos bem estruturados e sem muitas imagens.
 
@@ -238,11 +215,8 @@ Dica: Para melhores resultados, use documentos bem estruturados e sem muitas ima
 Exemplo de arquivos úteis:
 
 - Políticas de crédito da instituição
-
 - Regulamentações do Banco Central
-
 - Manuais de procedimentos
-
 - Documentos de compliance
 
 **4.4 Aguardar o processamento**
@@ -260,7 +234,7 @@ Tempo estimado: 1-5 minutos por documento, dependendo do tamanho.
 
 Você pode acompanhar o progresso na interface. Quando terminar, o status mudará para Completed ou Concluído.
 
-4.5 Verificar o Dataset
+### 4.5 Verificar o Dataset
 
 1.Clique no dataset para abrir os detalhes
 
@@ -333,11 +307,11 @@ Problema: Ollama não responde
 Solução:
 Bash
 # Verifique se o container está rodando
-docker ps | grep ollama
+`docker ps | grep ollama`
 # Veja os logs
-docker logs ollama
+`docker logs ollama`
 # Reinicie o container
-docker restart ollama
+`docker restart ollama`
 
 Problema: Modelos não aparecem na lista
 
@@ -361,15 +335,14 @@ Problema: Elasticsearch não inicia
 Solução:
 
 Bash
+## Aumentar o limite de memória no WSL2
+`wsl -d docker-desktop -u root`
+`sysctl -w vm.max_map_count=262144`
+`exit`
 
-# Aumentar o limite de memória no WSL2
-wsl -d docker-desktop -u root
-sysctl -w vm.max_map_count=262144
-exit
-
-# Reiniciar os containers
-docker-compose down
-docker-compose up -d
+## Reiniciar os containers
+`docker-compose down`
+`docker-compose up -d`
 
 Serviços e Portas
 
