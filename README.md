@@ -29,14 +29,15 @@ Saída esperada:
 - ✔ Container ragflow              Running
 - ✔ Container crewai_app           Running
 
-**1.3 Verificar o status dos containers**
+### 1.3 Verificar o status dos containers
+
 Para confirmar que todos os serviços estão rodando corretamente:
 
 docker-compose ps
 
 Todos os containers devem aparecer com status Up ou Healthy.
 
-**1.4 Aguardar a inicialização completa**
+### 1.4 Aguardar a inicialização completa
 O RAGFlow pode levar de 3 a 5 minutos para inicializar completamente na primeira execução. Para acompanhar o progresso:
 
 Bash
@@ -52,7 +53,7 @@ Plain Text
 
 ## Etapa 2: Instalar Modelos do Ollama
 
-**2.1 Instalar o modelo de chat (Llama 3.1 )**
+### 2.1 Instalar o modelo de chat (Llama 3.1 )
 O Ollama é um servidor de LLM local que fornece modelos de linguagem. Instale o modelo principal:
 
 Bash
@@ -70,7 +71,7 @@ pulling 5c40d7dd6c4f
 ...
 success
 
-**2.2 Instalar o modelo de embedding**
+### 2.2 Instalar o modelo de embedding
 Para que o RAGFlow possa vetorizar seus documentos, instale um modelo de embedding:
 
 **Bash**
@@ -83,7 +84,7 @@ Ou, alternativamente:
 
 Nota: O modelo de embedding é menor (~300MB) e essencial para a busca semântica.
 
-**2.3 Verificar modelos instalados**
+### 2.3 Verificar modelos instalados
 Para confirmar que os modelos foram instalados corretamente:
 
 **Bash**
@@ -99,7 +100,8 @@ nomic-embed-text:latest 0d3e4823be78    274MB     1 minute ago
 
 ## Etapa 3: Configurar o RAGFlow
 
-**3.1 Acessar a interface do RAGFlow**
+### 3.1 Acessar a interface do RAGFlow
+
 Abra seu navegador e acesse:
 
 Plain Text
@@ -108,7 +110,7 @@ Plain Text
 
 Você deve ver a tela inicial do RAGFlow.
 
-**3.2 Criar uma conta**
+### 3.2 Criar uma conta
 1.Clique em Sign Up (ou Registrar )
 
 2.Preencha os dados:
@@ -131,37 +133,41 @@ Você deve ver a tela inicial do RAGFlow.
 2.Selecione Ollama da lista
 3.Preencha os campos:
 
-Campo
-Valor
 **Model type**
 chat
+
 **Model name**
 llama3.1
+
 **Base url**
 http://ollama:11434
+
 **API-Key**
 (deixe em branco )
+
 **Max tokens**
 4096
 
 1.Clique em Save ou Salvar
 
-**3.3.3 Adicionar o modelo de Embedding**
+### 3.3.3 Adicionar o modelo de Embedding
 
 1. Clique novamente em Add Model Provider
 2. Selecione Ollama
 3. Preencha os campos:
 
-Campo
-Valor
 **Model type**
 embedding
+
 **Model name**
 nomic-embed-text
+
 **Base url**
 http://ollama:11434
+
 **API-Key**
 (deixe em branco )
+
 **Max tokens**
 512
 
@@ -171,12 +177,14 @@ Resultado esperado: Ambos os modelos devem aparecer na lista de provedores com s
 
 ## Etapa 4: Criar e Configurar um Dataset
 
-**4.1 Acessar a seção de Knowledge Base**
+### 4.1 Acessar a seção de Knowledge Base
+
 1.No menu lateral, clique em Knowledge Base ou Base de Conhecimento
 
 2.Clique em Create Dataset ou Criar Dataset
 
-**4.2 Configurar o Dataset**
+### 4.2 Configurar o Dataset
+
 1.Preencha os dados:
 
 - Dataset Name: Nome descritivo (ex: "Políticas de Crédito")
@@ -191,8 +199,10 @@ Resultado esperado: Ambos os modelos devem aparecer na lista de provedores com s
 
 3.Clique em Create ou Criar
 
-**4.3 Fazer upload de arquivos**
-**4.3.1 Preparar os documentos**
+## 4.3 Fazer upload de arquivos
+
+## 4.3.1 Preparar os documentos
+
 Prepare seus documentos em um dos formatos suportados:
 
 - PDF (.pdf)
@@ -203,7 +213,8 @@ Prepare seus documentos em um dos formatos suportados:
 
 Dica: Para melhores resultados, use documentos bem estruturados e sem muitas imagens.
 
-**4.3.2 Fazer upload**
+### 4.3.2 Fazer upload
+
 1.Acesse o dataset que você criou
 
 2.Clique em Upload ou Fazer Upload
@@ -219,7 +230,8 @@ Exemplo de arquivos úteis:
 - Manuais de procedimentos
 - Documentos de compliance
 
-**4.4 Aguardar o processamento**
+### 4.4 Aguardar o processamento
+
 O RAGFlow processará os documentos:
 
 1.Extração de texto: Extrai o conteúdo dos arquivos
@@ -246,7 +258,7 @@ Você pode acompanhar o progresso na interface. Quando terminar, o status mudar�
 
 ## Etapa 5: Testar o Sistema
 
-**5.1 Fazer uma pergunta ao Dataset**
+### 5.1 Fazer uma pergunta ao Dataset
 1.No dataset, clique em Chat ou Conversa
 
 2.Digite uma pergunta sobre o conteúdo dos seus documentos
@@ -263,7 +275,8 @@ O RAGFlow deve:
 
 3.Retornar uma resposta baseada nos documentos
 
-**5.2 Verificar a qualidade das respostas**
+### 5.2 Verificar a qualidade das respostas
+
 - As respostas devem ser baseadas nos documentos
 - Deve haver referências aos documentos usados
 - A resposta deve ser relevante e precisa
@@ -272,20 +285,22 @@ O RAGFlow deve:
 
 Se você deseja integrar o RAGFlow com o sistema de agentes (CrewAI), você precisará:
 
-**6.1 Obter a API Key**
+### 6.1 Obter a API Key
+
 1.Vá em Settings > API Keys
 2.Clique em Create API Key ou Criar Chave de API
 3.Dê um nome descritivo (ex: "CrewAI Integration")
 4.Copie a chave gerada
 5.Guarde em local seguro - você não poderá ver novamente
 
-**6.2 Obter o Dataset ID**
+### 6.2 Obter o Dataset ID
+
 1.Vá em Knowledge Base
 2.Clique no dataset que você criou
 3.O ID está na URL: http://localhost/knowledge/datasets/{DATASET_ID}
 4.Copie o DATASET_ID
 
-**6.3 Atualizar o arquivo .env**
+### 6.3 Atualizar o arquivo .env
 Se estiver usando o sistema de agentes, atualize o arquivo .env:
 
 Plain Text
@@ -305,7 +320,7 @@ Solução:
 Problema: Ollama não responde
 
 Solução:
-Bash
+**Bash**
 # Verifique se o container está rodando
 `docker ps | grep ollama`
 # Veja os logs
@@ -334,7 +349,7 @@ Problema: Elasticsearch não inicia
 
 Solução:
 
-Bash
+**Bash**
 ## Aumentar o limite de memória no WSL2
 `wsl -d docker-desktop -u root`
 `sysctl -w vm.max_map_count=262144`
@@ -349,26 +364,25 @@ Serviços e Portas
 Serviço
 URL
 Descrição
-RAGFlow
-http://localhost
+RAGFlow: `http://localhost`
 Interface web principal
-RAGFlow API
-http://localhost:9380
+
+RAGFlow API: `http://localhost:9380`
 API REST do RAGFlow
-Ollama
-http://localhost:11434
+
+Ollama `http://localhost:11434`
 API do Ollama
-MinIO
-http://localhost:9001
+
+MinIO `http://localhost:9001`
 Console de armazenamento
-MySQL
-localhost:3306
+
+MySQL `localhost:3306`
 Banco de dados
-Elasticsearch
-localhost:9200
+
+Elasticsearch `localhost:9200`
 Motor de busca
-Redis
-localhost:6379
+
+Redis `localhost:6379`
 Cache
 
 Próximos Passos
