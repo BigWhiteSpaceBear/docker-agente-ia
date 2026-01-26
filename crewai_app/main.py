@@ -350,7 +350,6 @@ def processar_cliente_com_dialog(
     # Se chegou aqui sem dados, retorna None
     return None
 
-   
 def inserir_cliente(client_data: Dict) -> bool:
     """Insere um novo cliente na tabela clientes"""
     try:
@@ -795,7 +794,6 @@ class AgentOrchestrator:
         """Executa o Agente Coletor de Dados com consultas reais ao banco"""
         result = {}
         
-        
         agent.current_task = "Validando CPF/CNPJ"
         self.add_log(LogLevel.INFO, agent.name, "Validando CPF/CNPJ", task="validar_cpf_cnpj")
         log_placeholder.markdown(self.get_logs_text())
@@ -843,21 +841,11 @@ class AgentOrchestrator:
             log_placeholder.markdown(self.get_logs_text())
             result['cliente'] = client_data
         
-            agent.current_task = "Consultando histórico"
-            # self.add_log(LogLevel.INFO, agent.name, "Consultando histórico de crédito", task="consultar_historico_credito")
-            # log_placeholder.markdown(self.get_logs_text())
-            # time.sleep(0.3)
-        
+            agent.current_task = "Consultando histórico"       
             self.add_log(LogLevel.TOOL, agent.name, "Executando tool", tool="consultar_historico_credito")
             log_placeholder.markdown(self.get_logs_text())
             time.sleep(0.3)
-        
-            # self.add_log(LogLevel.MCP, agent.name, "Query SQL executada", mcp_connection="mysql://localhost:3306/financiamentos")
-            # log_placeholder.markdown(self.get_logs_text())
-            # time.sleep(0.3)
-        
-        # Consulta real ao banco para histórico
-        
+                     
             cpf_cnpj = client_data.get('cpf_cnpj', '')
             financiamentos = obter_financiamentos_ativos(cpf_cnpj)
             historico = {
@@ -871,9 +859,7 @@ class AgentOrchestrator:
         else:
             # Aguardando preenchimento do diálogo
             st.info("⏳ Aguardando dados do cliente...")
-        
-        
-        
+
         return result
     
     def _run_risk_analyst(self, agent: AgentInfo, data: Dict, log_placeholder) -> Dict:
@@ -901,9 +887,9 @@ class AgentOrchestrator:
             taxa = 100.0
             self.add_log(LogLevel.ERROR, agent.name, "Renda mensal inválida ou zerada → taxa = 100%")
         else:
-            parcela_estimada = valor_solicitado / 36  # supondo 36x como base conservadora
+            parcela_estimada = valor_solicitado / 36
             taxa = ( float( parcela_estimada ) / float( renda_mensal ) ) * 100
-            taxa = min(taxa, 100.0)  # limite superior
+            taxa = min(taxa, 100.0)
 
         result['taxa_endividamento'] = round(taxa, 2)
 
@@ -938,12 +924,7 @@ class AgentOrchestrator:
             
             if response.status_code == 200:
                 dados_api = response.json()
-                
-                # ---------------------------------------------------------------
-                # Ajustado para o formato específico: 
-                # {"Nome":"João Silva Santos","Restricao":false,"CPF":"16142693001"}
-                # ---------------------------------------------------------------
-                
+                                
                 if isinstance(dados_api, dict):
                     tem_restricao = dados_api.get("Restricao", False)  # Booleano direto
                     nome_api = dados_api.get("Nome", "")
@@ -952,7 +933,7 @@ class AgentOrchestrator:
                     # Validação extra: verifica se CPF retornado bate com o consultado
                     if cpf_api != cpf_cnpj:
                         self.add_log(LogLevel.WARNING, agent.name, f"CPF retornado ({cpf_api}) não coincide com o consultado ({cpf_cnpj})")
-                        tem_restricao = True  # Considera como erro/restricao por segurança
+                        tem_restricao = True 
                     
                     # Opcional: comparar nome se disponível no cliente
                     if nome_api and cliente.get('nome', '').strip().lower() != nome_api.lower():
@@ -1001,7 +982,7 @@ class AgentOrchestrator:
         log_placeholder.markdown(self.get_logs_text())
         time.sleep(0.4)
 
-        score = 700  # base boa
+        score = 700
         
         if taxa > 50:
             score -= 250
@@ -1016,7 +997,7 @@ class AgentOrchestrator:
         elif renda_mensal < 4000:
             score -= 30
 
-        score = max(300, min(850, score))  # faixa típica
+        score = max(300, min(850, score))
         result['score_financeiro'] = score
 
         classificacao = "BAIXO" if score >= 700 else "MÉDIO" if score >= 500 else "ALTO"
@@ -1084,9 +1065,9 @@ class AgentOrchestrator:
     
         classificacao = data.get('classificacao_risco', 'MÉDIO')
     
-    # -------------------------------------------------------------------------
-    # 1. Consulta políticas de crédito via RAGFlow
-    # -------------------------------------------------------------------------
+        # -------------------------------------------------------------------------
+        # 1. Consulta políticas de crédito via RAGFlow
+        # -------------------------------------------------------------------------
         agent.current_task = "Consultando políticas de crédito no RAGFlow"
         self.add_log(LogLevel.INFO, agent.name, "Preparando query para políticas de crédito", task="consultar_politicas_credito")
         log_placeholder.markdown(self.get_logs_text())
@@ -1104,26 +1085,16 @@ class AgentOrchestrator:
 
         rag_response = consult_rag(query_politica)
         
-        # ✅ VERIFICAÇÃO CORRIGIDA
         if not rag_response.get("success"):
-        # Erro na consulta
             politica = f"Erro ao consultar RAGFlow: {rag_response.get('error', 'Erro desconhecido')}"
             self.add_log(LogLevel.ERROR, agent.name, politica)
             result['politica_aplicavel'] = "Política não disponível devido a erro na consulta. Usando default: Aprovação condicional para risco médio."
         else:
-        # ✅ SUCESSO - Processar chunks
             chunks = rag_response.get('chunks', [])
             if chunks:
-            # Extrair conteúdo do primeiro chunk (mais relevante)
                 politica = chunks[0].get('content', '')
-            
-            # Opcional: usar versão com highlight
-                # politica_highlight = chunks[0].get('highlight', politica)
-                # politica_limpa = strip_em_tags(politica_highlight)
-            # Obter confiança (similarity score)
                 similarity = chunks[0].get('similarity', 0)
             
-            # Extrair fontes
                 sources = [
                 {
                     'documento': chunks[0].get('document_keyword', 'Desconhecido'),
@@ -1141,7 +1112,6 @@ class AgentOrchestrator:
                 result['politica_sources'] = sources
                 result['politica_confianca'] = similarity
             else:
-            # Nenhum chunk retornado
                 politica = f"Política padrão para risco {classificacao}: Aprovação condicional com análise manual."
                 self.add_log(LogLevel.WARNING, agent.name, f"Nenhum resultado encontrado no RAGFlow — usando fallback")
                 result['politica_aplicavel'] = politica
@@ -1170,9 +1140,7 @@ class AgentOrchestrator:
 
         rag_response_reg = consult_rag(query_reg)
     
-    # ✅ VERIFICAÇÃO CORRIGIDA
         if not rag_response_reg.get("success"):
-        # Erro na consulta
             regulamentacoes = [f"Erro: {rag_response_reg.get('error', 'Erro desconhecido')}"]
             self.add_log(LogLevel.ERROR, agent.name, regulamentacoes[0])
             result['regulamentacoes'] = [
@@ -1194,7 +1162,6 @@ class AgentOrchestrator:
                 if not regulamentacoes:
                     regulamentacoes = [chunk.get('content', '') for chunk in chunks if chunk.get('content', '').strip()]
             
-            # Verificar confiança
                 if chunks:
                     confidence = chunks[0].get('similarity', 0)
                     if confidence < 0.7:
@@ -1207,7 +1174,6 @@ class AgentOrchestrator:
                 "Circular BACEN 3.978/2020 - Prevenção à lavagem (fallback)"
                 ]
             else:
-            # Nenhum chunk retornado
                 regulamentacoes = [
                 "Resolução CMN 4.949/2021 - Política de crédito (fallback)",
                 "Circular BACEN 3.978/2020 - Prevenção à lavagem (fallback)",
@@ -1402,7 +1368,6 @@ if not st.session_state.analysis_started:
             "finalidade": finalidade
         }
     
-        # ✅ NOVO: Chama processar_cliente_com_dialog ANTES de iniciar análise
         try:
             resultado = processar_cliente_com_dialog(
                 client_data=client_data,
@@ -1410,21 +1375,16 @@ if not st.session_state.analysis_started:
                 inserir_cliente=inserir_cliente,
                 atualizar_cliente=atualizar_cliente,
                 agent_name="Sistema",
-                add_log=lambda level, agent, msg, **kwargs: None  # Log dummy
+                add_log=lambda level, agent, msg, **kwargs: None  
             )
         
-            # ✅ NOVO: Se resultado é None, significa que diálogo está aberto
             if resultado is None:
-                # Diálogo está aguardando preenchimento, não inicia análise ainda
                 st.warning("⏳ Preencha os dados do cliente no diálogo para continuar...")
                 st.stop()
         
-            # ✅ NOVO: Se resultado tem dados, cliente foi confirmado
             if resultado:
-                # Atualiza client_data com dados confirmados
                 client_data.update(resultado)
             
-                # Agora sim, inicia a análise
                 st.session_state.analysis_started = True
                 st.session_state.client_data = client_data
                 st.rerun()
@@ -1433,37 +1393,29 @@ if not st.session_state.analysis_started:
                 st.stop()
     
         except ValueError as e:
-            # Se usuário cancelou o diálogo
             st.error(f"❌ {str(e)}")
             st.stop()
 
-# Tela de processamento
 elif st.session_state.analysis_started and not st.session_state.analysis_complete:
     st.subheader("⚙️ Processamento em Andamento")
     
-    # Status dos agentes
     st.markdown("### 🤖 Status dos Agentes")
     status_placeholder = st.empty()
     
-    # Barra de progresso
     st.markdown("### 📊 Progresso Geral")
     progress_bar = st.progress(0)
     
-    # Logs
     st.markdown("### 📋 Log de Execução em Tempo Real")
     log_placeholder = st.empty()
     
-    # Executa análise
     orchestrator = AgentOrchestrator()
     st.session_state.orchestrator = orchestrator
     
-    # Log inicial
     orchestrator.add_log(LogLevel.INFO, "Sistema", "Iniciando análise de risco financeiro...")
-    orchestrator.add_log(LogLevel.INFO, "Sistema", f"Cliente: {st.session_state.client_data['nome']}")
-    orchestrator.add_log(LogLevel.INFO, "Sistema", f"Valor Solicitado: R$ {st.session_state.client_data['valor_solicitado']:,.2f}")
+    # orchestrator.add_log(LogLevel.INFO, "Sistema", f"Cliente: {st.session_state.client_data['nome']}")
+    # orchestrator.add_log(LogLevel.INFO, "Sistema", f"Valor Solicitado: R$ {st.session_state.client_data['valor_solicitado']:,.2f}")
     log_placeholder.markdown(orchestrator.get_logs_text())
     
-    # Executa
     result = orchestrator.run_analysis(
         st.session_state.client_data,
         log_placeholder,
@@ -1477,7 +1429,6 @@ elif st.session_state.analysis_started and not st.session_state.analysis_complet
     time.sleep(1.5)
     st.rerun()
 
-# Tela de resultado
 elif st.session_state.analysis_complete and not st.session_state.show_logs:
     result = st.session_state.result
     
@@ -1504,7 +1455,6 @@ elif st.session_state.analysis_complete and not st.session_state.show_logs:
     else:
         st.subheader("✅ Análise Concluída")
         
-        # Métricas principais
         col1, col2, col3, col4 = st.columns(4)
         
         with col1:
